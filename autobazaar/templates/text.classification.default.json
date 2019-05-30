@@ -1,0 +1,16 @@
+{
+    "metadata": {
+        "name": "text/classification/default",
+        "data_type": "text",
+        "task_type": "classification"
+    },
+    "primitives": [
+        "mlprimitives.preprocessing.ClassEncoder",
+        "mlprimitives.feature_extraction.StringVectorizer",
+        "sklearn.preprocessing.Imputer",
+        "sklearn.ensemble.RandomForestClassifier",
+        "mlprimitives.preprocessing.ClassDecoder"
+    ],
+    "hyperparameters": {
+    }
+}
