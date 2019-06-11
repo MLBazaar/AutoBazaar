@@ -7,7 +7,7 @@
     "primitives": [
         "mlprimitives.feature_extraction.StringVectorizer",
         "sklearn.preprocessing.Imputer",
-        "sklearn.ensemble.RandomForestRegressor"
+        "xgboost.XGBRegressor"
     ],
     "hyperparameters": {
     }
