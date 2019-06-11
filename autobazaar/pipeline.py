@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+"""AutoBazaar Pipeline Module."""
+
 import json
 import logging
 import os
@@ -18,6 +20,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 class ABPipeline(object):
+    """AutoBazaar Pipeline Class."""
 
     def _extract_hyperparameters(self, preprocessing_primitives):
         block_names_count = Counter()
@@ -75,6 +78,7 @@ class ABPipeline(object):
         self.pipeline = MLPipeline.from_dict(pipeline_dict)
 
     def fit(self, data_params):
+        """Fit the pipeline on the given params."""
         X, y = data_params.X, data_params.y
 
         self.pipeline = MLPipeline.from_dict(self.pipeline_dict)
@@ -83,6 +87,7 @@ class ABPipeline(object):
         self.fitted = True
 
     def predict(self, d3mds):
+        """Get predictions for the given D3MDS."""
         data_params = self.loader.load(d3mds)
 
         predictions = self.pipeline.predict(data_params.X, **data_params.context)
@@ -93,7 +98,7 @@ class ABPipeline(object):
 
         return out_df
 
-    def get_split(self, X, y, indexes):
+    def _get_split(self, X, y, indexes):
         if hasattr(X, 'iloc'):
             X = X.iloc[indexes]
         else:
@@ -123,6 +128,7 @@ class ABPipeline(object):
         return score, std, rank
 
     def preprocess(self, X, y, context):
+        """Execute the preprocessing steps of the pipeline."""
         if self._preprocessing:
             LOGGER.info("Executing preprocessing pipeline")
             pipeline = MLPipeline.from_dict(self._preprocessing)
@@ -133,6 +139,7 @@ class ABPipeline(object):
             return X
 
     def cv_score(self, X, y, context, metric=None, cv=None):
+        """Cross Validate this pipeline."""
 
         scorer = METRICS_DICT[metric or self.metric]
 
@@ -144,11 +151,11 @@ class ABPipeline(object):
 
             LOGGER.debug('Scoring fold: %s', fold)
 
-            X_train, y_train = self.get_split(X, y, train_index)
+            X_train, y_train = self._get_split(X, y, train_index)
             pipeline = MLPipeline.from_dict(self._tunable)
             pipeline.fit(X_train, y_train, **context)
 
-            X_test, y_test = self.get_split(X, y, test_index)
+            X_test, y_test = self._get_split(X, y, test_index)
             pred = pipeline.predict(X_test, **context)
             score = scorer(pred, y_test)
             self.cv_scores.append(score)
@@ -164,6 +171,7 @@ class ABPipeline(object):
         self.rank = rank + random.random() * 1.e-12   # to avoid collisions
 
     def to_dict(self, problem_doc=False):
+        """Return the details of this pipeline in a dict."""
         pipeline_dict = self.pipeline.to_dict().copy()
         pipeline_dict.update({
             'id': self.id,
@@ -184,6 +192,7 @@ class ABPipeline(object):
 
     @classmethod
     def from_dict(cls, pipeline_dict):
+        """Load a pipeline from a dict."""
         pipeline_dict = pipeline_dict.copy()
         loader = get_loader(**pipeline_dict.pop('loader'))
         metric = pipeline_dict['metric']
@@ -191,6 +200,7 @@ class ABPipeline(object):
         return cls(pipeline_dict, loader, metric, problem_doc)
 
     def dump(self, output_dir, rank=None):
+        """Dump this pipeline using pickle."""
         if rank is None:
             rank = self.rank
 

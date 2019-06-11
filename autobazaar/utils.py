@@ -12,6 +12,7 @@ from keras.utils.generic_utils import CustomObjectScope
 
 
 def ensure_dir(directory):
+    """Create diretory if it does not exist yet."""
     if not os.path.exists(directory):
         os.makedirs(directory)
 
@@ -23,6 +24,16 @@ def make_dumpable(params, datetimes=False):
     And convert numpy types to primitive types.
 
     Optionally dump datetimes to ISO format.
+
+    Args:
+        params (dict):
+            Params dictionary with tuples as keys.
+        datetimes (bool):
+            whether to convert datetimes to ISO strings or not.
+
+    Returns:
+        dict:
+            Dumpable params as a tree of dicts and nested sub-dicts.
     """
     nested_params = defaultdict(dict)
     for (block, param), value in params.items():
@@ -49,16 +60,16 @@ def make_dumpable(params, datetimes=False):
     return nested_params
 
 
-def walk(document, transform):
+def _walk(document, transform):
     if not isinstance(document, dict):
         return document
 
     new_doc = dict()
     for key, value in document.items():
         if isinstance(value, dict):
-            value = walk(value, transform)
+            value = _walk(value, transform)
         elif isinstance(value, list):
-            value = [walk(v, transform) for v in value]
+            value = [_walk(v, transform) for v in value]
 
         new_key, new_value = transform(key, value)
         new_doc[new_key] = new_value
@@ -67,14 +78,17 @@ def walk(document, transform):
 
 
 def remove_dots(document):
-    return walk(document, lambda key, value: (key.replace('.', '-'), value))
+    """Replace dots with dashes in all the keys from the dictionary."""
+    return _walk(document, lambda key, value: (key.replace('.', '-'), value))
 
 
 def restore_dots(document):
-    return walk(document, lambda key, value: (key.replace('-', '.'), value))
+    """Replace dashes with dots in all the keys from the dictionary."""
+    return _walk(document, lambda key, value: (key.replace('-', '.'), value))
 
 
 def make_keras_picklable():
+    """Make the keras models picklable."""
     def __getstate__(self):
         model_str = ""
         with tempfile.NamedTemporaryFile(suffix='.hdf5', delete=True) as fd:

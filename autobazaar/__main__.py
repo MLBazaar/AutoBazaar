@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""AutoBazaar Command Line Module."""
+
 import argparse
 import json
 import os
@@ -24,7 +26,7 @@ from autobazaar.utils import make_keras_picklable
 warnings.filterwarnings(action='ignore')
 
 
-def load_targets(datasets_dir, dataset, problem):
+def _load_targets(datasets_dir, dataset, problem):
     score_phase = 'SCORE'
     if problem:
         score_phase += '_' + problem
@@ -34,7 +36,7 @@ def load_targets(datasets_dir, dataset, problem):
     return pd.read_csv(os.path.join(score_dir, 'targets.csv'), index_col='d3mIndex')
 
 
-def get_metric(problem_path):
+def _get_metric(problem_path):
     problem_schema = os.path.join(problem_path, 'problemDoc.json')
 
     with open(problem_schema, 'r') as f:
@@ -45,24 +47,6 @@ def get_metric(problem_path):
         raise Exception("Wrong number of metrics")
 
     return metrics.METRICS_DICT[problem_metrics[0]['metric']]
-
-
-def get_best_pipeline(pipelines_dir):
-    best = float('inf')
-    best_pipeline = None
-
-    pipelines = os.listdir(pipelines_dir)
-    for pipeline_json in pipelines:
-        pipeline_path = os.path.join(pipelines_dir, pipeline_json)
-        with open(pipeline_path, 'r') as f:
-            pipeline = json.load(f)
-
-        rank = pipeline.get('pipeline_rank')
-        if rank and rank < best:
-            best = rank
-            best_pipeline = pipeline['id']
-
-    return best_pipeline, len(pipelines)
 
 
 def _get_dataset_paths(datasets_dir, dataset, phase, problem):
@@ -78,7 +62,7 @@ def _get_dataset_paths(datasets_dir, dataset, phase, problem):
     return dataset_path, problem_path
 
 
-def search_pipeline(dataset, problem, template, input_dir, output_dir,
+def _search_pipeline(dataset, problem, template, input_dir, output_dir,
                     budget, checkpoints, splits, db, tuner_type):
 
     dataset_path, problem_path = _get_dataset_paths(input_dir, dataset, 'TRAIN', problem)
@@ -95,7 +79,7 @@ def search_pipeline(dataset, problem, template, input_dir, output_dir,
     return searcher.search(d3mds, template, budget=budget, checkpoints=checkpoints)
 
 
-def test_pipeline(dataset, problem, pipeline_id, input_dir, output_dir):
+def _test_pipeline(dataset, problem, pipeline_id, input_dir, output_dir):
 
     dataset_path, problem_path = _get_dataset_paths(input_dir, dataset, 'TEST', problem)
 
@@ -114,12 +98,12 @@ def test_pipeline(dataset, problem, pipeline_id, input_dir, output_dir):
     return predictions
 
 
-def score_predictions(dataset, problem, predictions, input_dir):
+def _score_predictions(dataset, problem, predictions, input_dir):
 
     dataset_path, problem_path = _get_dataset_paths(input_dir, dataset, 'TEST', problem)
-    metric = get_metric(problem_path)
+    metric = _get_metric(problem_path)
 
-    targets = load_targets(input_dir, dataset, problem)
+    targets = _load_targets(input_dir, dataset, problem)
     predictions = predictions.set_index('d3mIndex')[targets.columns]
 
     if len(targets.columns) > 1 or len(predictions.columns) > 1:
@@ -134,7 +118,7 @@ def score_predictions(dataset, problem, predictions, input_dir):
     return score
 
 
-def format_exception(e):
+def _format_exception(e):
     error = '{}'.format(e.__class__.__name__)
     str_e = str(e)
     if str_e:
@@ -143,7 +127,7 @@ def format_exception(e):
     return error
 
 
-def score_dataset(dataset, args):
+def _score_dataset(dataset, args):
 
     start_ts = datetime.utcnow()
 
@@ -172,7 +156,7 @@ def score_dataset(dataset, args):
         # cleanup
         shutil.rmtree(args.output, ignore_errors=True)
 
-        search_results = search_pipeline(
+        search_results = _search_pipeline(
             dataset, args.problem, args.template, args.input, args.output, args.budget,
             args.checkpoints, args.splits, args.db, args.tuner_type
         )
@@ -188,18 +172,18 @@ def score_dataset(dataset, args):
                 print('###################')
                 print('#### Executing ####')
                 print('###################')
-                predictions = test_pipeline(dataset, args.problem, pipeline,
-                                            args.input, args.output)
+                predictions = _test_pipeline(dataset, args.problem, pipeline,
+                                             args.input, args.output)
 
                 step = 'SCORE'
                 print('#################')
                 print('#### Scoring ####')
                 print('#################')
-                result['score'] = score_predictions(dataset, args.problem,
-                                                    predictions, args.input)
+                result['score'] = _score_predictions(dataset, args.problem,
+                                                     predictions, args.input)
 
             except Exception as e:
-                error = format_exception(e)
+                error = _format_exception(e)
                 print("Scoring pipeline {} for dataset {} failed on step {} with error {}"
                       .format(pipeline, dataset, step, error))
                 traceback.print_exc()
@@ -207,7 +191,7 @@ def score_dataset(dataset, args):
                 result['step'] = step
 
     except Exception as e:
-        error = format_exception(e)
+        error = _format_exception(e)
         print("Dataset {} failed on step {} with error {}".format(dataset, step, error))
         traceback.print_exc()
 
@@ -220,7 +204,7 @@ def score_dataset(dataset, args):
 
 
 def _prepare_search(args):
-    args.datasets = get_datasets(args)
+    args.datasets = _get_datasets(args)
 
     if args.db:
         args.db = get_db(
@@ -238,7 +222,7 @@ def _prepare_search(args):
         args.checkpoints = [args.timeout]
 
 
-def score_datasets(args):
+def _score_datasets(args):
 
     if args.report and os.path.exists(args.report):
         report = pd.read_csv(args.report)
@@ -254,7 +238,7 @@ def score_datasets(args):
                 # clean-up
                 report = report[report.dataset != dataset].copy()
 
-            scores = score_dataset(dataset, args)
+            scores = _score_dataset(dataset, args)
             if scores:
                 scores = pd.DataFrame(scores)
                 scores = scores.merge(pd.DataFrame([row]), left_on='dataset', right_index=True)
@@ -271,14 +255,14 @@ def _search(args):
     _prepare_search(args)
 
     print("Processing Datasets: {}".format(args.datasets.index.values))
-    report = score_datasets(args)
+    report = _score_datasets(args)
 
     report = report.reindex(REPORT_COLUMNS, axis=1)
     columns = REPORT_COLUMNS[1:]
     print(report.set_index('dataset').to_string(columns=columns))
 
 
-def get_datasets(args):
+def _get_datasets(args):
 
     if args.all:
         datasets = [
@@ -326,7 +310,7 @@ REPORT_COLUMNS = [
 
 
 def _list(args):
-    datasets = get_datasets(args)
+    datasets = _get_datasets(args)
     datasets = datasets.reset_index().sort_values('dataset').set_index('dataset')
     columns = [
         'data_modality', 'task_type', 'task_subtype', 'metric', 'size_human', 'train_samples'
@@ -348,7 +332,7 @@ def _path_type(string):
         raise argparse.ArgumentTypeError(error)
 
 
-def get_parser():
+def _get_parser():
 
     # Logging
     logging_args = ArgumentParser(add_help=False)
@@ -439,7 +423,7 @@ def get_parser():
 def main():
     make_keras_picklable()
 
-    parser = get_parser()
+    parser = _get_parser()
     args = parser.parse_args()
 
     if not args.command:

@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 
+"""AutoBazaar Search Module.
+
+
+This module contains the PipelineSearcher, which is the class that
+contains the main logic of the Auto Machine Learning process.
+"""
+
 import itertools
 import json
 import logging
@@ -49,22 +56,27 @@ class StopSearch(Exception):
 
 
 class PipelineSearcher(object):
+    """PipelineSearcher class.
+
+    This class is responsible for searching the best pipeline to solve a
+    given dataset and problem.
+    """
 
     def __init__(self, pipelines_dir, db=None, test_id=None, tuner_type='gp',
                  cv_splits=5, random_state=0):
 
-        self.db = db
+        self._db = db
 
         self._pipelines_dir = pipelines_dir
         ensure_dir(self._pipelines_dir)
 
-        self.cv_splits = cv_splits
-        self.random_state = random_state
+        self._cv_splits = cv_splits
+        self._random_state = random_state
 
-        self.tuner_type = tuner_type
-        self.tuner_class = TUNERS[tuner_type]
+        self._tuner_type = tuner_type
+        self._tuner_class = TUNERS[tuner_type]
 
-        self.test_id = test_id
+        self._test_id = test_id
 
     def _dump(self, pipeline):
         if not pipeline.dumped:
@@ -98,13 +110,13 @@ class PipelineSearcher(object):
 
         self.solutions.append(solution)
 
-        if self.db:
+        if self._db:
             insertable = remove_dots(solution)
             insertable.pop('problem_doc')
             insertable['dataset'] = self.dataset_id
-            insertable['tuner_type'] = self.tuner_type
-            insertable['test_id'] = self.test_id
-            self.db.solutions.insert_one(insertable)
+            insertable['tuner_type'] = self._tuner_type
+            insertable['test_id'] = self._test_id
+            self._db.solutions.insert_one(insertable)
 
     def _build_trivial_pipeline(self):
         LOGGER.info("Building the Trivial pipeline")
@@ -152,7 +164,7 @@ class PipelineSearcher(object):
         match = {
             'metadata.name': template_name
         }
-        cursor = self.db.pipelines.find(match)
+        cursor = self._db.pipelines.find(match)
         templates = list(cursor.sort('metadata.insert_ts', -1).limit(1))
         if templates:
             template = templates[0]
@@ -161,7 +173,7 @@ class PipelineSearcher(object):
             return restore_dots(template)
 
     def _load_template(self, template_name):
-        if self.db:
+        if self._db:
             return self._find_template(template_name)
 
         return self._load_template_json(template_name)
@@ -239,8 +251,8 @@ class PipelineSearcher(object):
                 tunable_keys.append(key)
 
         # Create the tuner
-        LOGGER.info('Creating %s tuner', self.tuner_class.__name__)
-        tuner = self.tuner_class(tunables)
+        LOGGER.info('Creating %s tuner', self._tuner_class.__name__)
+        tuner = self._tuner_class(tunables)
 
         if pipeline:
             # Add the default params and the score obtained by the default pipeline to the tuner.
@@ -256,14 +268,14 @@ class PipelineSearcher(object):
 
         return tuner
 
-    def set_checkpoint(self):
+    def _set_checkpoint(self):
         next_checkpoint = self.checkpoints.pop(0)
         interval = next_checkpoint - self.current_checkpoint
         LOGGER.info("Setting %s seconds checkpoint in %s seconds", next_checkpoint, interval)
         signal.alarm(interval)
         self.current_checkpoint = next_checkpoint
 
-    def checkpoint(self, signum=None, frame=None, final=False):
+    def _checkpoint(self, signum=None, frame=None, final=False):
         signal.alarm(0)
 
         checkpoint_name = 'Final' if final else str(self.current_checkpoint) + ' seconds'
@@ -272,7 +284,7 @@ class PipelineSearcher(object):
 
         set_checkpoint = (not final) and bool(self.checkpoints)
         if set_checkpoint:
-            self.set_checkpoint()
+            self._set_checkpoint()
 
         try:
             if self.best_pipeline:
@@ -287,21 +299,21 @@ class PipelineSearcher(object):
 
     def search(self, d3mds, template_name=None, budget=None, checkpoints=None):
         # Problem variables
-        self.problem_id = d3mds.get_problem_id()
+        problem_id = d3mds.get_problem_id()
         self.task_type = d3mds.get_task_type()
         self.task_subtype = d3mds.problem.get_task_subtype()
 
         if self.task_type == 'classification':
             self.kf = StratifiedKFold(
-                n_splits=self.cv_splits,
+                n_splits=self._cv_splits,
                 shuffle=True,
-                random_state=self.random_state
+                random_state=self._random_state
             )
         else:
             self.kf = KFold(
-                n_splits=self.cv_splits,
+                n_splits=self._cv_splits,
                 shuffle=True,
-                random_state=self.random_state
+                random_state=self._random_state
             )
 
         self.problem_doc = d3mds.problem_doc
@@ -331,7 +343,7 @@ class PipelineSearcher(object):
             self.start_time = datetime.utcnow()
 
             LOGGER.info("Running TA2 Search")
-            LOGGER.info("Problem Id: %s", self.problem_id)
+            LOGGER.info("Problem Id: %s", problem_id)
             LOGGER.info("    Data Modality: %s", self.data_modality)
             LOGGER.info("    Task type: %s", self.task_type)
             LOGGER.info("    Task subtype: %s", self.task_subtype)
@@ -340,8 +352,8 @@ class PipelineSearcher(object):
             LOGGER.info("    Budget: %s", budget)
 
             if self.checkpoints:
-                signal.signal(signal.SIGALRM, self.checkpoint)
-                self.set_checkpoint()
+                signal.signal(signal.SIGALRM, self._checkpoint)
+                self._set_checkpoint()
 
             load_start = datetime.utcnow()
             self.data_params = self.loader.load(d3mds)
@@ -424,16 +436,16 @@ class PipelineSearcher(object):
             signal.alarm(0)
 
         if self.current_checkpoint:
-            self.checkpoint(final=True)
+            self._checkpoint(final=True)
         elif self.best_pipeline and not checkpoints:
             self._dump(self.best_pipeline)
 
         if self.best_pipeline:
             LOGGER.info('Best pipeline for problem %s found: %s; rank: %s, score: %s',
-                        self.problem_id, self.best_pipeline,
+                        problem_id, self.best_pipeline,
                         self.best_pipeline.rank, self.best_pipeline.score)
 
         else:
-            LOGGER.info('No pipeline could be found for problem %s', self.problem_id)
+            LOGGER.info('No pipeline could be found for problem %s', problem_id)
 
         return self.pipelines

@@ -115,3 +115,7 @@ ENV/
 .idea/
 
 output/
+input/
+data/
+compressed/
+notebooks/
