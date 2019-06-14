@@ -114,8 +114,8 @@ ENV/
 # IntelliJ Idea
 .idea/
 
-output/
-input/
-data/
-compressed/
-notebooks/
+output
+input
+data
+compressed
+notebooks

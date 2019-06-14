@@ -22,6 +22,7 @@ install_requires = [
     'scikit-learn==0.20.2',
     'scipy==1.1.0',
     'urllib3==1.23',
+    'xgboost==0.81'
 ]
 
 tests_require = [
@@ -75,7 +76,7 @@ setup(
     description='The Machine Learning Bazaar',
     entry_points={
         'console_scripts': [
-            'autobazaar=autobazaar.__main__:main'
+            'abz=autobazaar.__main__:main'
         ]
     },
     extras_require={

@@ -93,7 +93,7 @@ class PipelineSearcher(object):
 
         self.pipelines.append({
             'elapsed': (datetime.utcnow() - self.start_time).total_seconds(),
-            'iterations': len(self.solutions),
+            'iterations': len(self.solutions) - 1,
             'cv_score': self.best_pipeline.score,
             'rank': self.best_pipeline.rank,
             'pipeline': self.best_pipeline.id,
@@ -359,6 +359,7 @@ class PipelineSearcher(object):
             self.data_params = self.loader.load(d3mds)
             load_end = datetime.utcnow()
             self.load_time = (load_end - load_start).total_seconds()
+            import ipdb; ipdb.set_trace()
 
             # Build the trivial pipeline
             trivial_start = datetime.utcnow()
@@ -383,6 +384,8 @@ class PipelineSearcher(object):
 
             if budget is not None:
                 budget -= 1
+            if budget == 0:
+                raise StopSearch()
 
             # Build the tuner
             tuner = self._get_tuner(default_pipeline, template_dict)

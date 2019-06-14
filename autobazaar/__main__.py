@@ -115,6 +115,9 @@ def _score_predictions(dataset, problem, predictions, input_dir):
     score = metric(targets.iloc[:, 0], predictions.iloc[:, 0])
     print("Score: {}".format(score))
 
+    summary = {'predictions': predictions.values[:,0], 'targets': targets.values[:,0]}
+    print(pd.DataFrame(summary).describe())
+
     return score
 
 
