@@ -63,7 +63,7 @@ def _get_dataset_paths(datasets_dir, dataset, phase, problem):
 
 
 def _search_pipeline(dataset, problem, template, input_dir, output_dir,
-                    budget, checkpoints, splits, db, tuner_type):
+                     budget, checkpoints, splits, db, tuner_type):
 
     dataset_path, problem_path = _get_dataset_paths(input_dir, dataset, 'TRAIN', problem)
 
@@ -112,10 +112,12 @@ def _score_predictions(dataset, problem, predictions, input_dir):
     if any(targets.index != predictions.index):
         raise Exception("Different indexes cannot be compared")
 
-    score = metric(targets.iloc[:, 0], predictions.iloc[:, 0])
+    targets = targets.iloc[:, 0]
+    predictions = predictions.iloc[:, 0]
+    score = metric(targets, predictions)
     print("Score: {}".format(score))
 
-    summary = {'predictions': predictions.values[:,0], 'targets': targets.values[:,0]}
+    summary = {'predictions': predictions, 'targets': targets}
     print(pd.DataFrame(summary).describe())
 
     return score
@@ -157,7 +159,8 @@ def _score_dataset(dataset, args):
         print('###################')
 
         # cleanup
-        shutil.rmtree(args.output, ignore_errors=True)
+        if not args.keep:
+            shutil.rmtree(args.output, ignore_errors=True)
 
         search_results = _search_pipeline(
             dataset, args.problem, args.template, args.input, args.output, args.budget,
@@ -207,6 +210,10 @@ def _score_dataset(dataset, args):
 
 
 def _prepare_search(args):
+    if not args.datasets and not args.all:
+        print('Please provide at least one dataset name or add the --all option')
+        sys.exit(1)
+
     args.datasets = _get_datasets(args)
 
     if args.db:
@@ -266,7 +273,6 @@ def _search(args):
 
 
 def _get_datasets(args):
-
     if args.all:
         datasets = [
             d for d in os.listdir(args.input)
@@ -275,25 +281,33 @@ def _get_datasets(args):
     else:
         datasets = args.datasets
 
-    exclude = args.exclude or []
+    exclude = getattr(args, 'exclude', None) or []
     datasets = [dataset for dataset in datasets if dataset not in exclude]
-    if not datasets:
+
+    try:
+        summary = get_stats(datasets, args.input)
+    except KeyError:
         print("No matching datasets found")
         sys.exit(1)
 
-    summary = get_stats(datasets, args.input)
     summary = summary.set_index('dataset').reindex(datasets)
+    summary = summary[~summary.data_modality.isnull()]
 
     for field in ['data_modality', 'task_type', 'task_subtype']:
         value = getattr(args, field)
         if value:
             summary = summary[summary[field] == value]
 
+    if summary.empty:
+        print("No matching datasets found")
+        sys.exit(1)
+
     return summary
 
 
 REPORT_COLUMNS = [
     'dataset',
+    'pipeline',
     'score',
     'rank',
     'cv_score',
@@ -313,6 +327,7 @@ REPORT_COLUMNS = [
 
 
 def _list(args):
+    args.all = True
     datasets = _get_datasets(args)
     datasets = datasets.reset_index().sort_values('dataset').set_index('dataset')
     columns = [
@@ -349,10 +364,10 @@ def _get_parser():
 
     # Dataset Selection
     dataset_args = ArgumentParser(add_help=False)
-    dataset_args.add_argument('-i', '--input', required=True, type=_path_type,
-                              help='Input datasets folder')
+    dataset_args.add_argument('-i', '--input', default='data', type=_path_type,
+                              help='Input datasets folder. Defaults to `data`.')
     dataset_args.add_argument('-o', '--output', type=_path_type,
-                              help='Output pipelines folder',
+                              help='Output pipelines folder. Defaults to `output`.',
                               default='output')
     dataset_args.add_argument('-p', '--problem', default='',
                               help='Problem suffix. Only needed if the dataset has more than one.')
@@ -362,12 +377,6 @@ def _get_parser():
                               help='Dataset task type')
     dataset_args.add_argument('-S', '--task-subtype', type=str,
                               help='Dataset task subtype')
-    dataset_args.add_argument('-e', '--exclude', nargs='+',
-                              help='Exclude these datasets. Useful in combination with --all.')
-    dataset_args.add_argument('-a', '--all', action='store_true',
-                              help='Process all the datasets found in the input folder.')
-    dataset_args.add_argument('datasets', nargs='*',
-                              help='Datasets to process. Ignored if --all use used.')
 
     # Search Configuration
     search_args = ArgumentParser(add_help=False)
@@ -376,19 +385,28 @@ def _get_parser():
                                    'Unlimited if not provided.'))
     search_args.add_argument('-s', '--splits', type=int, default=5,
                              help='Number of Cross Validation Folds. Defaults to 5')
-    search_args.add_argument('-c', '--checkpoints', nargs='+',
-                             help=('List of time checkpoints where best pipeline will be '
-                                   'dumped and stored, in seconds.'))
+    search_args.add_argument('-c', '--checkpoints',
+                             help=('Comma separated list of time checkpoints where best pipeline '
+                                   'so far will be dumped and stored in seconds, without spaces.'))
     search_args.add_argument('-t', '--timeout', type=int,
                              help='Timeout in seconds. Ignored if checkpoints are given.')
     search_args.add_argument('-u', '--tuner-type', default='gp', choices=TUNERS.keys(),
                              help='Type of tuner to use. Defaults to "gp"')
     search_args.add_argument('--template',
                              help='Template to use. If not given, use the most appropriate one.')
+    search_args.add_argument('-e', '--exclude', nargs='+',
+                             help='Exclude these datasets. Useful in combination with --all.')
+    search_args.add_argument('-a', '--all', action='store_true',
+                             help='Process all the datasets found in the input folder.')
+    search_args.add_argument('-k', '--keep', action='store_true',
+                             help='Keep previous results in the output folder.')
+    search_args.add_argument('datasets', nargs='*',
+                             help='Datasets to process. Ignored if --all use used.')
 
     # Backend configuration
     db_args = ArgumentParser(add_help=False)
-    db_args.add_argument('--db', action='store_true', help='Use a MongoDB backend.')
+    db_args.add_argument('--db', action='store_true',
+                         help='Use a MongoDB backend to store the results.')
     db_args.add_argument('--db-config', help='MongoDB configuraiton JSON file.')
     db_args.add_argument('--db-host', default='localhost')
     db_args.add_argument('--db-port', default=27017, type=int)
