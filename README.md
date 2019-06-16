@@ -194,13 +194,10 @@ be stored there:
 abz search 185_baseball -c10,20,30 -b10 -r results.csv
 ```
 
-# What's Next?
+## What's next?
 
-Do you want to [learn more about how the project](https://hdi-project.github.io/AutoBazaar/getting_started/concepts.html),
-about [how to contribute to it](https://hdi-project.github.io/AutoBazaar/community/contributing.html)
-or browse the [API Reference](https://hdi-project.github.io/AutoBazaar/api/mlprimitives.html)?
-Please check the corresponding sections of the [documentation](https://hdi-project.github.io/AutoBazaar/)!
-
+For more details about **AutoBazaar** and all its possibilities and features, please check the
+[project documentation site](https://HDI-Project.github.io/AutoBazaar/)!
 
 # Credits
 
