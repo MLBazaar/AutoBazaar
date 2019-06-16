@@ -206,10 +206,12 @@ class ABPipeline(object):
 
         LOGGER.info('Dumping pipeline with rank %s: %s', rank, self.id)
 
-        pickle_path = os.path.join(output_dir, '{}.pkl'.format(self.id))
-
         self.dumped = True
 
+        pickle_path = os.path.join(output_dir, '{}.pkl'.format(self.id))
         with open(pickle_path, "wb") as pickle_file:
             LOGGER.info("Outputting pipeline %s", pickle_file.name)
             cloudpickle.dump(self, pickle_file)
+
+        json_path = os.path.join(output_dir, '{}.json'.format(self.id))
+        self.pipeline.save(json_path)
