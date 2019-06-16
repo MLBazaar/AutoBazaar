@@ -59,6 +59,10 @@ development_requires = [
     # distribute on PyPI
     'twine>=1.10.0',
     'wheel>=0.30.0',
+
+    # Advanced testing
+    'tox>=2.9.1',
+    'coverage>=4.5.1',
 ]
 
 setup(
@@ -70,7 +74,9 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
     ],
     description='The Machine Learning Bazaar',
@@ -91,6 +97,7 @@ setup(
     keywords='automl machine learning hyperparameters tuning classification regression autobazaar',
     name='autobazaar',
     packages=find_packages(include=['autobazaar', 'autobazaar.*']),
+    python_requires='>=3.4',
     setup_requires=setup_requires,
     test_suite='tests',
     tests_require=tests_require,

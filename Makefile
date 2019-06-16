@@ -104,9 +104,9 @@ fix-lint: ## fix lint issues using autoflake, autopep8, and isort
 
 # TEST TARGETS
 
-.PHONY: test
-test: ## run tests quickly with the default Python
-	python -m pytest --cov=autobazaar
+# .PHONY: test
+# test: ## run tests quickly with the default Python
+# 	python -m pytest --cov=autobazaar tests
 
 .PHONY: test-all
 test-all: ## run tests on every Python version with tox
