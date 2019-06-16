@@ -177,15 +177,29 @@ in stdout with a summary of the best pipeline found for each dataset.
 If multiple checkpoints were provided, details about the best pipeline in each checkpoint
 will also be included.
 
-For example, the output to the previous command would be:
+The output will be a table similar to this one:
 
-```python
+```
                                           pipeline     score      rank  cv_score   metric data_modality       task_type task_subtype    elapsed  iterations  load_time  trivial_time  fit_time    cv_time error  step
 dataset
 185_baseball  fce28425-e45c-4620-9d3c-d329b8684bea  0.316961  0.682957  0.317043  f1Macro  single_table  classification  multi_class  10.024457         0.0   0.011041      0.026212       NaN        NaN  None  None
 185_baseball  f7428924-79ee-439d-bc32-998a9efea619  0.675132  0.390927  0.609073  f1Macro  single_table  classification  multi_class  21.412262         1.0   0.011041      0.026212   9.99484        NaN  None  None
 185_baseball  397780a5-6bf6-48c9-9a85-06b0d08c5a9d  0.675132  0.357361  0.642639  f1Macro  single_table  classification  multi_class  31.712946         2.0   0.011041      0.026212   9.99484  12.618179  None  None
 ```
+
+Alternatively, a `-r` option can be passed with the name of a CSV file, and the results will
+be stored there:
+
+```bash
+abz search 185_baseball -c10,20,30 -b10 -r results.csv
+```
+
+# What's Next?
+
+Do you want to [learn more about how the project](https://hdi-project.github.io/AutoBazaar/getting_started/concepts.html),
+about [how to contribute to it](https://hdi-project.github.io/AutoBazaar/community/contributing.html)
+or browse the [API Reference](https://hdi-project.github.io/AutoBazaar/api/mlprimitives.html)?
+Please check the corresponding sections of the [documentation](https://hdi-project.github.io/AutoBazaar/)!
 
 
 # Credits
@@ -196,3 +210,10 @@ AutoBazaar is an Open Source project from the Data to AI Lab at MIT built by the
 * Micah Smith <micahs@mit.edu>
 * Max Kanter <max.kanter@gmail.com>
 * Kalyan Veeramachaneni <kalyanv@mit.edu>
+
+## Citing AutoBazaar
+
+If you use AutoBazaar for yor research, please consider citing the following paper:
+
+Micah Smith, Carles Sala, Max Kanter, Kalyan Veeramachaneni. [The Machine Learning Bazaar Paper:
+Harnessing the ML Ecosystem for Effective System Development](https://arxiv.org/pdf/1905.08942.pdf)
