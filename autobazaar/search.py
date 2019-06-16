@@ -333,6 +333,9 @@ class PipelineSearcher(object):
         self.current_checkpoint = 0
         self.pipelines = []
 
+        if not self.checkpoints and budget is None:
+            budget = 1
+
         self.load_time = None
         self.trivial_time = None
         self.fit_time = None
@@ -359,7 +362,6 @@ class PipelineSearcher(object):
             self.data_params = self.loader.load(d3mds)
             load_end = datetime.utcnow()
             self.load_time = (load_end - load_start).total_seconds()
-            import ipdb; ipdb.set_trace()
 
             # Build the trivial pipeline
             trivial_start = datetime.utcnow()
@@ -382,10 +384,10 @@ class PipelineSearcher(object):
             fit_end = datetime.utcnow()
             self.fit_time = (fit_end - fit_start).total_seconds()
 
-            if budget is not None:
-                budget -= 1
-            if budget == 0:
+            if budget == 1:
                 raise StopSearch()
+            elif budget is not None:
+                budget -= 1
 
             # Build the tuner
             tuner = self._get_tuner(default_pipeline, template_dict)
