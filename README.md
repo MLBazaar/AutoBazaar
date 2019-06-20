@@ -210,7 +210,17 @@ AutoBazaar is an Open Source project from the Data to AI Lab at MIT built by the
 
 ## Citing AutoBazaar
 
-If you use AutoBazaar for yor research, please consider citing the following paper:
+If you use AutoBazaar for yor research, please consider citing the following paper (https://arxiv.org/pdf/1905.08942.pdf):
 
-Micah Smith, Carles Sala, Max Kanter, Kalyan Veeramachaneni. [The Machine Learning Bazaar Paper:
-Harnessing the ML Ecosystem for Effective System Development](https://arxiv.org/pdf/1905.08942.pdf)
+```
+@article{smith2019mlbazaar,
+  author = {Smith, Micah J. and Sala, Carles and Kanter, James Max and Veeramachaneni, Kalyan},
+  title = {The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development},
+  journal = {arXiv e-prints},
+  year = {2019},
+  eid = {arXiv:1905.08942},
+  pages = {arxiv:1904.09535},
+  archivePrefix = {arXiv},
+  eprint = {1905.08942},
+}
+```
