@@ -22,7 +22,8 @@ install_requires = [
     'scikit-learn==0.20.2',
     'scipy==1.1.0',
     'urllib3==1.23',
-    'xgboost==0.81'
+    'xgboost==0.81',
+    'featuretools==0.5.1'
 ]
 
 tests_require = [
