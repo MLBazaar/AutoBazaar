@@ -1,0 +1,19 @@
+autobazaar package
+==================
+
+Submodules
+----------
+
+.. toctree::
+
+   autobazaar.pipeline
+   autobazaar.search
+   autobazaar.utils
+
+Module contents
+---------------
+
+.. automodule:: autobazaar
+   :members:
+   :undoc-members:
+   :show-inheritance:

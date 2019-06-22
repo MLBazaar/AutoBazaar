@@ -1,0 +1,7 @@
+autobazaar.search module
+========================
+
+.. automodule:: autobazaar.search
+   :members:
+   :undoc-members:
+   :show-inheritance:

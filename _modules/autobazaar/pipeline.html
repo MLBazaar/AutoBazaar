@@ -1,0 +1,456 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>autobazaar.pipeline &mdash; AutoBazaar 0.1.0-dev documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/dai-logo-white.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AutoBazaar
+          
+
+          
+            
+            <img src="../../_static/dai-logo-white-200.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">AutoBazaar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#overview">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#install">Install</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../readme.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../readme.html#install-with-pip">Install with pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../readme.html#install-from-source">Install from source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#data-format">Data Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#quickstart">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../readme.html#prepare-your-data">1. Prepare your Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../readme.html#start-the-search-process">2. Start the search process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../readme.html#explore-the-results">3. Explore the results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../readme.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#credits">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../readme.html#citing-autobazaar">Citing AutoBazaar</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/autobazaar.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/autobazaar.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/autobazaar.pipeline.html">autobazaar.pipeline module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/autobazaar.search.html">autobazaar.search module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/autobazaar.utils.html">autobazaar.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/autobazaar.html#module-autobazaar">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing.html#types-of-contributions">Types of Contributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing.html#report-bugs">Report Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing.html#fix-bugs">Fix Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing.html#implement-features">Implement Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing.html#write-documentation">Write Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing.html#submit-feedback">Submit Feedback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing.html#unit-testing-guidelines">Unit Testing Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing.html#tips">Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing.html#release-workflow">Release Workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AutoBazaar</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>autobazaar.pipeline</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for autobazaar.pipeline</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;AutoBazaar Pipeline Module.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
+
+<span class="kn">import</span> <span class="nn">cloudpickle</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">mit_d3m.loaders</span> <span class="k">import</span> <span class="n">get_loader</span>
+<span class="kn">from</span> <span class="nn">mit_d3m.metrics</span> <span class="k">import</span> <span class="n">METRICS_DICT</span>
+<span class="kn">from</span> <span class="nn">mlblocks</span> <span class="k">import</span> <span class="n">MLPipeline</span>
+
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ABPipeline"><a class="viewcode-back" href="../../api/autobazaar.pipeline.html#autobazaar.pipeline.ABPipeline">[docs]</a><span class="k">class</span> <span class="nc">ABPipeline</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;AutoBazaar Pipeline Class.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_extract_hyperparameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preprocessing_primitives</span><span class="p">):</span>
+        <span class="n">block_names_count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+        <span class="n">block_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">primitive</span> <span class="ow">in</span> <span class="n">preprocessing_primitives</span><span class="p">:</span>
+            <span class="n">block_names_count</span><span class="o">.</span><span class="n">update</span><span class="p">([</span><span class="n">primitive</span><span class="p">])</span>
+            <span class="n">block_count</span> <span class="o">=</span> <span class="n">block_names_count</span><span class="p">[</span><span class="n">primitive</span><span class="p">]</span>
+            <span class="n">block_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">#</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">primitive</span><span class="p">,</span> <span class="n">block_count</span><span class="p">))</span>
+
+        <span class="n">pre_params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">hyperparameters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dict</span><span class="p">[</span><span class="s1">&#39;hyperparameters&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">block_name</span> <span class="ow">in</span> <span class="n">block_names</span><span class="p">:</span>
+            <span class="n">block_params</span> <span class="o">=</span> <span class="n">hyperparameters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">block_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">block_params</span><span class="p">:</span>
+                <span class="n">pre_params</span><span class="p">[</span><span class="n">block_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">block_params</span>
+
+        <span class="k">return</span> <span class="n">pre_params</span><span class="p">,</span> <span class="n">hyperparameters</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pipeline_dict</span><span class="p">,</span> <span class="n">loader</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">problem_doc</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dict</span> <span class="o">=</span> <span class="n">pipeline_dict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">pipeline_dict</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="n">pipeline_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;template&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loader</span> <span class="o">=</span> <span class="n">loader</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">metric</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">problem_doc</span> <span class="o">=</span> <span class="n">problem_doc</span>
+
+        <span class="n">preprocessing_blocks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;preprocessing_blocks&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">preprocessing_blocks</span><span class="p">:</span>
+            <span class="n">preprocessing</span> <span class="o">=</span> <span class="n">pipeline_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">preprocessing_primitives</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="p">[</span><span class="s1">&#39;primitives&#39;</span><span class="p">][:</span><span class="n">preprocessing_blocks</span><span class="p">]</span>
+            <span class="n">preprocessing</span><span class="p">[</span><span class="s1">&#39;primitives&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">preprocessing_primitives</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_preprocessing</span> <span class="o">=</span> <span class="n">preprocessing</span>
+
+            <span class="n">tunable</span> <span class="o">=</span> <span class="n">pipeline_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">tunable_primitives</span> <span class="o">=</span> <span class="n">tunable</span><span class="p">[</span><span class="s1">&#39;primitives&#39;</span><span class="p">][</span><span class="n">preprocessing_blocks</span><span class="p">:]</span>
+            <span class="n">tunable</span><span class="p">[</span><span class="s1">&#39;primitives&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tunable_primitives</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tunable</span> <span class="o">=</span> <span class="n">tunable</span>
+
+            <span class="n">pre_params</span><span class="p">,</span> <span class="n">tun_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_hyperparameters</span><span class="p">(</span><span class="n">preprocessing_primitives</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_preprocessing</span><span class="p">[</span><span class="s1">&#39;hyperparameters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pre_params</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tunable</span><span class="p">[</span><span class="s1">&#39;hyperparameters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tun_params</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_preprocessing</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tunable</span> <span class="o">=</span> <span class="n">pipeline_dict</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cv_scores</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rank</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dumped</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fitted</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">MLPipeline</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">pipeline_dict</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ABPipeline.fit"><a class="viewcode-back" href="../../api/autobazaar.pipeline.html#autobazaar.pipeline.ABPipeline.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_params</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fit the pipeline on the given params.&quot;&quot;&quot;</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data_params</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">data_params</span><span class="o">.</span><span class="n">y</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">MLPipeline</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">data_params</span><span class="o">.</span><span class="n">context</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fitted</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="ABPipeline.predict"><a class="viewcode-back" href="../../api/autobazaar.pipeline.html#autobazaar.pipeline.ABPipeline.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d3mds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get predictions for the given D3MDS.&quot;&quot;&quot;</span>
+        <span class="n">data_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">d3mds</span><span class="p">)</span>
+
+        <span class="n">predictions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_params</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="o">**</span><span class="n">data_params</span><span class="o">.</span><span class="n">context</span><span class="p">)</span>
+
+        <span class="n">out_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        <span class="n">out_df</span><span class="p">[</span><span class="s1">&#39;d3mIndex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_params</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">index</span>
+        <span class="n">out_df</span><span class="p">[</span><span class="n">d3mds</span><span class="o">.</span><span class="n">target_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">predictions</span>
+
+        <span class="k">return</span> <span class="n">out_df</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">indexes</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="s1">&#39;iloc&#39;</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">indexes</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">indexes</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;iloc&#39;</span><span class="p">):</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">indexes</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">indexes</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span>
+
+    <span class="k">def</span> <span class="nf">_get_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cv_scores</span><span class="p">)</span>
+        <span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cv_scores</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s1">&#39;Error&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">:</span>
+            <span class="n">rank</span> <span class="o">=</span> <span class="n">score</span>
+
+        <span class="k">elif</span> <span class="n">score</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">rank</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">score</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Found a score &gt; 1 in a maximization problem: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">score</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">score</span><span class="p">,</span> <span class="n">std</span><span class="p">,</span> <span class="n">rank</span>
+
+<div class="viewcode-block" id="ABPipeline.preprocess"><a class="viewcode-back" href="../../api/autobazaar.pipeline.html#autobazaar.pipeline.ABPipeline.preprocess">[docs]</a>    <span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Execute the preprocessing steps of the pipeline.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preprocessing</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Executing preprocessing pipeline&quot;</span><span class="p">)</span>
+            <span class="n">pipeline</span> <span class="o">=</span> <span class="n">MLPipeline</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_preprocessing</span><span class="p">)</span>
+            <span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">context</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">**</span><span class="n">context</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;No preprocessing steps found&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">X</span></div>
+
+<div class="viewcode-block" id="ABPipeline.cv_score"><a class="viewcode-back" href="../../api/autobazaar.pipeline.html#autobazaar.pipeline.ABPipeline.cv_score">[docs]</a>    <span class="k">def</span> <span class="nf">cv_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Cross Validate this pipeline.&quot;&quot;&quot;</span>
+
+        <span class="n">scorer</span> <span class="o">=</span> <span class="n">METRICS_DICT</span><span class="p">[</span><span class="n">metric</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">]</span>
+
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;CV Scoring pipeline </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cv_scores</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">fold</span><span class="p">,</span> <span class="p">(</span><span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)):</span>
+
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Scoring fold: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="p">)</span>
+
+            <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">train_index</span><span class="p">)</span>
+            <span class="n">pipeline</span> <span class="o">=</span> <span class="n">MLPipeline</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tunable</span><span class="p">)</span>
+            <span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="o">**</span><span class="n">context</span><span class="p">)</span>
+
+            <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_index</span><span class="p">)</span>
+            <span class="n">pred</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="o">**</span><span class="n">context</span><span class="p">)</span>
+            <span class="n">score</span> <span class="o">=</span> <span class="n">scorer</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cv_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Fold </span><span class="si">%s</span><span class="s1"> score: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+
+        <span class="n">score</span><span class="p">,</span> <span class="n">std</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_score</span><span class="p">()</span>
+
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;CV score: </span><span class="si">%s</span><span class="s1"> +/- </span><span class="si">%s</span><span class="s1">; rank: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">std</span><span class="p">,</span> <span class="n">rank</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="n">score</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">std</span> <span class="o">=</span> <span class="n">std</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rank</span> <span class="o">=</span> <span class="n">rank</span> <span class="o">+</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1.e-12</span>   <span class="c1"># to avoid collisions</span></div>
+
+<div class="viewcode-block" id="ABPipeline.to_dict"><a class="viewcode-back" href="../../api/autobazaar.pipeline.html#autobazaar.pipeline.ABPipeline.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">problem_doc</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the details of this pipeline in a dict.&quot;&quot;&quot;</span>
+        <span class="n">pipeline_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">pipeline_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;template&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="p">,</span>
+            <span class="s1">&#39;loader&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span>
+            <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">,</span>
+            <span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="p">,</span>
+            <span class="s1">&#39;metric&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric</span>
+        <span class="p">})</span>
+        <span class="k">if</span> <span class="n">problem_doc</span><span class="p">:</span>
+            <span class="n">pipeline_dict</span><span class="p">[</span><span class="s1">&#39;problem_doc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem_doc</span>
+
+        <span class="k">return</span> <span class="n">pipeline_dict</span></div>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;ABPipeline(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+
+<div class="viewcode-block" id="ABPipeline.from_dict"><a class="viewcode-back" href="../../api/autobazaar.pipeline.html#autobazaar.pipeline.ABPipeline.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">pipeline_dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load a pipeline from a dict.&quot;&quot;&quot;</span>
+        <span class="n">pipeline_dict</span> <span class="o">=</span> <span class="n">pipeline_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">loader</span> <span class="o">=</span> <span class="n">get_loader</span><span class="p">(</span><span class="o">**</span><span class="n">pipeline_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;loader&#39;</span><span class="p">))</span>
+        <span class="n">metric</span> <span class="o">=</span> <span class="n">pipeline_dict</span><span class="p">[</span><span class="s1">&#39;metric&#39;</span><span class="p">]</span>
+        <span class="n">problem_doc</span> <span class="o">=</span> <span class="n">pipeline_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;problem_doc&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">pipeline_dict</span><span class="p">,</span> <span class="n">loader</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">problem_doc</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ABPipeline.dump"><a class="viewcode-back" href="../../api/autobazaar.pipeline.html#autobazaar.pipeline.ABPipeline.dump">[docs]</a>    <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Dump this pipeline using pickle.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">rank</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">rank</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rank</span>
+
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Dumping pipeline with rank </span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dumped</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">pickle_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.pkl&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pickle_path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">pickle_file</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Outputting pipeline </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">pickle_file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">cloudpickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pickle_file</span><span class="p">)</span>
+
+        <span class="n">json_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.json&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">json_path</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, MIT Data to AI Lab
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,514 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>AutoBazaar &mdash; AutoBazaar 0.1.0-dev documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/dai-logo-white.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="AutoBazaar" href="readme.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> AutoBazaar
+          
+
+          
+            
+            <img src="_static/dai-logo-white-200.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">AutoBazaar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#overview">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#install">Install</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#install-with-pip">Install with pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#install-from-source">Install from source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#data-format">Data Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#quickstart">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#prepare-your-data">1. Prepare your Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#start-the-search-process">2. Start the search process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#explore-the-results">3. Explore the results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#credits">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#citing-autobazaar">Citing AutoBazaar</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/autobazaar.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/autobazaar.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/autobazaar.pipeline.html">autobazaar.pipeline module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/autobazaar.search.html">autobazaar.search module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/autobazaar.utils.html">autobazaar.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/autobazaar.html#module-autobazaar">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#types-of-contributions">Types of Contributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#report-bugs">Report Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#fix-bugs">Fix Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#implement-features">Implement Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#write-documentation">Write Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#submit-feedback">Submit Feedback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#unit-testing-guidelines">Unit Testing Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#tips">Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#release-workflow">Release Workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">AutoBazaar</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>AutoBazaar</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/HDI-project/AutoBazaar/blob/master/docs/index.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <p align="left">
+<img width=15% src="https://dai.lids.mit.edu/wp-content/uploads/2018/06/Logo_DAI_highres.png" alt=“AutoBazaar” />
+<i>An open source project from Data to AI Lab at MIT.</i>
+</p><div class="section" id="autobazaar">
+<h1>AutoBazaar<a class="headerlink" href="#autobazaar" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>License: MIT</p></li>
+<li><p>Documentation: <a class="reference external" href="https://HDI-Project.github.io/AutoBazaar/">https://HDI-Project.github.io/AutoBazaar/</a></p></li>
+<li><p>Homepage: <a class="reference external" href="https://github.com/HDI-Project/AutoBazaar">https://github.com/HDI-Project/AutoBazaar</a></p></li>
+</ul>
+</div>
+<div class="section" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<p>AutoBazaar is an AutoML system created to execute the experiments associated with the
+<a class="reference external" href="https://arxiv.org/pdf/1905.08942.pdf">The Machine Learning Bazaar Paper: Harnessing the ML Ecosystem for Effective System
+Development</a>
+by the <a class="reference external" href="https://hdi-dai.lids.mit.edu/">Human-Data Interaction (HDI) Project</a> at LIDS, MIT.</p>
+<p>It comes in the form of a python library which can be used directly inside any other python
+project, as well as a CLI which allows searching for pipelines to solve a problem directly
+from the command line.</p>
+</div>
+<div class="section" id="install">
+<h1>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p><strong>AutoBazaar</strong> has been developed and tested on <a class="reference external" href="https://www.python.org/downloads/">Python 3.5, 3.6 and 3.7</a></p>
+<p>Also, although it is not strictly required, the usage of a
+<a class="reference external" href="https://virtualenv.pypa.io/en/latest/">virtualenv</a> is highly recommended in order to avoid
+interfering with other software installed in the system where <strong>AutoBazaar</strong> is run.</p>
+<p>These are the minimum commands needed to create a virtualenv using python3.6 for <strong>AutoBazaar</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install virtualenv
+virtualenv -p <span class="k">$(</span>which python3.6<span class="k">)</span> autobazaar-venv
+</pre></div>
+</div>
+<p>Afterwards, you have to execute this command to have the virtualenv activated:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> autobazaar-venv/bin/activate
+</pre></div>
+</div>
+<p>Remember about executing it every time you start a new console to work on <strong>AutoBazaar</strong>!</p>
+</div>
+<div class="section" id="install-with-pip">
+<h2>Install with pip<a class="headerlink" href="#install-with-pip" title="Permalink to this headline">¶</a></h2>
+<p>After creating the virtualenv and activating it, we recommend using
+<a class="reference external" href="https://pip.pypa.io/en/stable/">pip</a> in order to install <strong>AutoBazaar</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install autobazaar
+</pre></div>
+</div>
+<p>This will pull and install the latest stable release from <a class="reference external" href="https://pypi.org/">PyPi</a>.</p>
+</div>
+<div class="section" id="install-from-source">
+<h2>Install from source<a class="headerlink" href="#install-from-source" title="Permalink to this headline">¶</a></h2>
+<p>Alternatively, with your virtualenv activated, you can clone the repository and install it from
+source by running <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> on the <code class="docutils literal notranslate"><span class="pre">stable</span></code> branch:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone git@github.com:HDI-Project/AutoBazaar.git
+<span class="nb">cd</span> AutoBazaar
+git checkout stable
+make install
+</pre></div>
+</div>
+<p>For development, you can use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install-develop</span></code> instead in order to install all
+the required dependencies for testing and code linting.</p>
+</div>
+</div>
+<div class="section" id="data-format">
+<h1>Data Format<a class="headerlink" href="#data-format" title="Permalink to this headline">¶</a></h1>
+<p>AutoBazaar works with datasets in the <a class="reference external" href="https://github.com/mitll/d3m-schema">D3M Schema Format</a>
+as input.</p>
+<p>This dataset Schema, developed by MIT Lincoln Labs Laboratory for DARPA’s Data Driven Discovery
+of Models Program, requires the data to be in plainly readable formats such as CSV files or
+JPG images, and to be set within a folder hierarchy alongside some metadata specifications
+in JSON format, which include information about all the data contained, as well as the problem
+that we are trying to solve.</p>
+<p>For more details about the schema and about how to format your data to be compliant with it,
+please have a look at the <a class="reference external" href="https://github.com/mitll/d3m-schema/tree/master/documentation">Schema Documentation</a></p>
+<p>As an example, you can browse some datasets which have been included in this repository for
+demonstration purposes:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/HDI-Project/AutoBazaar/tree/master/data/185_baseball">185_baseball</a>: Single Table Regression</p></li>
+<li><p><a class="reference external" href="https://github.com/HDI-Project/AutoBazaar/tree/master/data/196_autoMpg">196_autoMpg</a>: Single Table Classification</p></li>
+</ul>
+<p>Additionally, you can find a collection with ~500 datasets already formatted in the
+<a class="reference external" href="https://d3m-data-dai.s3.amazonaws.com/index.html">d3m-data-dai S3 Bucket in AWS</a>.</p>
+</div>
+<div class="section" id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
+<p>In this short tutorial we will guide you through a series of steps that will help you getting
+started with <strong>AutoBazaar</strong> using its CLI command <code class="docutils literal notranslate"><span class="pre">abz</span></code>.</p>
+<p>For more details about its usage and the available options, please execute <code class="docutils literal notranslate"><span class="pre">abz</span> <span class="pre">--help</span></code>
+on your command line.</p>
+<div class="section" id="prepare-your-data">
+<h2>1. Prepare your Data<a class="headerlink" href="#prepare-your-data" title="Permalink to this headline">¶</a></h2>
+<p>Make sure to have your data prepared in the <a class="reference external" href="#data-format">Data Format</a> explained above inside
+and uncompressed folder in a filesystem directly accessible by <strong>AutoBazaar</strong>.</p>
+<p>In order to check, whether your dataset is available and ready to use, you can execute
+the <code class="docutils literal notranslate"><span class="pre">abz</span></code> command in your command line with its <code class="docutils literal notranslate"><span class="pre">list</span></code> subcommand.
+If your dataset is in a different place than inside a folder called <code class="docutils literal notranslate"><span class="pre">data</span></code> within your
+current working directory, do not forget to add the <code class="docutils literal notranslate"><span class="pre">-i</span></code> argument to your command indicating
+the path to the folder that contains your dataset.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ abz list -i /path/to/your/datasets/folder
+</pre></div>
+</div>
+<p>The output should be a table which includes the details of all the datasets found inside
+the indicated directory:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>             <span class="n">data_modality</span>                <span class="n">task_type</span> <span class="n">task_subtype</span>             <span class="n">metric</span> <span class="n">size_human</span>  <span class="n">train_samples</span>
+<span class="n">dataset</span>
+<span class="mi">185</span><span class="n">_baseball</span>  <span class="n">single_table</span>           <span class="n">classification</span>  <span class="n">multi_class</span>            <span class="n">f1Macro</span>       <span class="mi">148</span><span class="n">K</span>           <span class="mi">1073</span>
+<span class="mi">196</span><span class="n">_autoMpg</span>   <span class="n">single_table</span>               <span class="n">regression</span>   <span class="n">univariate</span>   <span class="n">meanSquaredError</span>        <span class="mi">32</span><span class="n">K</span>            <span class="mi">298</span>
+<span class="mi">30</span><span class="n">_personae</span>           <span class="n">text</span>           <span class="n">classification</span>       <span class="n">binary</span>                 <span class="n">f1</span>       <span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="n">M</span>            <span class="mi">116</span>
+<span class="mi">32</span><span class="n">_wikiqa</span>      <span class="n">multi_table</span>           <span class="n">classification</span>       <span class="n">binary</span>                 <span class="n">f1</span>       <span class="mi">4</span><span class="p">,</span><span class="mi">9</span><span class="n">M</span>          <span class="mi">23406</span>
+<span class="mi">60</span><span class="n">_jester</span>     <span class="n">single_table</span>  <span class="n">collaborative_filtering</span>               <span class="n">meanAbsoluteError</span>        <span class="mi">44</span><span class="n">M</span>         <span class="mi">880719</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong> If you see an error saying that <code class="docutils literal notranslate"><span class="pre">No</span> <span class="pre">matching</span> <span class="pre">datasets</span> <span class="pre">found</span></code>, please review your
+dataset format and make sure to have indicated the right path.</p>
+<p>For the rest of this quickstart, we will be using the <code class="docutils literal notranslate"><span class="pre">185_baseball</span></code> dataset that you can
+find inside the <a class="reference external" href="https://github.com/HDI-Project/AutoBazaar/tree/master/data">data folder</a>
+contained in this repository.</p>
+</div>
+<div class="section" id="start-the-search-process">
+<h2>2. Start the search process<a class="headerlink" href="#start-the-search-process" title="Permalink to this headline">¶</a></h2>
+<p>Once your data is ready, you can start the AutoBazaar search process using the <code class="docutils literal notranslate"><span class="pre">abz</span> <span class="pre">search</span></code>
+command.
+To do this, you will need to provide again the path to where your datasets are contained, as
+well as the name of the datasets that you want to process.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ abz search -i /path/to/your/datasets/folder name_of_your_dataset
+</pre></div>
+</div>
+<p>This will evaluate the default pipeline without performing additional tuning iteration on it.</p>
+<p>In order to start an actual tuning process, you will need to provide at least one of the
+following additional options:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-b,</span> <span class="pre">--budget</span></code>: Maximum number of tuning iterations to perform.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-t,</span> <span class="pre">--timeout</span></code>: Maximum time that the system needs to run, in seconds.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-c,</span> <span class="pre">--checkpoints</span></code>: Comma separated string containing the different checkpoints where
+the best pipeline so far must be stored and evaluated against the test dataset. There must be
+no spaces between the checkpoint times. For example, to store the best pipeline every 10 minutes
+until 30 minutes have passed, you would use the option <code class="docutils literal notranslate"><span class="pre">-c</span> <span class="pre">600,1200,1800</span></code>.</p></li>
+</ul>
+<p>For example, to search process the <code class="docutils literal notranslate"><span class="pre">185_baseball</span></code> dataset during 30 seconds evaluating the
+best pipeline so far every 10 seconds but with a maximum of 10 tuning iterations, we would
+use the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>abz search 185_baseball -c10,20,30 -b10
+</pre></div>
+</div>
+<p>For further details about the available options, please execute <code class="docutils literal notranslate"><span class="pre">abz</span> <span class="pre">search</span> <span class="pre">--help</span></code> in your
+terminal.</p>
+</div>
+<div class="section" id="explore-the-results">
+<h2>3. Explore the results<a class="headerlink" href="#explore-the-results" title="Permalink to this headline">¶</a></h2>
+<p>Once the <strong>AutoBazaar</strong> has finished searching for the best pipeline, a table will be printed
+in stdout with a summary of the best pipeline found for each dataset.
+If multiple checkpoints were provided, details about the best pipeline in each checkpoint
+will also be included.</p>
+<p>The output will be a table similar to this one:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>                                          <span class="n">pipeline</span>     <span class="n">score</span>      <span class="n">rank</span>  <span class="n">cv_score</span>   <span class="n">metric</span> <span class="n">data_modality</span>       <span class="n">task_type</span> <span class="n">task_subtype</span>    <span class="n">elapsed</span>  <span class="n">iterations</span>  <span class="n">load_time</span>  <span class="n">trivial_time</span>  <span class="n">fit_time</span>    <span class="n">cv_time</span> <span class="n">error</span>  <span class="n">step</span>
+<span class="n">dataset</span>
+<span class="mi">185</span><span class="n">_baseball</span>  <span class="n">fce28425</span><span class="o">-</span><span class="n">e45c</span><span class="o">-</span><span class="mi">4620</span><span class="o">-</span><span class="mi">9</span><span class="n">d3c</span><span class="o">-</span><span class="n">d329b8684bea</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">316961</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">682957</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">317043</span>  <span class="n">f1Macro</span>  <span class="n">single_table</span>  <span class="n">classification</span>  <span class="n">multi_class</span>  <span class="mi">10</span><span class="p">.</span><span class="mi">024457</span>         <span class="mi">0</span><span class="p">.</span><span class="mi">0</span>   <span class="mi">0</span><span class="p">.</span><span class="mi">011041</span>      <span class="mi">0</span><span class="p">.</span><span class="mi">026212</span>       <span class="n">NaN</span>        <span class="n">NaN</span>  <span class="k">None</span>  <span class="k">None</span>
+<span class="mi">185</span><span class="n">_baseball</span>  <span class="n">f7428924</span><span class="o">-</span><span class="mi">79</span><span class="n">ee</span><span class="o">-</span><span class="mi">439</span><span class="n">d</span><span class="o">-</span><span class="n">bc32</span><span class="o">-</span><span class="mi">998</span><span class="n">a9efea619</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">675132</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">390927</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">609073</span>  <span class="n">f1Macro</span>  <span class="n">single_table</span>  <span class="n">classification</span>  <span class="n">multi_class</span>  <span class="mi">21</span><span class="p">.</span><span class="mi">412262</span>         <span class="mi">1</span><span class="p">.</span><span class="mi">0</span>   <span class="mi">0</span><span class="p">.</span><span class="mi">011041</span>      <span class="mi">0</span><span class="p">.</span><span class="mi">026212</span>   <span class="mi">9</span><span class="p">.</span><span class="mi">99484</span>        <span class="n">NaN</span>  <span class="k">None</span>  <span class="k">None</span>
+<span class="mi">185</span><span class="n">_baseball</span>  <span class="mi">397780</span><span class="n">a5</span><span class="o">-</span><span class="mi">6</span><span class="n">bf6</span><span class="o">-</span><span class="mi">48</span><span class="n">c9</span><span class="o">-</span><span class="mi">9</span><span class="n">a85</span><span class="o">-</span><span class="mi">06</span><span class="n">b0d08c5a9d</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">675132</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">357361</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">642639</span>  <span class="n">f1Macro</span>  <span class="n">single_table</span>  <span class="n">classification</span>  <span class="n">multi_class</span>  <span class="mi">31</span><span class="p">.</span><span class="mi">712946</span>         <span class="mi">2</span><span class="p">.</span><span class="mi">0</span>   <span class="mi">0</span><span class="p">.</span><span class="mi">011041</span>      <span class="mi">0</span><span class="p">.</span><span class="mi">026212</span>   <span class="mi">9</span><span class="p">.</span><span class="mi">99484</span>  <span class="mi">12</span><span class="p">.</span><span class="mi">618179</span>  <span class="k">None</span>  <span class="k">None</span>
+</pre></div>
+</div>
+<p>Alternatively, a <code class="docutils literal notranslate"><span class="pre">-r</span></code> option can be passed with the name of a CSV file, and the results will
+be stored there:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>abz search 185_baseball -c10,20,30 -b10 -r results.csv
+</pre></div>
+</div>
+</div>
+<div class="section" id="what-s-next">
+<h2>What’s next?<a class="headerlink" href="#what-s-next" title="Permalink to this headline">¶</a></h2>
+<p>For more details about <strong>AutoBazaar</strong> and all its possibilities and features, please check the
+<a class="reference external" href="https://HDI-Project.github.io/AutoBazaar/">project documentation site</a>!</p>
+</div>
+</div>
+<div class="section" id="credits">
+<h1>Credits<a class="headerlink" href="#credits" title="Permalink to this headline">¶</a></h1>
+<p>AutoBazaar is an Open Source project from the Data to AI Lab at MIT built by the following team:</p>
+<ul class="simple">
+<li><p>Carles Sala <a class="reference external" href="mailto:csala&#37;&#52;&#48;csail&#46;mit&#46;edu">csala<span>&#64;</span>csail<span>&#46;</span>mit<span>&#46;</span>edu</a></p></li>
+<li><p>Micah Smith <a class="reference external" href="mailto:micahs&#37;&#52;&#48;mit&#46;edu">micahs<span>&#64;</span>mit<span>&#46;</span>edu</a></p></li>
+<li><p>Max Kanter <a class="reference external" href="mailto:max&#46;kanter&#37;&#52;&#48;gmail&#46;com">max<span>&#46;</span>kanter<span>&#64;</span>gmail<span>&#46;</span>com</a></p></li>
+<li><p>Kalyan Veeramachaneni <a class="reference external" href="mailto:kalyanv&#37;&#52;&#48;mit&#46;edu">kalyanv<span>&#64;</span>mit<span>&#46;</span>edu</a></p></li>
+</ul>
+<div class="section" id="citing-autobazaar">
+<h2>Citing AutoBazaar<a class="headerlink" href="#citing-autobazaar" title="Permalink to this headline">¶</a></h2>
+<p>If you use AutoBazaar for yor research, please consider citing the following paper (<a class="reference external" href="https://arxiv.org/pdf/1905.08942.pdf">https://arxiv.org/pdf/1905.08942.pdf</a>):</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>@article{smith2019mlbazaar,
+  author = {Smith, Micah J. and Sala, Carles and Kanter, James Max and Veeramachaneni, Kalyan},
+  title = {The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development},
+  journal = {arXiv e-prints},
+  year = {2019},
+  eid = {arXiv:1905.08942},
+  pages = {arxiv:1904.09535},
+  archivePrefix = {arXiv},
+  eprint = {1905.08942},
+}
+</pre></div>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">AutoBazaar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#overview">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#install">Install</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#install-with-pip">Install with pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#install-from-source">Install from source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#data-format">Data Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#quickstart">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#prepare-your-data">1. Prepare your Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#start-the-search-process">2. Start the search process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#explore-the-results">3. Explore the results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#credits">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#citing-autobazaar">Citing AutoBazaar</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/autobazaar.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/autobazaar.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/autobazaar.pipeline.html">autobazaar.pipeline module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/autobazaar.search.html">autobazaar.search module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/autobazaar.utils.html">autobazaar.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/autobazaar.html#module-autobazaar">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#types-of-contributions">Types of Contributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#report-bugs">Report Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#fix-bugs">Fix Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#implement-features">Implement Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#write-documentation">Write Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing.html#submit-feedback">Submit Feedback</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#unit-testing-guidelines">Unit Testing Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#tips">Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#release-workflow">Release Workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="readme.html" class="btn btn-neutral float-right" title="AutoBazaar" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, MIT Data to AI Lab
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+autobazaar.pipeline module
+==========================
+
+.. automodule:: autobazaar.pipeline
+   :members:
+   :undoc-members:
+   :show-inheritance:
