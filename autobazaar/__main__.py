@@ -210,6 +210,9 @@ def _score_dataset(dataset, args):
 
 
 def _prepare_search(args):
+
+    make_keras_picklable()
+
     if not args.datasets and not args.all:
         print('Please provide at least one dataset name or add the --all option')
         sys.exit(1)
@@ -442,8 +445,6 @@ def _get_parser():
 
 
 def main():
-    make_keras_picklable()
-
     parser = _get_parser()
     args = parser.parse_args()
 

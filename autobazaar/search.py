@@ -174,7 +174,9 @@ class PipelineSearcher(object):
 
     def _load_template(self, template_name):
         if self._db:
-            return self._find_template(template_name)
+            template = self._find_template(template_name)
+            if template:
+                return template
 
         return self._load_template_json(template_name)
 
