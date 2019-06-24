@@ -3,6 +3,11 @@
 <i>An open source project from Data to AI Lab at MIT.</i>
 </p>
 
+
+[![Travis](https://travis-ci.org/HDI-Project/AutoBazaar.svg?branch=master)](https://travis-ci.org/HDI-Project/AutoBazaar)
+[![PyPi Shield](https://img.shields.io/pypi/v/autobazaar.svg)](https://pypi.python.org/pypi/autobazaar)
+
+
 # AutoBazaar
 
 - License: MIT
@@ -119,7 +124,7 @@ $ abz list -i /path/to/your/datasets/folder
 The output should be a table which includes the details of all the datasets found inside
 the indicated directory:
 
-```python
+```
              data_modality                task_type task_subtype             metric size_human  train_samples
 dataset
 185_baseball  single_table           classification  multi_class            f1Macro       148K           1073
