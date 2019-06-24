@@ -88,19 +88,14 @@ install-develop: clean-build clean-pyc ## install the package in editable mode a
 
 .PHONY: lint
 lint: ## check style with flake8 and isort
-	flake8 autobazaar tests
-	isort -c --recursive autobazaar tests
+	flake8 autobazaar
+	isort -c --recursive autobazaar
 
 .PHONY: fix-lint
 fix-lint: ## fix lint issues using autoflake, autopep8, and isort
 	find autobazaar -name '*.py' | xargs autoflake --in-place --remove-all-unused-imports --remove-unused-variables
 	autopep8 --in-place --recursive --aggressive autobazaar
 	isort --apply --atomic --recursive autobazaar
-
-	find tests -name '*.py' | xargs autoflake --in-place --remove-all-unused-imports --remove-unused-variables
-	autopep8 --in-place --recursive --aggressive tests
-	isort --apply --atomic --recursive tests
-
 
 # TEST TARGETS
 
