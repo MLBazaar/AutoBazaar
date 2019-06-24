@@ -371,7 +371,9 @@
 
     <span class="k">def</span> <span class="nf">_load_template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template_name</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_template</span><span class="p">(</span><span class="n">template_name</span><span class="p">)</span>
+            <span class="n">template</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_template</span><span class="p">(</span><span class="n">template_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">template</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">template</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_template_json</span><span class="p">(</span><span class="n">template_name</span><span class="p">)</span>
 
