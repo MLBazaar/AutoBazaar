@@ -157,6 +157,6 @@ setup(
     test_suite='tests',
     tests_require=tests_require,
     url='https://github.com/HDI-project/AutoBazaar',
-    version='0.1.0-dev',
+    version='0.1.0',
     zip_safe=False,
 )
