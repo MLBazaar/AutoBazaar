@@ -424,6 +424,9 @@
             <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Saving the default pipeline </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_save_pipeline</span><span class="p">(</span><span class="n">pipeline</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">StopSearch</span><span class="p">:</span>
+            <span class="k">raise</span>
+
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="c1"># if the Default pipeline crashes we can do nothing,</span>
             <span class="c1"># so we just log the error and move on.</span>
@@ -484,8 +487,7 @@
 
         <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> checkpoint reached&quot;</span><span class="p">,</span> <span class="n">checkpoint_name</span><span class="p">)</span>
 
-        <span class="n">set_checkpoint</span> <span class="o">=</span> <span class="p">(</span><span class="ow">not</span> <span class="n">final</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">checkpoints</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">set_checkpoint</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">final</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">checkpoints</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_set_checkpoint</span><span class="p">()</span>
 
         <span class="k">try</span><span class="p">:</span>
@@ -495,7 +497,7 @@
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="n">LOGGER</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Checkpoint dump crashed&quot;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">set_checkpoint</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">final</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">checkpoints</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">current_checkpoint</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">raise</span> <span class="n">StopSearch</span><span class="p">()</span>
 
@@ -611,12 +613,13 @@
                 <span class="n">pipeline</span> <span class="o">=</span> <span class="n">ABPipeline</span><span class="p">(</span><span class="n">pipeline_dict</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">loader</span><span class="p">,</span>
                                       <span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem_doc</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
+                    <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Cross validating pipeline </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">iteration</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
                     <span class="n">pipeline</span><span class="o">.</span><span class="n">cv_score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kf</span><span class="p">)</span>
                 <span class="k">except</span> <span class="n">StopSearch</span><span class="p">:</span>
                     <span class="k">raise</span>
 
                 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                    <span class="n">LOGGER</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Crash during cross validation&quot;</span><span class="p">)</span>
+                    <span class="n">LOGGER</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Crash cross validating pipeline </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">iteration</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
                     <span class="n">tuner</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">proposed_params</span><span class="p">,</span> <span class="o">-</span><span class="mi">1000000</span><span class="p">)</span>
 
                 <span class="k">if</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">rank</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
