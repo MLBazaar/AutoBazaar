@@ -132,6 +132,13 @@ def _format_exception(e):
     return error
 
 
+def box_print(message):
+    length = len(message) + 10
+    print(length * '#')
+    print('#### {} ####'.format(message))
+    print(length * '#')
+
+
 def _score_dataset(dataset, args):
 
     start_ts = datetime.utcnow()
@@ -154,9 +161,7 @@ def _score_dataset(dataset, args):
     step = None
     try:
         step = 'SEARCH'
-        print('###################')
-        print('#### Searching ####')
-        print('###################')
+        box_print('Searching {}'.format(dataset))
 
         # cleanup
         if not args.keep:
@@ -175,16 +180,12 @@ def _score_dataset(dataset, args):
             pipeline = result['pipeline']
             try:
                 step = 'TEST'
-                print('###################')
-                print('#### Executing ####')
-                print('###################')
+                box_print('Executing {}'.format(dataset))
                 predictions = _test_pipeline(dataset, args.problem, pipeline,
                                              args.input, args.output)
 
                 step = 'SCORE'
-                print('#################')
-                print('#### Scoring ####')
-                print('#################')
+                box_print('Scoring {}'.format(dataset))
                 result['score'] = _score_predictions(dataset, args.problem,
                                                      predictions, args.input)
 

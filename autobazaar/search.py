@@ -224,6 +224,9 @@ class PipelineSearcher(object):
             LOGGER.info("Saving the default pipeline %s", pipeline.id)
 
             self._save_pipeline(pipeline)
+        except StopSearch:
+            raise
+
         except Exception:
             # if the Default pipeline crashes we can do nothing,
             # so we just log the error and move on.
@@ -284,8 +287,7 @@ class PipelineSearcher(object):
 
         LOGGER.info("%s checkpoint reached", checkpoint_name)
 
-        set_checkpoint = (not final) and bool(self.checkpoints)
-        if set_checkpoint:
+        if (not final) and bool(self.checkpoints):
             self._set_checkpoint()
 
         try:
@@ -295,7 +297,7 @@ class PipelineSearcher(object):
         except Exception:
             LOGGER.exception("Checkpoint dump crashed")
 
-        if not set_checkpoint:
+        if (not final) and not bool(self.checkpoints):
             self.current_checkpoint = None
             raise StopSearch()
 
@@ -411,12 +413,13 @@ class PipelineSearcher(object):
                 pipeline = ABPipeline(pipeline_dict, self.loader,
                                       self.metric, self.problem_doc)
                 try:
+                    LOGGER.info("Cross validating pipeline %s", iteration + 1)
                     pipeline.cv_score(X, y, context, cv=self.kf)
                 except StopSearch:
                     raise
 
                 except Exception:
-                    LOGGER.exception("Crash during cross validation")
+                    LOGGER.exception("Crash cross validating pipeline %s", iteration + 1)
                     tuner.add(proposed_params, -1000000)
 
                 if pipeline.rank is not None:
