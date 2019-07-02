@@ -124,9 +124,9 @@ class PipelineSearcher(object):
             method = TRIVIAL_PIPELINE_METHOD.get(self.task_type)
             pipeline_dict = {
                 'name': 'trivial.{}'.format(method),
-                'primitives': ['mlprimitives.trivial.TrivialPredictor'],
+                'primitives': ['mlprimitives.custom.trivial.TrivialPredictor'],
                 'init_params': {
-                    'mlprimitives.trivial.TrivialPredictor': {
+                    'mlprimitives.custom.trivial.TrivialPredictor': {
                         'method': method
                     }
                 }

@@ -32,8 +32,11 @@ def _load_targets(datasets_dir, dataset, problem):
         score_phase += '_' + problem
 
     score_dir = os.path.join(datasets_dir, dataset, score_phase)
+    csv_path = os.path.join(score_dir, 'targets.csv')
+    if not os.path.exists(csv_path):
+        csv_path = os.path.join(score_dir, 'dataset_SCORE', 'tables', 'learningData.csv')
 
-    return pd.read_csv(os.path.join(score_dir, 'targets.csv'), index_col='d3mIndex')
+    return pd.read_csv(csv_path, index_col='d3mIndex')
 
 
 def _get_metric(problem_path):
@@ -103,8 +106,8 @@ def _score_predictions(dataset, problem, predictions, input_dir):
     dataset_path, problem_path = _get_dataset_paths(input_dir, dataset, 'TEST', problem)
     metric = _get_metric(problem_path)
 
-    targets = _load_targets(input_dir, dataset, problem)
-    predictions = predictions.set_index('d3mIndex')[targets.columns]
+    predictions = predictions.set_index('d3mIndex')
+    targets = _load_targets(input_dir, dataset, problem)[predictions.columns]
 
     if len(targets.columns) > 1 or len(predictions.columns) > 1:
         raise Exception("I don't know how to handle these")
