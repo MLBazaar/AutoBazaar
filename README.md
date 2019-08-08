@@ -3,10 +3,9 @@
 <i>An open source project from Data to AI Lab at MIT.</i>
 </p>
 
-
+[![PyPi](https://img.shields.io/pypi/v/autobazaar.svg)](https://pypi.python.org/pypi/autobazaar)
 [![Travis](https://travis-ci.org/HDI-Project/AutoBazaar.svg?branch=master)](https://travis-ci.org/HDI-Project/AutoBazaar)
-[![PyPi Shield](https://img.shields.io/pypi/v/autobazaar.svg)](https://pypi.python.org/pypi/autobazaar)
-
+[![Downloads](https://pepy.tech/badge/autobazaar)](https://pepy.tech/project/autobazaar)
 
 # AutoBazaar
 
