@@ -20,6 +20,7 @@ from mit_d3m.db import get_db
 from mit_d3m.stats import get_stats
 from mit_d3m.utils import logging_setup, make_abs
 
+import autobazaar
 from autobazaar.search import TUNERS, PipelineSearcher
 from autobazaar.utils import make_keras_picklable
 
@@ -419,10 +420,14 @@ def _get_parser():
     db_args.add_argument('--db-password')
 
     parser = ArgumentParser(
+        prog='autobazaar',
         description='AutoBazaar Experiments Suite',
         fromfile_prefix_chars='@',
         parents=[logging_args]
     )
+
+    parser.add_argument('--version', action='version',
+                        version='%(prog)s {version}'.format(version=autobazaar.__version__))
 
     subparsers = parser.add_subparsers(title='command', help='Command to execute')
     parser.set_defaults(command=None)
