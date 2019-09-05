@@ -7,8 +7,6 @@ from datetime import datetime
 
 import keras.models
 import numpy as np
-from keras.applications import mobilenet
-from keras.utils.generic_utils import CustomObjectScope
 
 
 def ensure_dir(directory):
@@ -105,6 +103,8 @@ def make_keras_picklable():
                 model = keras.models.load_model(fd.name)
 
             except ValueError:
+                from keras.applications import mobilenet
+                from keras.utils.generic_utils import CustomObjectScope
                 scope = {
                     'relu6': mobilenet.relu6,
                     'DepthwiseConv2D': mobilenet.DepthwiseConv2D
