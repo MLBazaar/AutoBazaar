@@ -11,10 +11,11 @@ with open('HISTORY.md') as history_file:
 
 install_requires = [
     'baytune>=0.2.1,<0.3',
-    'mlblocks>=0.3.0,<0.4',
-    'mlprimitives>=0.1.10,<0.2',
+    'mlblocks>=0.3.2,<0.4',
+    'mlprimitives>=0.2,<0.3',
     'scikit-learn>=0.20,<0.21',
-    'mit-d3m>=0.1.2,<0.2',
+    'mit-d3m>=0.1.2,<0.3',
+    'numpy<=1.16.5',
 ]
 
 tests_require = [
@@ -87,7 +88,7 @@ setup(
     keywords='automl machine learning hyperparameters tuning classification regression autobazaar',
     name='autobazaar',
     packages=find_packages(include=['autobazaar', 'autobazaar.*']),
-    python_requires='>=3.4',
+    python_requires='>=3.5',
     setup_requires=setup_requires,
     test_suite='tests',
     tests_require=tests_require,
