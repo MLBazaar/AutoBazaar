@@ -371,7 +371,7 @@ def _get_parser():
 
     # Dataset Selection
     dataset_args = ArgumentParser(add_help=False)
-    dataset_args.add_argument('-i', '--input', default='data', type=_path_type,
+    dataset_args.add_argument('-i', '--input', default='input', type=_path_type,
                               help='Input datasets folder. Defaults to `data`.')
     dataset_args.add_argument('-o', '--output', type=_path_type,
                               help='Output pipelines folder. Defaults to `output`.',
