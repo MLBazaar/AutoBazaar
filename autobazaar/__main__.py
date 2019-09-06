@@ -7,6 +7,7 @@ import argparse
 import json
 import os
 import shutil
+import socket
 import sys
 import traceback
 import warnings
@@ -25,6 +26,9 @@ from autobazaar.search import TUNERS, PipelineSearcher
 from autobazaar.utils import make_keras_picklable
 
 warnings.filterwarnings(action='ignore')
+
+
+VERSION = autobazaar.get_version()
 
 
 def _load_targets(datasets_dir, dataset, problem):
@@ -136,16 +140,59 @@ def _format_exception(e):
     return error
 
 
-def box_print(message):
+def _box_print(message):
     length = len(message) + 10
     print(length * '#')
     print('#### {} ####'.format(message))
     print(length * '#')
 
 
-def _score_dataset(dataset, args):
+def _insert_test(args, dataset, start_ts, test_id):
+    document = {
+        '_id': test_id,
+        'dataset': dataset,
+        'timeout': args.timeout,
+        'checkpoints': args.checkpoints,
+        'budget': args.budget,
+        'template': args.template,
+        'status': 'running',
+        'insert_ts': start_ts,
+        'update_ts': start_ts,
+        'version': VERSION,
+        'hostname': socket.gethostname(),
+        'tuner_type': args.tuner_type,
+        'splits': args.splits,
+    }
+    args.db.tests.insert_one(document)
 
+
+def _update_test(args, test_id, error, step):
+    query = {
+        '_id': test_id
+    }
+    update = {
+        '$set': {
+            'status': 'error' if error else 'done',
+            'error': error,
+            'step': step,
+            'update_ts': datetime.utcnow()
+        }
+    }
+    args.db.tests.update_one(query, update)
+
+
+def _insert_test_result(args, test_id, result):
+    document = result.copy()
+    document['test_id'] = test_id
+    document['insert_ts'] = datetime.utcnow()
+    args.db.test_results.insert_one(document)
+
+
+def _score_dataset(dataset, args):
     start_ts = datetime.utcnow()
+    test_id = datetime.utcnow().strftime('%Y%m%d%H%M%S%f')
+    if args.db:
+        _insert_test(args, dataset, start_ts, test_id)
 
     result_base = {
         'dataset': dataset,
@@ -163,9 +210,10 @@ def _score_dataset(dataset, args):
     }
     results = []
     step = None
+    error = None
     try:
         step = 'SEARCH'
-        box_print('Searching {}'.format(dataset))
+        _box_print('Searching {}'.format(dataset))
 
         # cleanup
         if not args.keep:
@@ -184,14 +232,15 @@ def _score_dataset(dataset, args):
             pipeline = result['pipeline']
             try:
                 step = 'TEST'
-                box_print('Executing {}'.format(dataset))
+                _box_print('Executing {}'.format(dataset))
                 predictions = _test_pipeline(dataset, args.problem, pipeline,
                                              args.input, args.output)
 
                 step = 'SCORE'
-                box_print('Scoring {}'.format(dataset))
-                result['score'] = _score_predictions(dataset, args.problem,
-                                                     predictions, args.input)
+                _box_print('Scoring {}'.format(dataset))
+                score = _score_predictions(dataset, args.problem,
+                                           predictions, args.input)
+                result['score'] = score
 
             except Exception as e:
                 error = _format_exception(e)
@@ -200,6 +249,9 @@ def _score_dataset(dataset, args):
                 traceback.print_exc()
                 result['error'] = error
                 result['step'] = step
+
+            if args.db:
+                _insert_test_result(args, test_id, result)
 
     except Exception as e:
         error = _format_exception(e)
@@ -210,6 +262,9 @@ def _score_dataset(dataset, args):
         result_base['error'] = error
         result_base['elapsed'] = (datetime.utcnow() - start_ts).total_seconds()
         results.append(result_base)
+
+    if args.db:
+        _update_test(args, test_id, error, step)
 
     return results
 
@@ -372,7 +427,7 @@ def _get_parser():
 
     # Dataset Selection
     dataset_args = ArgumentParser(add_help=False)
-    dataset_args.add_argument('-i', '--input', default='data', type=_path_type,
+    dataset_args.add_argument('-i', '--input', default='input', type=_path_type,
                               help='Input datasets folder. Defaults to `data`.')
     dataset_args.add_argument('-o', '--output', type=_path_type,
                               help='Output pipelines folder. Defaults to `output`.',
@@ -430,7 +485,7 @@ def _get_parser():
     )
 
     parser.add_argument('--version', action='version',
-                        version='%(prog)s {version}'.format(version=autobazaar.__version__))
+                        version='%(prog)s {version}'.format(version=VERSION))
 
     subparsers = parser.add_subparsers(title='command', help='Command to execute')
     parser.set_defaults(command=None)
