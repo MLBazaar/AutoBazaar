@@ -14,7 +14,7 @@ install_requires = [
     'mlblocks>=0.3.2,<0.4',
     'mlprimitives>=0.2,<0.3',
     'scikit-learn>=0.20,<0.21',
-    'mit-d3m>=0.2,<0.3',
+    'mit-d3m>=0.2.0.dev,<0.3',
     'numpy<=1.16.5',
 ]
 
