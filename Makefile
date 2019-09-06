@@ -105,7 +105,7 @@ fix-lint: ## fix lint issues using autoflake, autopep8, and isort
 
 .PHONY: test-all
 test-all: ## run tests on every Python version with tox
-	tox
+	tox -r
 
 .PHONY: coverage
 coverage: ## check code coverage quickly with the default Python
