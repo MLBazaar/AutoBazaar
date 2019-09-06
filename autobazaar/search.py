@@ -91,32 +91,36 @@ class PipelineSearcher(object):
         else:
             LOGGER.info("Skipping already dumped pipeline %s", pipeline.id)
 
-        self.pipelines.append({
+        self.dumped.append({
             'elapsed': (datetime.utcnow() - self.start_time).total_seconds(),
-            'iterations': len(self.solutions) - 1,
+            'iterations': len(self.pipelines) - 1,
             'cv_score': self.best_pipeline.score,
             'rank': self.best_pipeline.rank,
             'pipeline': self.best_pipeline.id,
             'load_time': self.load_time,
             'trivial_time': self.trivial_time,
             'fit_time': self.fit_time,
-            'cv_time': self.cv_time
+            'cv_time': self.cv_time,
+            'data_modality': self.data_modality,
+            'task_type': self.task_type,
+            'task_subtype': self.task_subtype,
+            'metric': self.metric
         })
 
     def _save_pipeline(self, pipeline):
-        solution = pipeline.to_dict(True)
-        solution['_id'] = pipeline.id
-        solution['ts'] = datetime.utcnow()
+        pipeline_dict = pipeline.to_dict(True)
+        pipeline_dict['_id'] = pipeline.id
+        pipeline_dict['ts'] = datetime.utcnow()
 
-        self.solutions.append(solution)
+        self.pipelines.append(pipeline_dict)
 
         if self._db:
-            insertable = remove_dots(solution)
+            insertable = remove_dots(pipeline_dict)
             insertable.pop('problem_doc')
             insertable['dataset'] = self.dataset_id
             insertable['tuner_type'] = self._tuner_type
             insertable['test_id'] = self._test_id
-            self._db.solutions.insert_one(insertable)
+            self._db.pipelines.insert_one(insertable)
 
     def _build_trivial_pipeline(self):
         LOGGER.info("Building the Trivial pipeline")
@@ -287,19 +291,20 @@ class PipelineSearcher(object):
 
         LOGGER.info("%s checkpoint reached", checkpoint_name)
 
-        if (not final) and bool(self.checkpoints):
-            self._set_checkpoint()
-
         try:
             if self.best_pipeline:
                 self._dump(self.best_pipeline)
 
+        except StopSearch:
+            raise
         except Exception:
             LOGGER.exception("Checkpoint dump crashed")
 
-        if (not final) and not bool(self.checkpoints):
+        if final or not bool(self.checkpoints):
             self.current_checkpoint = None
             raise StopSearch()
+        else:
+            self._set_checkpoint()
 
     def search(self, d3mds, template_name=None, budget=None, checkpoints=None):
         # Problem variables
@@ -332,10 +337,10 @@ class PipelineSearcher(object):
 
         self.best_pipeline = None
 
-        self.solutions = []
+        self.pipelines = []
         self.checkpoints = sorted(checkpoints or [])
         self.current_checkpoint = 0
-        self.pipelines = []
+        self.dumped = []
 
         if not self.checkpoints and budget is None:
             budget = 1
@@ -458,4 +463,4 @@ class PipelineSearcher(object):
         else:
             LOGGER.info('No pipeline could be found for problem %s', problem_id)
 
-        return self.pipelines
+        return self.dumped

@@ -16,6 +16,7 @@ install_requires = [
     'scikit-learn>=0.20,<0.21',
     'mit-d3m>=0.2.0.dev,<0.3',
     'numpy<=1.16.5',
+    'gitpython==3.0.2'
 ]
 
 tests_require = [
