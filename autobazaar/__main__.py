@@ -71,7 +71,7 @@ def _get_dataset_paths(datasets_dir, dataset, phase, problem):
 
 
 def _search_pipeline(dataset, problem, template, input_dir, output_dir,
-                     budget, checkpoints, splits, db, tuner_type):
+                     budget, checkpoints, splits, db, tuner_type, test_id):
 
     dataset_path, problem_path = _get_dataset_paths(input_dir, dataset, 'TRAIN', problem)
 
@@ -81,7 +81,8 @@ def _search_pipeline(dataset, problem, template, input_dir, output_dir,
         output_dir,
         cv_splits=splits,
         db=db,
-        tuner_type=tuner_type
+        tuner_type=tuner_type,
+        test_id=test_id
     )
 
     return searcher.search(d3mds, template, budget=budget, checkpoints=checkpoints)
@@ -221,7 +222,7 @@ def _score_dataset(dataset, args):
 
         search_results = _search_pipeline(
             dataset, args.problem, args.template, args.input, args.output, args.budget,
-            args.checkpoints, args.splits, args.db, args.tuner_type
+            args.checkpoints, args.splits, args.db, args.tuner_type, args.test_id
         )
 
         for search_result in search_results or []:
