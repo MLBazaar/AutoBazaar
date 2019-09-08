@@ -54,6 +54,9 @@ PARAM_TYPES = {
 class StopSearch(Exception):
     pass
 
+class UnsupportedProblem(Exception):
+    pass
+
 
 class PipelineSearcher(object):
     """PipelineSearcher class.
@@ -210,7 +213,9 @@ class PipelineSearcher(object):
                     return template
 
             # Nothing has been found for this modality/task/subtask combination
-            raise StopSearch()
+            problem_type = '/'.join(problem_type)
+            LOGGER.error('Problem type not supported %s', problem_type)
+            raise UnsupportedProblem(problem_type)
 
     def _build_default_pipeline(self, template_dict):
         LOGGER.info("Building the default pipeline")
@@ -264,16 +269,21 @@ class PipelineSearcher(object):
         tuner = self._tuner_class(tunables)
 
         if pipeline:
-            # Add the default params and the score obtained by the default pipeline to the tuner.
-            default_params = defaultdict(dict)
-            for block_name, params in pipeline.pipeline.get_hyperparameters().items():
-                for param, value in params.items():
-                    key = (block_name, param)
-                    if key in tunable_keys:
-                        # default_params[key] = 'None' if value is None else value
-                        default_params[key] = value
+            try:
+                # Add the default params and the score obtained by them to the tuner.
+                default_params = defaultdict(dict)
+                for block_name, params in pipeline.pipeline.get_hyperparameters().items():
+                    for param, value in params.items():
+                        key = (block_name, param)
+                        if key in tunable_keys:
+                            if value is None:
+                                raise ValueError('None value is not supported')
 
-            tuner.add(default_params, 1 - pipeline.rank)
+                            default_params[key] = value
+
+                tuner.add(default_params, 1 - pipeline.rank)
+            except ValueError:
+                pass
 
         return tuner
 
@@ -309,8 +319,13 @@ class PipelineSearcher(object):
     def search(self, d3mds, template_name=None, budget=None, checkpoints=None):
         # Problem variables
         problem_id = d3mds.get_problem_id()
+
         self.task_type = d3mds.get_task_type()
         self.task_subtype = d3mds.problem.get_task_subtype()
+
+        # TODO: put this in mit-d3m loaders
+        if self.task_type == 'vertex_classification':
+            self.task_type = 'vertex_nomination'
 
         if self.task_type == 'classification':
             self.kf = StratifiedKFold(
@@ -330,6 +345,10 @@ class PipelineSearcher(object):
         # Dataset variables
         self.dataset_id = d3mds.dataset_id
         self.data_modality = d3mds.get_data_modality()
+
+        # TODO: put this in mit-d3m loaders
+        if self.data_modality == 'edgeList':
+            self.data_modality = 'graph'
 
         self.metric = d3mds.get_metric()
 
