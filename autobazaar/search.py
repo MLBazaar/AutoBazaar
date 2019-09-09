@@ -7,6 +7,7 @@ This module contains the PipelineSearcher, which is the class that
 contains the main logic of the Auto Machine Learning process.
 """
 
+import gc
 import itertools
 import json
 import logging
@@ -17,6 +18,7 @@ from collections import defaultdict
 from datetime import datetime
 
 import numpy as np
+import pandas as pd
 from btb import HyperParameter
 from btb.tuning import GP, GPEi, Uniform
 from mit_d3m.loaders import get_loader
@@ -379,7 +381,12 @@ class PipelineSearcher(object):
             load_end = datetime.utcnow()
             self.load_time = (load_end - load_start).total_seconds()
 
-            min_samples = self.data_params.y.value_counts().min()
+            if isinstance(self.data_params.y, pd.Series):
+                min_samples = self.data_params.y.value_counts().min()
+            else:
+                y = self.data_params.y
+                min_samples = y.groupby(list(y.columns)).size().min()
+
             if self.task_type == 'classification' and min_samples >= self._cv_splits:
                 self.kf = StratifiedKFold(
                     n_splits=self._cv_splits,
@@ -441,6 +448,7 @@ class PipelineSearcher(object):
                 try:
                     LOGGER.info("Cross validating pipeline %s", iteration + 1)
                     pipeline.cv_score(X, y, context, cv=self.kf)
+                    gc.collect()
                 except StopSearch:
                     raise
 

@@ -4,6 +4,7 @@
 """AutoBazaar Command Line Module."""
 
 import argparse
+import gc
 import json
 import os
 import shutil
@@ -224,6 +225,7 @@ def _score_dataset(dataset, args):
             dataset, args.problem, args.template, args.input, args.output, args.budget,
             args.checkpoints, args.splits, args.db, args.tuner_type, args.test_id
         )
+        gc.collect()
 
         for search_result in search_results or []:
             result = result_base.copy()
@@ -242,6 +244,7 @@ def _score_dataset(dataset, args):
                 score = _score_predictions(dataset, args.problem,
                                            predictions, args.input)
                 result['score'] = score
+                gc.collect()
 
             except Exception as e:
                 error = _format_exception(e)
