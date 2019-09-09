@@ -54,6 +54,7 @@ PARAM_TYPES = {
 class StopSearch(Exception):
     pass
 
+
 class UnsupportedProblem(Exception):
     pass
 
