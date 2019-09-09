@@ -71,7 +71,7 @@ def _get_dataset_paths(datasets_dir, dataset, phase, problem):
 
 
 def _search_pipeline(dataset, problem, template, input_dir, output_dir,
-                     budget, checkpoints, splits, db, tuner_type):
+                     budget, checkpoints, splits, db, tuner_type, test_id):
 
     dataset_path, problem_path = _get_dataset_paths(input_dir, dataset, 'TRAIN', problem)
 
@@ -81,7 +81,8 @@ def _search_pipeline(dataset, problem, template, input_dir, output_dir,
         output_dir,
         cv_splits=splits,
         db=db,
-        tuner_type=tuner_type
+        tuner_type=tuner_type,
+        test_id=test_id
     )
 
     return searcher.search(d3mds, template, budget=budget, checkpoints=checkpoints)
@@ -147,9 +148,9 @@ def _box_print(message):
     print(length * '#')
 
 
-def _insert_test(args, dataset, start_ts, test_id):
+def _insert_test(args, dataset, start_ts):
     document = {
-        '_id': test_id,
+        'test_id': args.test_id,
         'dataset': dataset,
         'timeout': args.timeout,
         'checkpoints': args.checkpoints,
@@ -166,9 +167,10 @@ def _insert_test(args, dataset, start_ts, test_id):
     args.db.tests.insert_one(document)
 
 
-def _update_test(args, test_id, error, step):
+def _update_test(args, dataset, error, step):
     query = {
-        '_id': test_id
+        'test_id': args.test_id,
+        'dataset': dataset
     }
     update = {
         '$set': {
@@ -181,18 +183,17 @@ def _update_test(args, test_id, error, step):
     args.db.tests.update_one(query, update)
 
 
-def _insert_test_result(args, test_id, result):
+def _insert_test_result(args, result):
     document = result.copy()
-    document['test_id'] = test_id
+    document['test_id'] = args.test_id
     document['insert_ts'] = datetime.utcnow()
     args.db.test_results.insert_one(document)
 
 
 def _score_dataset(dataset, args):
     start_ts = datetime.utcnow()
-    test_id = datetime.utcnow().strftime('%Y%m%d%H%M%S%f')
     if args.db:
-        _insert_test(args, dataset, start_ts, test_id)
+        _insert_test(args, dataset, start_ts)
 
     result_base = {
         'dataset': dataset,
@@ -221,7 +222,7 @@ def _score_dataset(dataset, args):
 
         search_results = _search_pipeline(
             dataset, args.problem, args.template, args.input, args.output, args.budget,
-            args.checkpoints, args.splits, args.db, args.tuner_type
+            args.checkpoints, args.splits, args.db, args.tuner_type, args.test_id
         )
 
         for search_result in search_results or []:
@@ -251,7 +252,7 @@ def _score_dataset(dataset, args):
                 result['step'] = step
 
             if args.db:
-                _insert_test_result(args, test_id, result)
+                _insert_test_result(args, result)
 
     except Exception as e:
         error = _format_exception(e)
@@ -264,13 +265,12 @@ def _score_dataset(dataset, args):
         results.append(result_base)
 
     if args.db:
-        _update_test(args, test_id, error, step)
+        _update_test(args, dataset, error, step)
 
     return results
 
 
 def _prepare_search(args):
-
     make_keras_picklable()
 
     if not args.datasets and not args.all:
@@ -294,9 +294,11 @@ def _prepare_search(args):
     elif args.timeout:
         args.checkpoints = [args.timeout]
 
+    if args.test_id is None:
+        args.test_id = datetime.utcnow().strftime('%Y%m%d%H%M%S%f')
+
 
 def _score_datasets(args):
-
     if args.report and os.path.exists(args.report):
         report = pd.read_csv(args.report)
 
@@ -327,7 +329,7 @@ def _score_datasets(args):
 def _search(args):
     _prepare_search(args)
 
-    print("Processing Datasets: {}".format(args.datasets.index.values))
+    print("{} - Processing Datasets: {}".format(args.test_id, args.datasets.index.values))
     report = _score_datasets(args)
 
     report = report.reindex(REPORT_COLUMNS, axis=1)
@@ -463,6 +465,8 @@ def _get_parser():
                              help='Process all the datasets found in the input folder.')
     search_args.add_argument('-k', '--keep', action='store_true',
                              help='Keep previous results in the output folder.')
+    search_args.add_argument('--test-id', help='test_id associated with this run.')
+
     search_args.add_argument('datasets', nargs='*',
                              help='Datasets to process. Ignored if --all use used.')
 
