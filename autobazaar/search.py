@@ -327,19 +327,6 @@ class PipelineSearcher(object):
         if self.task_type == 'vertex_classification':
             self.task_type = 'vertex_nomination'
 
-        if self.task_type == 'classification':
-            self.kf = StratifiedKFold(
-                n_splits=self._cv_splits,
-                shuffle=True,
-                random_state=self._random_state
-            )
-        else:
-            self.kf = KFold(
-                n_splits=self._cv_splits,
-                shuffle=True,
-                random_state=self._random_state
-            )
-
         self.problem_doc = d3mds.problem_doc
 
         # Dataset variables
@@ -390,6 +377,20 @@ class PipelineSearcher(object):
             self.data_params = self.loader.load(d3mds)
             load_end = datetime.utcnow()
             self.load_time = (load_end - load_start).total_seconds()
+
+            min_samples = self.data_params.y.value_counts().min()
+            if self.task_type == 'classification' and min_samples >= self._cv_splits:
+                self.kf = StratifiedKFold(
+                    n_splits=self._cv_splits,
+                    shuffle=True,
+                    random_state=self._random_state
+                )
+            else:
+                self.kf = KFold(
+                    n_splits=self._cv_splits,
+                    shuffle=True,
+                    random_state=self._random_state
+                )
 
             # Build the trivial pipeline
             trivial_start = datetime.utcnow()
