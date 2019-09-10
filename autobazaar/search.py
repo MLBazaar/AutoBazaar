@@ -7,7 +7,6 @@ This module contains the PipelineSearcher, which is the class that
 contains the main logic of the Auto Machine Learning process.
 """
 
-import gc
 import itertools
 import json
 import logging
@@ -15,7 +14,7 @@ import os
 import signal
 import warnings
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import numpy as np
 import pandas as pd
@@ -293,7 +292,9 @@ class PipelineSearcher(object):
     def _set_checkpoint(self):
         next_checkpoint = self.checkpoints.pop(0)
         interval = next_checkpoint - self.current_checkpoint
-        LOGGER.info("Setting %s seconds checkpoint in %s seconds", next_checkpoint, interval)
+        self._stop_time = datetime.utcnow() + timedelta(seconds=interval)
+        LOGGER.info("Setting %s seconds checkpoint in %s seconds: %s",
+                    next_checkpoint, interval, self._stop_time)
         signal.alarm(interval)
         self.current_checkpoint = next_checkpoint
 
@@ -315,11 +316,18 @@ class PipelineSearcher(object):
 
         if final or not bool(self.checkpoints):
             self.current_checkpoint = None
-            raise StopSearch()
+            # LOGGER.warn("Stopping Search")
+            # raise StopSearch()
         else:
             self._set_checkpoint()
 
+    def _check_stop(self):
+        if self._stop_time and self._stop_time < datetime.utcnow():
+            LOGGER.warn("Stop Time already passed. Stopping Search!")
+            raise StopSearch()
+
     def search(self, d3mds, template_name=None, budget=None, checkpoints=None):
+
         # Problem variables
         problem_id = d3mds.get_problem_id()
 
@@ -375,6 +383,8 @@ class PipelineSearcher(object):
             if self.checkpoints:
                 signal.signal(signal.SIGALRM, self._checkpoint)
                 self._set_checkpoint()
+            else:
+                self._stop_time = None
 
             load_start = datetime.utcnow()
             self.data_params = self.loader.load(d3mds)
@@ -448,13 +458,14 @@ class PipelineSearcher(object):
                 try:
                     LOGGER.info("Cross validating pipeline %s", iteration + 1)
                     pipeline.cv_score(X, y, context, cv=self.kf)
-                    gc.collect()
                 except StopSearch:
                     raise
 
                 except Exception:
                     LOGGER.exception("Crash cross validating pipeline %s", iteration + 1)
                     tuner.add(proposed_params, -1000000)
+
+                self._check_stop()
 
                 if pipeline.rank is not None:
                     tuner.add(proposed_params, 1 - pipeline.rank)
