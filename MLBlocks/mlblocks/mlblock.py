@@ -357,4 +357,4 @@ class MLBlock():
             return self._produce_instance(**produce_kwargs)
 
         produce_kwargs.update(self.get_hyperparameters())
-        return self.primitive(**produce_kwargs)
+        return self._produce_primitive(**produce_kwargs)
