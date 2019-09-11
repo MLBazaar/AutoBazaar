@@ -287,6 +287,7 @@ class PipelineSearcher(object):
             raise
         except Exception:
             LOGGER.exception("Crash cross validating pipeline %s", pipeline.id)
+            return None
         finally:
             self.mlblocks_times.extend(pipeline.mlblocks_times)
             self.primitive_times.extend(pipeline.primitive_times)
@@ -345,7 +346,9 @@ class PipelineSearcher(object):
 
                             default_params[key] = value
 
-                self._tuner_add(default_params, 1 - pipeline.rank)
+                if pipeline.rank is not None:
+                    self._tuner_add(default_params, 1 - pipeline.rank)
+
             except ValueError:
                 pass
 
