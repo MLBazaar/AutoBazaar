@@ -439,7 +439,11 @@ def _list(args):
         'data_modality', 'task_type', 'task_subtype', 'metric', 'size_human', 'train_samples'
     ]
     datasets = datasets.reindex(columns, axis=1)
-    print(datasets.to_string(columns=columns, index=True))
+    if args.report:
+        print("Storing datasets as {}".format(args.report))
+        datasets[columns].to_csv(args.report, index=True)
+    else:
+        print(datasets.to_string(columns=columns, index=True))
 
 
 class ArgumentParser(argparse.ArgumentParser):
@@ -534,7 +538,7 @@ def _get_parser():
     subparsers = parser.add_subparsers(title='command', help='Command to execute')
     parser.set_defaults(command=None)
 
-    list_ = subparsers.add_parser('list', parents=[logging_args, dataset_args],
+    list_ = subparsers.add_parser('list', parents=[logging_args, dataset_args, report_args],
                                   help='List the available datasets that match the conditions.')
     list_.set_defaults(command=_list)
 
