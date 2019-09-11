@@ -3,6 +3,9 @@
 
 """AutoBazaar Command Line Module."""
 
+from datetime import datetime # noqa
+START_TS = datetime.utcnow()  # noqa
+
 import argparse
 import gc
 import json
@@ -15,6 +18,7 @@ import warnings
 from datetime import datetime
 
 import cloudpickle
+import numpy as np
 import pandas as pd
 from mit_d3m import metrics
 from mit_d3m.dataset import D3MDS
@@ -105,16 +109,23 @@ def _test_pipeline(dataset, problem, pipeline_id, input_dir, output_dir):
         warnings.simplefilter('ignore')
         predictions = pipeline.predict(d3mds)
 
-    return predictions
+    times = (
+        pipeline.load_time,
+        np.sum(pipeline.mlblocks_times),
+        np.sum(pipeline.primitive_times)
+    )
+    return predictions, times
 
 
 def _score_predictions(dataset, problem, predictions, input_dir):
 
+    io_start = datetime.utcnow()
     dataset_path, problem_path = _get_dataset_paths(input_dir, dataset, 'TEST', problem)
     metric = _get_metric(problem_path)
 
     predictions = predictions.set_index('d3mIndex')
     targets = _load_targets(input_dir, dataset, problem)[predictions.columns]
+    io_time = (datetime.utcnow() - io_start).total_seconds()
 
     if len(targets.columns) > 1 or len(predictions.columns) > 1:
         raise Exception("I don't know how to handle these")
@@ -130,7 +141,7 @@ def _score_predictions(dataset, problem, predictions, input_dir):
     summary = {'predictions': predictions, 'targets': targets}
     print(pd.DataFrame(summary).describe())
 
-    return score
+    return score, io_time
 
 
 def _format_exception(e):
@@ -149,7 +160,8 @@ def _box_print(message):
     print(length * '#')
 
 
-def _insert_test(args, dataset, start_ts):
+def _insert_test(args, dataset):
+    insert_ts = datetime.utcnow()
     document = {
         'test_id': args.test_id,
         'dataset': dataset,
@@ -158,8 +170,8 @@ def _insert_test(args, dataset, start_ts):
         'budget': args.budget,
         'template': args.template,
         'status': 'running',
-        'insert_ts': start_ts,
-        'update_ts': start_ts,
+        'insert_ts': insert_ts,
+        'update_ts': insert_ts,
         'version': VERSION,
         'hostname': socket.gethostname(),
         'tuner_type': args.tuner_type,
@@ -191,10 +203,17 @@ def _insert_test_result(args, result):
     args.db.test_results.insert_one(document)
 
 
-def _score_dataset(dataset, args):
+def log_times(times, function, *args, **kwargs):
     start_ts = datetime.utcnow()
+    result = function(*args, **kwargs)
+    times.append((datetime.utcnow() - start_ts).total_seconds())
+    return result
+
+
+def _score_dataset(dataset, args):
+    io_times = list()
     if args.db:
-        _insert_test(args, dataset, start_ts)
+        log_times(io_times, _insert_test, args, dataset)
 
     result_base = {
         'dataset': dataset,
@@ -205,9 +224,14 @@ def _score_dataset(dataset, args):
         'step': None,
         'load_time': None,
         'trivial_time': None,
-        'fit_time': None,
         'cv_time': None,
         'cv_score': None,
+        'io_time': None,
+        'abz_time': None,
+        'mlblocks_time': None,
+        'primitives_time': None,
+        'btb_time': None,
+        'btb_gp_time': None,
         'rank': None
     }
     results = []
@@ -219,7 +243,7 @@ def _score_dataset(dataset, args):
 
         # cleanup
         if not args.keep:
-            shutil.rmtree(args.output, ignore_errors=True)
+            log_times(io_times, shutil.rmtree, args.output, ignore_errors=True)
 
         search_results = _search_pipeline(
             dataset, args.problem, args.template, args.input, args.output, args.budget,
@@ -236,14 +260,20 @@ def _score_dataset(dataset, args):
             try:
                 step = 'TEST'
                 _box_print('Executing {}'.format(dataset))
-                predictions = _test_pipeline(dataset, args.problem, pipeline,
-                                             args.input, args.output)
+                predictions, times = _test_pipeline(dataset, args.problem, pipeline,
+                                                    args.input, args.output)
+
+                result['io_time'] += times[0]
+                result['mlblocks_time'] += times[1]
+                result['primitives_time'] += times[2]
 
                 step = 'SCORE'
                 _box_print('Scoring {}'.format(dataset))
-                score = _score_predictions(dataset, args.problem,
-                                           predictions, args.input)
+                score, io_time = _score_predictions(dataset, args.problem,
+                                                    predictions, args.input)
+
                 result['score'] = score
+                result['io_time'] += io_time + np.sum(io_times)
                 gc.collect()
 
             except Exception as e:
@@ -253,6 +283,8 @@ def _score_dataset(dataset, args):
                 traceback.print_exc()
                 result['error'] = error
                 result['step'] = step
+
+            result['abz_time'] = (datetime.utcnow() - START_TS).total_seconds()
 
             if args.db:
                 _insert_test_result(args, result)
@@ -264,7 +296,7 @@ def _score_dataset(dataset, args):
 
         result_base['step'] = step
         result_base['error'] = error
-        result_base['elapsed'] = (datetime.utcnow() - start_ts).total_seconds()
+        result_base['elapsed'] = (datetime.utcnow() - START_TS).total_seconds()
         results.append(result_base)
 
     if args.db:
@@ -387,8 +419,13 @@ REPORT_COLUMNS = [
     'iterations',
     'load_time',
     'trivial_time',
-    'fit_time',
     'cv_time',
+    'btb_time',
+    'btb_gp_time',
+    'mlblocks_time',
+    'primitives_time',
+    'abz_time',
+    'io_time',
     'error',
     'step'
 ]
@@ -516,6 +553,7 @@ def _get_parser():
 
 
 def main():
+    start = datetime.utcnow()
     parser = _get_parser()
     args = parser.parse_args()
 

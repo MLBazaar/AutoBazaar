@@ -88,7 +88,7 @@ install-develop: clean-build clean-pyc ## install the package in editable mode a
 
 .PHONY: lint
 lint: ## check style with flake8 and isort
-	flake8 autobazaar
+	flake8 autobazaar BTB/btb MLBlocks/mlblocks
 	isort -c --recursive autobazaar
 
 .PHONY: fix-lint

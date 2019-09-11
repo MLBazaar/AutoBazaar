@@ -8,6 +8,7 @@ import os
 import random
 import uuid
 from collections import Counter
+from datetime import datetime
 
 import cloudpickle
 import numpy as np
@@ -75,22 +76,38 @@ class ABPipeline(object):
         self.dumped = False
         self.fitted = False
 
+        start_ts = datetime.utcnow()
+
         self.pipeline = MLPipeline.from_dict(pipeline_dict)
+
+        self.mlblocks_times = [(datetime.utcnow() - start_ts).total_seconds()]
+        self.primitive_times = self.pipeline.primitive_times
 
     def fit(self, data_params):
         """Fit the pipeline on the given params."""
         X, y = data_params.X, data_params.y
 
+        start_ts = datetime.utcnow()
+
         self.pipeline = MLPipeline.from_dict(self.pipeline_dict)
         self.pipeline.fit(X, y, **data_params.context)
+
+        self.mlblocks_times = [(datetime.utcnow() - start_ts).total_seconds()]
+        self.primitive_times = self.pipeline.primitive_times
 
         self.fitted = True
 
     def predict(self, d3mds):
         """Get predictions for the given D3MDS."""
+        load_start = datetime.utcnow()
         data_params = self.loader.load(d3mds)
+        self.load_time = (datetime.utcnow() - load_start).total_seconds()
 
+        mlblocks_start = datetime.utcnow()
         predictions = self.pipeline.predict(data_params.X, **data_params.context)
+        self.mlblocks_times.append((datetime.utcnow() - mlblocks_start).total_seconds())
+
+        self.primitive_times = self.pipeline.primitive_times
 
         out_df = pd.DataFrame()
         out_df['d3mIndex'] = data_params.y.index
@@ -152,11 +169,15 @@ class ABPipeline(object):
             LOGGER.debug('Scoring fold: %s', fold)
 
             X_train, y_train = self._get_split(X, y, train_index)
+            X_test, y_test = self._get_split(X, y, test_index)
+
+            start_ts = datetime.utcnow()
             pipeline = MLPipeline.from_dict(self._tunable)
             pipeline.fit(X_train, y_train, **context)
-
-            X_test, y_test = self._get_split(X, y, test_index)
             pred = pipeline.predict(X_test, **context)
+            self.mlblocks_times.append((datetime.utcnow() - start_ts).total_seconds())
+            self.primitive_times.extend(pipeline.primitive_times)
+
             score = scorer(pred, y_test)
             self.cv_scores.append(score)
 
