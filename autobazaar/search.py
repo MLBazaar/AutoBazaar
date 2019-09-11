@@ -7,6 +7,7 @@ This module contains the PipelineSearcher, which is the class that
 contains the main logic of the Auto Machine Learning process.
 """
 
+import gc
 import itertools
 import json
 import logging
@@ -52,7 +53,7 @@ PARAM_TYPES = {
 }
 
 
-class StopSearch(Exception):
+class StopSearch(KeyboardInterrupt):
     pass
 
 
@@ -83,25 +84,36 @@ class PipelineSearcher(object):
 
         self._test_id = test_id
 
-    def _dump(self, pipeline):
-        if not pipeline.dumped:
-            pipeline.fit(self.data_params)
+    def _dump_pipelines(self):
+        LOGGER.info('Dumping best pipelines')
+        dumped = list()
+        gc.collect()
+        for details in self.to_dump:
+            pipeline = details['pipeline']
+            if not pipeline.dumped:
+                pipeline.fit(self.data_params)
 
-            mlpipeline = pipeline.pipeline
+                mlpipeline = pipeline.pipeline
 
-            LOGGER.info("Dumping pipeline %s: %s", pipeline.id, pipeline.pipeline)
-            LOGGER.info("Hyperparameters: %s", mlpipeline.get_hyperparameters())
-            pipeline.dump(self._pipelines_dir)
+                LOGGER.info("Dumping pipeline %s: %s", pipeline.id, pipeline.pipeline)
+                LOGGER.info("Hyperparameters: %s", mlpipeline.get_hyperparameters())
+                pipeline.dump(self._pipelines_dir)
+                details['pipeline'] = pipeline.id
+                dumped.append(details)
+                gc.collect()
 
-        else:
-            LOGGER.info("Skipping already dumped pipeline %s", pipeline.id)
+            else:
+                LOGGER.info("Skipping already dumped pipeline %s", pipeline.id)
 
-        self.dumped.append({
+        return dumped
+
+    def _set_for_dump(self, pipeline):
+        self.to_dump.append({
             'elapsed': (datetime.utcnow() - self.start_time).total_seconds(),
             'iterations': len(self.pipelines) - 1,
             'cv_score': self.best_pipeline.score,
             'rank': self.best_pipeline.rank,
-            'pipeline': self.best_pipeline.id,
+            'pipeline': pipeline,
             'load_time': self.load_time,
             'trivial_time': self.trivial_time,
             'fit_time': self.fit_time,
@@ -307,7 +319,7 @@ class PipelineSearcher(object):
 
         try:
             if self.best_pipeline:
-                self._dump(self.best_pipeline)
+                self._set_for_dump(self.best_pipeline)
 
         except StopSearch:
             raise
@@ -357,7 +369,7 @@ class PipelineSearcher(object):
         self.pipelines = []
         self.checkpoints = sorted(checkpoints or [])
         self.current_checkpoint = 0
-        self.dumped = []
+        self.to_dump = []
 
         if not self.checkpoints and budget is None:
             budget = 1
@@ -369,8 +381,6 @@ class PipelineSearcher(object):
         self.cv_time = None
 
         try:
-            self.start_time = datetime.utcnow()
-
             LOGGER.info("Running TA2 Search")
             LOGGER.info("Problem Id: %s", problem_id)
             LOGGER.info("    Data Modality: %s", self.data_modality)
@@ -379,12 +389,6 @@ class PipelineSearcher(object):
             LOGGER.info("    Metric: %s", self.metric)
             LOGGER.info("    Checkpoints: %s", self.checkpoints)
             LOGGER.info("    Budget: %s", budget)
-
-            if self.checkpoints:
-                signal.signal(signal.SIGALRM, self._checkpoint)
-                self._set_checkpoint()
-            else:
-                self._stop_time = None
 
             load_start = datetime.utcnow()
             self.data_params = self.loader.load(d3mds)
@@ -441,6 +445,13 @@ class PipelineSearcher(object):
 
             LOGGER.info("Starting the tuning loop")
 
+            self.start_time = datetime.utcnow()
+            if self.checkpoints:
+                signal.signal(signal.SIGALRM, self._checkpoint)
+                self._set_checkpoint()
+            else:
+                self._stop_time = None
+
             if budget is not None:
                 iterator = range(budget)
             else:
@@ -493,7 +504,7 @@ class PipelineSearcher(object):
         if self.current_checkpoint:
             self._checkpoint(final=True)
         elif self.best_pipeline and not checkpoints:
-            self._dump(self.best_pipeline)
+            self._set_for_dump(self.best_pipeline)
 
         if self.best_pipeline:
             LOGGER.info('Best pipeline for problem %s found: %s; rank: %s, score: %s',
@@ -503,4 +514,4 @@ class PipelineSearcher(object):
         else:
             LOGGER.info('No pipeline could be found for problem %s', problem_id)
 
-        return self.dumped
+        return self._dump_pipelines()

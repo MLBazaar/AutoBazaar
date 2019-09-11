@@ -524,6 +524,7 @@ def main():
         parser.exit()
 
     logging_setup(args.verbose, args.logfile)
+    gc.enable()
 
     args.command(args)
 
