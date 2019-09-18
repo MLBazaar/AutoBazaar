@@ -482,7 +482,7 @@ class PipelineSearcher(object):
                 pipeline = self._cv_pipeline(params)
 
                 if pipeline and (pipeline.rank is not None):
-                    self._tuner_add(proposed_params, 1 - pipeline.rank)
+                    self.tuner.add(proposed_params, 1 - pipeline.rank)
 
                     LOGGER.info("Saving pipeline %s: %s", iteration + 1, pipeline.id)
                     self._save_pipeline(pipeline)
@@ -494,7 +494,7 @@ class PipelineSearcher(object):
                                     self.best_pipeline.score)
 
                 else:
-                    self._tuner_add(proposed_params, -1000000)
+                    self.tuner.add(proposed_params, -1000000)
 
         except KeyboardInterrupt:
             pass
