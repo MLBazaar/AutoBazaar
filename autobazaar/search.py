@@ -394,6 +394,7 @@ class PipelineSearcher(object):
         self.pipelines = []
         self.checkpoints = sorted(checkpoints or [])
         self.current_checkpoint = 0
+<<<<<<< HEAD
         self._to_dump = []
 
         if not self.checkpoints and budget is None:
