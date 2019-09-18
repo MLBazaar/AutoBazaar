@@ -245,6 +245,8 @@ class PipelineSearcher(object):
             if not template:
                 raise ValueError("Template {} not found".format(template_name))
 
+            primitives = '\n'.join(template['primitives'])
+            LOGGER.info('Using template %s:\n%s', template_name, primitives)
             return template
 
         else:
@@ -262,6 +264,8 @@ class PipelineSearcher(object):
                 template_name = '/'.join(problem_type[:levels] + ['default'])
                 template = self._load_template(template_name)
                 if template:
+                    primitives = '\n'.join(template['primitives'])
+                    LOGGER.info('Using template %s:\n%s', template_name, primitives)
                     return template
 
             # Nothing has been found for this modality/task/subtask combination
