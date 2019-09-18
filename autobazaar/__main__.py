@@ -4,6 +4,7 @@
 """AutoBazaar Command Line Module."""
 
 import argparse
+import gc
 import json
 import os
 import shutil
@@ -23,7 +24,7 @@ from mit_d3m.utils import logging_setup, make_abs
 
 import autobazaar
 from autobazaar.search import TUNERS, PipelineSearcher
-from autobazaar.utils import make_keras_picklable
+from autobazaar.utils import make_keras_picklable, encode_score
 
 warnings.filterwarnings(action='ignore')
 
@@ -123,7 +124,7 @@ def _score_predictions(dataset, problem, predictions, input_dir):
 
     targets = targets.iloc[:, 0]
     predictions = predictions.iloc[:, 0]
-    score = metric(targets, predictions)
+    score = encode_score(metric, targets, predictions)
     print("Score: {}".format(score))
 
     summary = {'predictions': predictions, 'targets': targets}
@@ -148,7 +149,8 @@ def _box_print(message):
     print(length * '#')
 
 
-def _insert_test(args, dataset, start_ts):
+def _insert_test(args, dataset):
+    insert_ts = datetime.utcnow()
     document = {
         'test_id': args.test_id,
         'dataset': dataset,
@@ -157,8 +159,8 @@ def _insert_test(args, dataset, start_ts):
         'budget': args.budget,
         'template': args.template,
         'status': 'running',
-        'insert_ts': start_ts,
-        'update_ts': start_ts,
+        'insert_ts': insert_ts,
+        'update_ts': insert_ts,
         'version': VERSION,
         'hostname': socket.gethostname(),
         'tuner_type': args.tuner_type,
@@ -193,7 +195,7 @@ def _insert_test_result(args, result):
 def _score_dataset(dataset, args):
     start_ts = datetime.utcnow()
     if args.db:
-        _insert_test(args, dataset, start_ts)
+        _insert_test(args, dataset)
 
     result_base = {
         'dataset': dataset,
@@ -204,7 +206,6 @@ def _score_dataset(dataset, args):
         'step': None,
         'load_time': None,
         'trivial_time': None,
-        'fit_time': None,
         'cv_time': None,
         'cv_score': None,
         'rank': None
@@ -224,6 +225,7 @@ def _score_dataset(dataset, args):
             dataset, args.problem, args.template, args.input, args.output, args.budget,
             args.checkpoints, args.splits, args.db, args.tuner_type, args.test_id
         )
+        gc.collect()
 
         for search_result in search_results or []:
             result = result_base.copy()
@@ -242,6 +244,7 @@ def _score_dataset(dataset, args):
                 score = _score_predictions(dataset, args.problem,
                                            predictions, args.input)
                 result['score'] = score
+                gc.collect()
 
             except Exception as e:
                 error = _format_exception(e)
@@ -384,7 +387,6 @@ REPORT_COLUMNS = [
     'iterations',
     'load_time',
     'trivial_time',
-    'fit_time',
     'cv_time',
     'error',
     'step'
@@ -399,7 +401,11 @@ def _list(args):
         'data_modality', 'task_type', 'task_subtype', 'metric', 'size_human', 'train_samples'
     ]
     datasets = datasets.reindex(columns, axis=1)
-    print(datasets.to_string(columns=columns, index=True))
+    if args.report:
+        print("Storing datasets as {}".format(args.report))
+        datasets[columns].to_csv(args.report, index=True)
+    else:
+        print(datasets.to_string(columns=columns, index=True))
 
 
 class ArgumentParser(argparse.ArgumentParser):
@@ -494,7 +500,7 @@ def _get_parser():
     subparsers = parser.add_subparsers(title='command', help='Command to execute')
     parser.set_defaults(command=None)
 
-    list_ = subparsers.add_parser('list', parents=[logging_args, dataset_args],
+    list_ = subparsers.add_parser('list', parents=[logging_args, dataset_args, report_args],
                                   help='List the available datasets that match the conditions.')
     list_.set_defaults(command=_list)
 
@@ -521,6 +527,7 @@ def main():
         parser.exit()
 
     logging_setup(args.verbose, args.logfile)
+    gc.enable()
 
     args.command(args)
 
