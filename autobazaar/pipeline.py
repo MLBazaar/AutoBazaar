@@ -17,6 +17,8 @@ from mit_d3m.loaders import get_loader
 from mit_d3m.metrics import METRICS_DICT
 from mlblocks import MLPipeline
 
+from autobazaar.utils import encode_score
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -178,7 +180,7 @@ class ABPipeline(object):
             self.mlblocks_times.append((datetime.utcnow() - start_ts).total_seconds())
             self.primitive_times.extend(pipeline.primitive_times)
 
-            score = scorer(pred, y_test)
+            score = encode_score(scorer, y_test, pred)
             self.cv_scores.append(score)
 
             LOGGER.debug('Fold %s score: %s', fold, score)
