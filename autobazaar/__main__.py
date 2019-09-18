@@ -28,7 +28,7 @@ from mit_d3m.utils import logging_setup, make_abs
 
 import autobazaar
 from autobazaar.search import TUNERS, PipelineSearcher
-from autobazaar.utils import make_keras_picklable
+from autobazaar.utils import make_keras_picklable, encode_score
 
 warnings.filterwarnings(action='ignore')
 
@@ -135,7 +135,7 @@ def _score_predictions(dataset, problem, predictions, input_dir):
 
     targets = targets.iloc[:, 0]
     predictions = predictions.iloc[:, 0]
-    score = metric(targets, predictions)
+    score = encode_score(metric, targets, predictions)
     print("Score: {}".format(score))
 
     summary = {'predictions': predictions, 'targets': targets}
