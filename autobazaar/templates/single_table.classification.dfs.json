@@ -6,13 +6,16 @@
     },
     "primitives": [
         "mlprimitives.custom.preprocessing.ClassEncoder",
-        "mlprimitives.custom.feature_extraction.CategoricalEncoder",
-        "sklearn.impute.SimpleImputer",
-        "sklearn.preprocessing.RobustScaler",
+        "featuretools.dfs",
+        "sklearn.preprocessing.Imputer",
+        "sklearn.preprocessing.StandardScaler",
         "xgboost.XGBClassifier",
         "mlprimitives.custom.preprocessing.ClassDecoder"
     ],
     "hyperparameters": {
+        "featuretools.dfs#1": {
+            "encode": true
+        },
         "xgboost.XGBClassifier#1": {
             "n_jobs": -1,
             "learning_rate": 0.1,

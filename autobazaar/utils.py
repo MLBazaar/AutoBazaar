@@ -7,6 +7,16 @@ from datetime import datetime
 
 import keras.models
 import numpy as np
+from sklearn.preprocessing import LabelEncoder
+
+
+def encode_score(scorer, expected, observed):
+    if expected.dtype == 'object':
+        le = LabelEncoder()
+        expected = le.fit_transform(expected)
+        observed = le.transform(observed)
+
+    return scorer(expected, observed)
 
 
 def ensure_dir(directory):
