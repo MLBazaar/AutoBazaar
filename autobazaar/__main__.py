@@ -3,8 +3,8 @@
 
 """AutoBazaar Command Line Module."""
 
-from datetime import datetime # noqa
-START_TS = datetime.utcnow()  # noqa
+from datetime import datetime # noqa  isort:skip
+START_TS = datetime.utcnow()  # noqa  isort:skip
 
 import argparse
 import gc
@@ -28,7 +28,7 @@ from mit_d3m.utils import logging_setup, make_abs
 
 import autobazaar
 from autobazaar.search import TUNERS, PipelineSearcher
-from autobazaar.utils import make_keras_picklable, encode_score
+from autobazaar.utils import encode_score, make_keras_picklable
 
 warnings.filterwarnings(action='ignore')
 
@@ -557,7 +557,6 @@ def _get_parser():
 
 
 def main():
-    start = datetime.utcnow()
     parser = _get_parser()
     args = parser.parse_args()
 
