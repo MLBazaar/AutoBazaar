@@ -15,10 +15,7 @@
 
 # Overview
 
-AutoBazaar is an AutoML system created to execute the experiments associated with the
-[The Machine Learning Bazaar Paper: Harnessing the ML Ecosystem for Effective System
-Development](https://arxiv.org/pdf/1905.08942.pdf)
-by the [Human-Data Interaction (HDI) Project](https://hdi-dai.lids.mit.edu/) at LIDS, MIT.
+AutoBazaar is an AutoML system created using the Machine Learning Bazaar, a research project and framework for building ML and AutoML systems by the Data To AI Lab at MIT. See [below](#citing-autobazaar) for more references.
 
 It comes in the form of a python library which can be used directly inside any other python
 project, as well as a CLI which allows searching for pipelines to solve a problem directly
@@ -47,7 +44,7 @@ Afterwards, you have to execute this command to have the virtualenv activated:
 source autobazaar-venv/bin/activate
 ```
 
-Remember about executing it every time you start a new console to work on **AutoBazaar**!
+Remember to execute it every time you start a new console to work on **AutoBazaar**!
 
 ## Install with pip
 
@@ -58,7 +55,7 @@ After creating the virtualenv and activating it, we recommend using
 pip install autobazaar
 ```
 
-This will pull and install the latest stable release from [PyPi](https://pypi.org/).
+This will pull and install the latest stable release from [PyPI](https://pypi.org/).
 
 ## Install from source
 
@@ -80,14 +77,14 @@ the required dependencies for testing and code linting.
 AutoBazaar works with datasets in the [D3M Schema Format](https://github.com/mitll/d3m-schema)
 as input.
 
-This dataset Schema, developed by MIT Lincoln Labs Laboratory for DARPA's Data Driven Discovery
-of Models Program, requires the data to be in plainly readable formats such as CSV files or
+This dataset schema, developed by MIT Lincoln Labs Laboratory for DARPA's Data-Driven Discovery
+of Models (D3M) Program, requires the data to be in plainly readable formats such as CSV files or
 JPG images, and to be set within a folder hierarchy alongside some metadata specifications
 in JSON format, which include information about all the data contained, as well as the problem
 that we are trying to solve.
 
 For more details about the schema and about how to format your data to be compliant with it,
-please have a look at the [Schema Documentation](https://github.com/mitll/d3m-schema/tree/master/documentation)
+refer to the [Schema Documentation](https://github.com/mitll/d3m-schema/tree/master/documentation)
 
 As an example, you can browse some datasets which have been included in this repository for
 demonstration purposes:
@@ -95,7 +92,7 @@ demonstration purposes:
 - [196_autoMpg](https://github.com/HDI-Project/AutoBazaar/tree/master/data/196_autoMpg): Single Table Classification
 
 Additionally, you can find a collection with ~500 datasets already formatted in the
-[d3m-data-dai S3 Bucket in AWS](https://d3m-data-dai.s3.amazonaws.com/index.html).
+[d3m-data-dai S3 Bucket](https://d3m-data-dai.s3.amazonaws.com/index.html).
 
 # Quickstart
 
@@ -205,7 +202,7 @@ For more details about **AutoBazaar** and all its possibilities and features, pl
 
 # Credits
 
-AutoBazaar is an Open Source project from the Data to AI Lab at MIT built by the following team:
+AutoBazaar is an open-source project from the Data to AI Lab at MIT built by the following team:
 
 * Carles Sala <csala@csail.mit.edu>
 * Micah Smith <micahs@mit.edu>
@@ -214,7 +211,7 @@ AutoBazaar is an Open Source project from the Data to AI Lab at MIT built by the
 
 ## Citing AutoBazaar
 
-If you use AutoBazaar for yor research, please consider citing the following paper (https://arxiv.org/pdf/1905.08942.pdf):
+If you use AutoBazaar for your research, please consider citing the following paper (https://arxiv.org/pdf/1905.08942.pdf):
 
 ```
 @article{smith2019mlbazaar,
