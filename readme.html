@@ -219,10 +219,7 @@
 </div>
 <div class="section" id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
-<p>AutoBazaar is an AutoML system created to execute the experiments associated with the
-<a class="reference external" href="https://arxiv.org/pdf/1905.08942.pdf">The Machine Learning Bazaar Paper: Harnessing the ML Ecosystem for Effective System
-Development</a>
-by the <a class="reference external" href="https://hdi-dai.lids.mit.edu/">Human-Data Interaction (HDI) Project</a> at LIDS, MIT.</p>
+<p>AutoBazaar is an AutoML system created using the Machine Learning Bazaar, a research project and framework for building ML and AutoML systems by the Data To AI Lab at MIT. See <a class="reference external" href="#citing-autobazaar">below</a> for more references.</p>
 <p>It comes in the form of a python library which can be used directly inside any other python
 project, as well as a CLI which allows searching for pipelines to solve a problem directly
 from the command line.</p>
@@ -244,7 +241,7 @@ virtualenv -p <span class="k">$(</span>which python3.6<span class="k">)</span> a
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> autobazaar-venv/bin/activate
 </pre></div>
 </div>
-<p>Remember about executing it every time you start a new console to work on <strong>AutoBazaar</strong>!</p>
+<p>Remember to execute it every time you start a new console to work on <strong>AutoBazaar</strong>!</p>
 </div>
 <div class="section" id="install-with-pip">
 <h2>Install with pip<a class="headerlink" href="#install-with-pip" title="Permalink to this headline">¶</a></h2>
@@ -253,7 +250,7 @@ virtualenv -p <span class="k">$(</span>which python3.6<span class="k">)</span> a
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install autobazaar
 </pre></div>
 </div>
-<p>This will pull and install the latest stable release from <a class="reference external" href="https://pypi.org/">PyPi</a>.</p>
+<p>This will pull and install the latest stable release from <a class="reference external" href="https://pypi.org/">PyPI</a>.</p>
 </div>
 <div class="section" id="install-from-source">
 <h2>Install from source<a class="headerlink" href="#install-from-source" title="Permalink to this headline">¶</a></h2>
@@ -273,13 +270,13 @@ the required dependencies for testing and code linting.</p>
 <h1>Data Format<a class="headerlink" href="#data-format" title="Permalink to this headline">¶</a></h1>
 <p>AutoBazaar works with datasets in the <a class="reference external" href="https://github.com/mitll/d3m-schema">D3M Schema Format</a>
 as input.</p>
-<p>This dataset Schema, developed by MIT Lincoln Labs Laboratory for DARPA’s Data Driven Discovery
-of Models Program, requires the data to be in plainly readable formats such as CSV files or
+<p>This dataset schema, developed by MIT Lincoln Labs Laboratory for DARPA’s Data-Driven Discovery
+of Models (D3M) Program, requires the data to be in plainly readable formats such as CSV files or
 JPG images, and to be set within a folder hierarchy alongside some metadata specifications
 in JSON format, which include information about all the data contained, as well as the problem
 that we are trying to solve.</p>
 <p>For more details about the schema and about how to format your data to be compliant with it,
-please have a look at the <a class="reference external" href="https://github.com/mitll/d3m-schema/tree/master/documentation">Schema Documentation</a></p>
+refer to the <a class="reference external" href="https://github.com/mitll/d3m-schema/tree/master/documentation">Schema Documentation</a></p>
 <p>As an example, you can browse some datasets which have been included in this repository for
 demonstration purposes:</p>
 <ul class="simple">
@@ -287,7 +284,7 @@ demonstration purposes:</p>
 <li><p><a class="reference external" href="https://github.com/HDI-Project/AutoBazaar/tree/master/data/196_autoMpg">196_autoMpg</a>: Single Table Classification</p></li>
 </ul>
 <p>Additionally, you can find a collection with ~500 datasets already formatted in the
-<a class="reference external" href="https://d3m-data-dai.s3.amazonaws.com/index.html">d3m-data-dai S3 Bucket in AWS</a>.</p>
+<a class="reference external" href="https://d3m-data-dai.s3.amazonaws.com/index.html">d3m-data-dai S3 Bucket</a>.</p>
 </div>
 <div class="section" id="quickstart">
 <h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
@@ -381,7 +378,7 @@ be stored there:</p>
 </div>
 <div class="section" id="credits">
 <h1>Credits<a class="headerlink" href="#credits" title="Permalink to this headline">¶</a></h1>
-<p>AutoBazaar is an Open Source project from the Data to AI Lab at MIT built by the following team:</p>
+<p>AutoBazaar is an open-source project from the Data to AI Lab at MIT built by the following team:</p>
 <ul class="simple">
 <li><p>Carles Sala <a class="reference external" href="mailto:csala&#37;&#52;&#48;csail&#46;mit&#46;edu">csala<span>&#64;</span>csail<span>&#46;</span>mit<span>&#46;</span>edu</a></p></li>
 <li><p>Micah Smith <a class="reference external" href="mailto:micahs&#37;&#52;&#48;mit&#46;edu">micahs<span>&#64;</span>mit<span>&#46;</span>edu</a></p></li>
@@ -390,7 +387,7 @@ be stored there:</p>
 </ul>
 <div class="section" id="citing-autobazaar">
 <h2>Citing AutoBazaar<a class="headerlink" href="#citing-autobazaar" title="Permalink to this headline">¶</a></h2>
-<p>If you use AutoBazaar for yor research, please consider citing the following paper (<a class="reference external" href="https://arxiv.org/pdf/1905.08942.pdf">https://arxiv.org/pdf/1905.08942.pdf</a>):</p>
+<p>If you use AutoBazaar for your research, please consider citing the following paper (<a class="reference external" href="https://arxiv.org/pdf/1905.08942.pdf">https://arxiv.org/pdf/1905.08942.pdf</a>):</p>
 <div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>@article{smith2019mlbazaar,
   author = {Smith, Micah J. and Sala, Carles and Kanter, James Max and Veeramachaneni, Kalyan},
   title = {The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development},
