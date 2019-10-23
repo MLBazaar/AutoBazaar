@@ -50,7 +50,7 @@ install_requires = [
     'numpy==1.15.2',
     'opencv-python==3.4.2.17',
     'pandas==0.23.4',
-    'Pillow==5.1.0',
+    'Pillow==6.2.0',
     'protobuf==3.6.1',
     'psutil==5.4.7',
     'pymongo==3.7.2',
