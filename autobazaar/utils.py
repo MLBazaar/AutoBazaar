@@ -5,7 +5,6 @@ import tempfile
 from collections import defaultdict
 from datetime import datetime
 
-import keras.models
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
 
@@ -97,6 +96,9 @@ def restore_dots(document):
 
 def make_keras_picklable():
     """Make the keras models picklable."""
+
+    import keras.models   # noqa: lazy import slow dependencies
+
     def __getstate__(self):
         model_str = ""
         with tempfile.NamedTemporaryFile(suffix='.hdf5', delete=True) as fd:
