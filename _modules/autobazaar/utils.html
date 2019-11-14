@@ -208,7 +208,6 @@
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
 
-<span class="kn">import</span> <span class="nn">keras.models</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">LabelEncoder</span>
 
@@ -300,6 +299,9 @@
 
 <div class="viewcode-block" id="make_keras_picklable"><a class="viewcode-back" href="../../api/autobazaar.utils.html#autobazaar.utils.make_keras_picklable">[docs]</a><span class="k">def</span> <span class="nf">make_keras_picklable</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Make the keras models picklable.&quot;&quot;&quot;</span>
+
+    <span class="kn">import</span> <span class="nn">keras.models</span>   <span class="c1"># noqa: lazy import slow dependencies</span>
+
     <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">model_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.hdf5&#39;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
