@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Overview: module code &mdash; AutoBazaar 0.2.0-dev documentation</title>
+  <title>autobazaar &mdash; AutoBazaar 0.2.0-dev documentation</title>
   
 
   
@@ -180,7 +180,9 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Overview: module code</li>
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>autobazaar</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -195,12 +197,51 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>All modules for which code is available</h1>
-<ul><li><a href="autobazaar.html">autobazaar</a></li>
-<ul><li><a href="autobazaar/pipeline.html">autobazaar.pipeline</a></li>
-<li><a href="autobazaar/search.html">autobazaar.search</a></li>
-<li><a href="autobazaar/utils.html">autobazaar.utils</a></li>
-</ul></ul>
+  <h1>Source code for autobazaar</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">AutoBazaar top module.</span>
+
+<span class="sd">AutoBazaar is an AutoML system created to execute the experiments associated with the</span>
+<span class="sd">[The Machine Learning Bazaar Paper: Harnessing the ML Ecosystem for Effective System</span>
+<span class="sd">Development](https://arxiv.org/pdf/1905.08942.pdf)</span>
+<span class="sd">by the [Human-Data Interaction (HDI) Project](https://hdi-dai.lids.mit.edu/) at LIDS, MIT.</span>
+
+<span class="sd">* Free software: MIT license</span>
+<span class="sd">* Documentation: https://HDI-Project.github.io/AutoBazaar</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">git</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;MIT Data To AI Lab&#39;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s1">&#39;Copyright (c) 2019, MIT Data To AI Lab&#39;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s1">&#39;dailabmit@gmail.com&#39;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s1">&#39;MIT&#39;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.2.0-dev&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">_get_commit</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">base_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+        <span class="n">repo</span> <span class="o">=</span> <span class="n">git</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">base_path</span><span class="p">,</span> <span class="n">search_parent_directories</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">commit</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span><span class="o">.</span><span class="n">hexsha</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">repo</span><span class="o">.</span><span class="n">is_dirty</span><span class="p">(</span><span class="n">untracked_files</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+            <span class="n">commit</span> <span class="o">+=</span> <span class="s1">&#39;*&#39;</span>
+
+        <span class="k">return</span> <span class="n">commit</span>
+    <span class="k">except</span> <span class="n">git</span><span class="o">.</span><span class="n">InvalidGitRepositoryError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="get_version"><a class="viewcode-back" href="../api/autobazaar.html#autobazaar.get_version">[docs]</a><span class="k">def</span> <span class="nf">get_version</span><span class="p">():</span>
+    <span class="n">commit</span> <span class="o">=</span> <span class="n">_get_commit</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">commit</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> - </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">__version__</span><span class="p">,</span> <span class="n">commit</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">__version__</span></div>
+</pre></div>
 
            </div>
            

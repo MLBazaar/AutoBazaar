@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>autobazaar.utils &mdash; AutoBazaar 0.1.1-dev documentation</title>
+  <title>autobazaar.utils &mdash; AutoBazaar 0.2.0-dev documentation</title>
   
 
   
@@ -182,6 +182,8 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../autobazaar.html">autobazaar</a> &raquo;</li>
+        
       <li>autobazaar.utils</li>
     
     
@@ -207,8 +209,16 @@
 
 <span class="kn">import</span> <span class="nn">keras.models</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">keras.applications</span> <span class="k">import</span> <span class="n">mobilenet</span>
-<span class="kn">from</span> <span class="nn">keras.utils.generic_utils</span> <span class="k">import</span> <span class="n">CustomObjectScope</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">LabelEncoder</span>
+
+
+<div class="viewcode-block" id="encode_score"><a class="viewcode-back" href="../../api/autobazaar.utils.html#autobazaar.utils.encode_score">[docs]</a><span class="k">def</span> <span class="nf">encode_score</span><span class="p">(</span><span class="n">scorer</span><span class="p">,</span> <span class="n">expected</span><span class="p">,</span> <span class="n">observed</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">expected</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;object&#39;</span><span class="p">:</span>
+        <span class="n">le</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">expected</span><span class="p">)</span>
+        <span class="n">observed</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">observed</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">scorer</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="n">observed</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ensure_dir"><a class="viewcode-back" href="../../api/autobazaar.utils.html#autobazaar.utils.ensure_dir">[docs]</a><span class="k">def</span> <span class="nf">ensure_dir</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
@@ -305,6 +315,8 @@
                 <span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">fd</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
             <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="kn">from</span> <span class="nn">keras.applications</span> <span class="k">import</span> <span class="n">mobilenet</span>
+                <span class="kn">from</span> <span class="nn">keras.utils.generic_utils</span> <span class="k">import</span> <span class="n">CustomObjectScope</span>
                 <span class="n">scope</span> <span class="o">=</span> <span class="p">{</span>
                     <span class="s1">&#39;relu6&#39;</span><span class="p">:</span> <span class="n">mobilenet</span><span class="o">.</span><span class="n">relu6</span><span class="p">,</span>
                     <span class="s1">&#39;DepthwiseConv2D&#39;</span><span class="p">:</span> <span class="n">mobilenet</span><span class="o">.</span><span class="n">DepthwiseConv2D</span>
