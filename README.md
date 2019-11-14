@@ -9,11 +9,11 @@
 
 # AutoBazaar
 
-- License: MIT
-- Documentation: https://HDI-Project.github.io/AutoBazaar/
-- Homepage: https://github.com/HDI-Project/AutoBazaar
+* License: [MIT](https://github.com/HDI-Project/AutoBazaar/blob/master/LICENSE)
+* Documentation: https://HDI-Project.github.io/AutoBazaar/
+* Homepage: https://github.com/HDI-Project/AutoBazaar
 
-# Overview
+## Overview
 
 AutoBazaar is an AutoML system created using the Machine Learning Bazaar, a research project and framework for building ML and AutoML systems by the Data To AI Lab at MIT. See [below](#citing-autobazaar) for more references.
 
@@ -31,25 +31,10 @@ Also, although it is not strictly required, the usage of a
 [virtualenv](https://virtualenv.pypa.io/en/latest/) is highly recommended in order to avoid
 interfering with other software installed in the system where **AutoBazaar** is run.
 
-These are the minimum commands needed to create a virtualenv using python3.6 for **AutoBazaar**:
-
-```bash
-pip install virtualenv
-virtualenv -p $(which python3.6) autobazaar-venv
-```
-
-Afterwards, you have to execute this command to have the virtualenv activated:
-
-```bash
-source autobazaar-venv/bin/activate
-```
-
-Remember to execute it every time you start a new console to work on **AutoBazaar**!
-
 ## Install with pip
 
-After creating the virtualenv and activating it, we recommend using
-[pip](https://pip.pypa.io/en/stable/) in order to install **AutoBazaar**:
+The easiest and recommended way to install **AutoBazaar** is using
+[pip](https://pip.pypa.io/en/stable/):
 
 ```bash
 pip install autobazaar
@@ -57,20 +42,8 @@ pip install autobazaar
 
 This will pull and install the latest stable release from [PyPI](https://pypi.org/).
 
-## Install from source
-
-Alternatively, with your virtualenv activated, you can clone the repository and install it from
-source by running `make install` on the `stable` branch:
-
-```bash
-git clone git@github.com:HDI-Project/AutoBazaar.git
-cd AutoBazaar
-git checkout stable
-make install
-```
-
-For development, you can use `make install-develop` instead in order to install all
-the required dependencies for testing and code linting.
+If you want to install from source or contribute to the project please read the
+[Contributing Guide](https://HDI-Project.github.io/AutoBazaar/contributing.html#get-started).
 
 # Data Format
 
@@ -91,8 +64,8 @@ demonstration purposes:
 - [185_baseball](https://github.com/HDI-Project/AutoBazaar/tree/master/data/185_baseball): Single Table Regression
 - [196_autoMpg](https://github.com/HDI-Project/AutoBazaar/tree/master/data/196_autoMpg): Single Table Classification
 
-Additionally, you can find a collection with ~500 datasets already formatted in the
-[d3m-data-dai S3 Bucket](https://d3m-data-dai.s3.amazonaws.com/index.html).
+<!--Additionally, you can find a collection with ~500 datasets already formatted in the
+[d3m-data-dai S3 Bucket](https://d3m-data-dai.s3.amazonaws.com/index.html).-->
 
 # Quickstart
 
@@ -204,9 +177,9 @@ For more details about **AutoBazaar** and all its possibilities and features, pl
 
 AutoBazaar is an open-source project from the Data to AI Lab at MIT built by the following team:
 
-* Carles Sala <csala@csail.mit.edu>
 * Micah Smith <micahs@mit.edu>
-* Max Kanter <max.kanter@gmail.com>
+* Carles Sala <csala@mit.edu>
+* Max Kanter <max.kanter@featurelabs.com>
 * Kalyan Veeramachaneni <kalyanv@mit.edu>
 
 ## Citing AutoBazaar
