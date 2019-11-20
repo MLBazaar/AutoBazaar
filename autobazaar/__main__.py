@@ -436,29 +436,28 @@ def _get_parser():
     # Dataset Selection
     dataset_args = ArgumentParser(add_help=False)
     dataset_args.add_argument('-i', '--input', default='input', type=_path_type,
-                              help='Input datasets folder. Defaults to `data`.')
+                              help='Input datasets folder. Defaults to `input`.')
     dataset_args.add_argument('-o', '--output', type=_path_type,
                               help='Output pipelines folder. Defaults to `output`.',
                               default='output')
     dataset_args.add_argument('-p', '--problem', default='',
                               help='Problem suffix. Only needed if the dataset has more than one.')
     dataset_args.add_argument('-M', '--data-modality', type=str,
-                              help='Dataset Modality.')
+                              help='Only process datasets of the given Data Modality.')
     dataset_args.add_argument('-T', '--task-type', type=str,
-                              help='Dataset task type')
+                              help='Only process datasets of the given Task type')
     dataset_args.add_argument('-S', '--task-subtype', type=str,
-                              help='Dataset task subtype')
+                              help='Only process datasets of the given Task Subtype')
 
     # Search Configuration
     search_args = ArgumentParser(add_help=False)
     search_args.add_argument('-b', '--budget', type=int,
-                             help=('Maximum number of tuning iterations to perform. '
-                                   'Unlimited if not provided.'))
+                             help='If given, maximum number tuning iterations to perform.')
     search_args.add_argument('-s', '--splits', type=int, default=5,
                              help='Number of Cross Validation Folds. Defaults to 5')
     search_args.add_argument('-c', '--checkpoints',
-                             help=('Comma separated list of time checkpoints where best pipeline '
-                                   'so far will be dumped and stored in seconds, without spaces.'))
+                             help=('Comma separated list of time checkpoints in seconds where '
+                                   'the best pipeline so far will be dumped and stored.'))
     search_args.add_argument('-t', '--timeout', type=int,
                              help='Timeout in seconds. Ignored if checkpoints are given.')
     search_args.add_argument('-u', '--tuner-type', default='gp', choices=TUNERS.keys(),
