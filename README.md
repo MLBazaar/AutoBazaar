@@ -12,10 +12,13 @@
 * License: [MIT](https://github.com/HDI-Project/AutoBazaar/blob/master/LICENSE)
 * Documentation: https://HDI-Project.github.io/AutoBazaar/
 * Homepage: https://github.com/HDI-Project/AutoBazaar
+* Paper: https://arxiv.org/pdf/1905.08942.pdf
 
 ## Overview
 
-AutoBazaar is an AutoML system created using the Machine Learning Bazaar, a research project and framework for building ML and AutoML systems by the Data To AI Lab at MIT. See [below](#citing-autobazaar) for more references.
+AutoBazaar is an AutoML system created using [The Machine Learning Bazaar](https://arxiv.org/abs/1905.08942),
+a research project and framework for building ML and AutoML systems by the Data To AI Lab at MIT.
+See [below](#citing-autobazaar) for more references.
 
 It comes in the form of a python library which can be used directly inside any other python
 project, as well as a CLI which allows searching for pipelines to solve a problem directly
