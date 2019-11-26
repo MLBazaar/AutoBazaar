@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>AutoBazaar &mdash; AutoBazaar 0.2.0-dev documentation</title>
+  <title>AutoBazaar &mdash; AutoBazaar 0.2.1-dev documentation</title>
   
 
   
@@ -135,7 +135,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="history.html">History</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="history.html#id1">0.1.0 - 2019-06-24</a></li>
+<li class="toctree-l2"><a class="reference internal" href="history.html#id1">0.2.0 - 2019-11-26</a></li>
+<li class="toctree-l2"><a class="reference internal" href="history.html#id2">0.1.0 - 2019-06-24</a></li>
 </ul>
 </li>
 </ul>
@@ -288,13 +289,13 @@ the path to the folder that contains your dataset.</p>
 </div>
 <p>The output should be a table which includes the details of all the datasets found inside
 the indicated directory:</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>             <span class="n">data_modality</span>                <span class="n">task_type</span> <span class="n">task_subtype</span>             <span class="n">metric</span> <span class="n">size_human</span>  <span class="n">train_samples</span>
-<span class="n">dataset</span>
-<span class="mi">185</span><span class="n">_baseball</span>  <span class="n">single_table</span>           <span class="n">classification</span>  <span class="n">multi_class</span>            <span class="n">f1Macro</span>       <span class="mi">148</span><span class="n">K</span>           <span class="mi">1073</span>
-<span class="mi">196</span><span class="n">_autoMpg</span>   <span class="n">single_table</span>               <span class="n">regression</span>   <span class="n">univariate</span>   <span class="n">meanSquaredError</span>        <span class="mi">32</span><span class="n">K</span>            <span class="mi">298</span>
-<span class="mi">30</span><span class="n">_personae</span>           <span class="nb">text</span>           <span class="n">classification</span>       <span class="nb">binary</span>                 <span class="n">f1</span>       <span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="n">M</span>            <span class="mi">116</span>
-<span class="mi">32</span><span class="n">_wikiqa</span>      <span class="n">multi_table</span>           <span class="n">classification</span>       <span class="nb">binary</span>                 <span class="n">f1</span>       <span class="mi">4</span><span class="p">,</span><span class="mi">9</span><span class="n">M</span>          <span class="mi">23406</span>
-<span class="mi">60</span><span class="n">_jester</span>     <span class="n">single_table</span>  <span class="n">collaborative_filtering</span>               <span class="n">meanAbsoluteError</span>        <span class="mi">44</span><span class="n">M</span>         <span class="mi">880719</span>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>             data_modality                task_type task_subtype             metric size_human  train_samples
+dataset
+185_baseball  single_table           classification  multi_class            f1Macro       148K           1073
+196_autoMpg   single_table               regression   univariate   meanSquaredError        32K            298
+30_personae           text           classification       binary                 f1       1,4M            116
+32_wikiqa      multi_table           classification       binary                 f1       4,9M          23406
+60_jester     single_table  collaborative_filtering               meanAbsoluteError        44M         880719
 </pre></div>
 </div>
 <p><strong>Note:</strong> If you see an error saying that <code class="docutils literal notranslate"><span class="pre">No</span> <span class="pre">matching</span> <span class="pre">datasets</span> <span class="pre">found</span></code>, please review your
@@ -339,11 +340,11 @@ in stdout with a summary of the best pipeline found for each dataset.
 If multiple checkpoints were provided, details about the best pipeline in each checkpoint
 will also be included.</p>
 <p>The output will be a table similar to this one:</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>                                          <span class="n">pipeline</span>     <span class="n">score</span>      <span class="n">rank</span>  <span class="n">cv_score</span>   <span class="n">metric</span> <span class="n">data_modality</span>       <span class="n">task_type</span> <span class="n">task_subtype</span>    <span class="n">elapsed</span>  <span class="n">iterations</span>  <span class="n">load_time</span>  <span class="n">trivial_time</span>  <span class="n">fit_time</span>    <span class="n">cv_time</span> <span class="n">error</span>  <span class="n">step</span>
-<span class="n">dataset</span>
-<span class="mi">185</span><span class="n">_baseball</span>  <span class="n">fce28425</span><span class="o">-</span><span class="n">e45c</span><span class="o">-</span><span class="mi">4620</span><span class="o">-</span><span class="mi">9</span><span class="n">d3c</span><span class="o">-</span><span class="n">d329b8684bea</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">316961</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">682957</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">317043</span>  <span class="n">f1Macro</span>  <span class="n">single_table</span>  <span class="n">classification</span>  <span class="n">multi_class</span>  <span class="mi">10</span><span class="p">.</span><span class="mi">024457</span>         <span class="mi">0</span><span class="p">.</span><span class="mi">0</span>   <span class="mi">0</span><span class="p">.</span><span class="mi">011041</span>      <span class="mi">0</span><span class="p">.</span><span class="mi">026212</span>       <span class="n">NaN</span>        <span class="n">NaN</span>  <span class="k">None</span>  <span class="k">None</span>
-<span class="mi">185</span><span class="n">_baseball</span>  <span class="n">f7428924</span><span class="o">-</span><span class="mi">79</span><span class="n">ee</span><span class="o">-</span><span class="mi">439</span><span class="n">d</span><span class="o">-</span><span class="n">bc32</span><span class="o">-</span><span class="mi">998</span><span class="n">a9efea619</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">675132</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">390927</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">609073</span>  <span class="n">f1Macro</span>  <span class="n">single_table</span>  <span class="n">classification</span>  <span class="n">multi_class</span>  <span class="mi">21</span><span class="p">.</span><span class="mi">412262</span>         <span class="mi">1</span><span class="p">.</span><span class="mi">0</span>   <span class="mi">0</span><span class="p">.</span><span class="mi">011041</span>      <span class="mi">0</span><span class="p">.</span><span class="mi">026212</span>   <span class="mi">9</span><span class="p">.</span><span class="mi">99484</span>        <span class="n">NaN</span>  <span class="k">None</span>  <span class="k">None</span>
-<span class="mi">185</span><span class="n">_baseball</span>  <span class="mi">397780</span><span class="n">a5</span><span class="o">-</span><span class="mi">6</span><span class="n">bf6</span><span class="o">-</span><span class="mi">48</span><span class="n">c9</span><span class="o">-</span><span class="mi">9</span><span class="n">a85</span><span class="o">-</span><span class="mi">06</span><span class="n">b0d08c5a9d</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">675132</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">357361</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">642639</span>  <span class="n">f1Macro</span>  <span class="n">single_table</span>  <span class="n">classification</span>  <span class="n">multi_class</span>  <span class="mi">31</span><span class="p">.</span><span class="mi">712946</span>         <span class="mi">2</span><span class="p">.</span><span class="mi">0</span>   <span class="mi">0</span><span class="p">.</span><span class="mi">011041</span>      <span class="mi">0</span><span class="p">.</span><span class="mi">026212</span>   <span class="mi">9</span><span class="p">.</span><span class="mi">99484</span>  <span class="mi">12</span><span class="p">.</span><span class="mi">618179</span>  <span class="k">None</span>  <span class="k">None</span>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>                                          pipeline     score      rank  cv_score   metric data_modality       task_type task_subtype    elapsed  iterations  load_time  trivial_time  fit_time    cv_time error  step
+dataset
+185_baseball  fce28425-e45c-4620-9d3c-d329b8684bea  0.316961  0.682957  0.317043  f1Macro  single_table  classification  multi_class  10.024457         0.0   0.011041      0.026212       NaN        NaN  None  None
+185_baseball  f7428924-79ee-439d-bc32-998a9efea619  0.675132  0.390927  0.609073  f1Macro  single_table  classification  multi_class  21.412262         1.0   0.011041      0.026212   9.99484        NaN  None  None
+185_baseball  397780a5-6bf6-48c9-9a85-06b0d08c5a9d  0.675132  0.357361  0.642639  f1Macro  single_table  classification  multi_class  31.712946         2.0   0.011041      0.026212   9.99484  12.618179  None  None
 </pre></div>
 </div>
 <p>Alternatively, a <code class="docutils literal notranslate"><span class="pre">-r</span></code> option can be passed with the name of a CSV file, and the results will

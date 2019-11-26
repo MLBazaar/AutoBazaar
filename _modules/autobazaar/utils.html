@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>autobazaar.utils &mdash; AutoBazaar 0.2.0-dev documentation</title>
+  <title>autobazaar.utils &mdash; AutoBazaar 0.2.1-dev documentation</title>
   
 
   
@@ -133,7 +133,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../history.html#id1">0.1.0 - 2019-06-24</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../history.html#id1">0.2.0 - 2019-11-26</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../history.html#id2">0.1.0 - 2019-06-24</a></li>
 </ul>
 </li>
 </ul>
@@ -205,11 +206,11 @@
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">tempfile</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">LabelEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
 
 
 <div class="viewcode-block" id="encode_score"><a class="viewcode-back" href="../../api/autobazaar.utils.html#autobazaar.utils.encode_score">[docs]</a><span class="k">def</span> <span class="nf">encode_score</span><span class="p">(</span><span class="n">scorer</span><span class="p">,</span> <span class="n">expected</span><span class="p">,</span> <span class="n">observed</span><span class="p">):</span>
@@ -318,8 +319,8 @@
                 <span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">fd</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
             <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                <span class="kn">from</span> <span class="nn">keras.applications</span> <span class="k">import</span> <span class="n">mobilenet</span>
-                <span class="kn">from</span> <span class="nn">keras.utils.generic_utils</span> <span class="k">import</span> <span class="n">CustomObjectScope</span>
+                <span class="kn">from</span> <span class="nn">keras.applications</span> <span class="kn">import</span> <span class="n">mobilenet</span>
+                <span class="kn">from</span> <span class="nn">keras.utils.generic_utils</span> <span class="kn">import</span> <span class="n">CustomObjectScope</span>
                 <span class="n">scope</span> <span class="o">=</span> <span class="p">{</span>
                     <span class="s1">&#39;relu6&#39;</span><span class="p">:</span> <span class="n">mobilenet</span><span class="o">.</span><span class="n">relu6</span><span class="p">,</span>
                     <span class="s1">&#39;DepthwiseConv2D&#39;</span><span class="p">:</span> <span class="n">mobilenet</span><span class="o">.</span><span class="n">DepthwiseConv2D</span>
