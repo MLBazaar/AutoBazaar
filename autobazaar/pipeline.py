@@ -16,6 +16,8 @@ from mit_d3m.loaders import get_loader
 from mit_d3m.metrics import METRICS_DICT
 from mlblocks import MLPipeline
 
+from autobazaar.utils import encode_score
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -152,12 +154,14 @@ class ABPipeline(object):
             LOGGER.debug('Scoring fold: %s', fold)
 
             X_train, y_train = self._get_split(X, y, train_index)
+            X_test, y_test = self._get_split(X, y, test_index)
+
             pipeline = MLPipeline.from_dict(self._tunable)
             pipeline.fit(X_train, y_train, **context)
 
-            X_test, y_test = self._get_split(X, y, test_index)
             pred = pipeline.predict(X_test, **context)
-            score = scorer(pred, y_test)
+
+            score = encode_score(scorer, y_test, pred)
             self.cv_scores.append(score)
 
             LOGGER.debug('Fold %s score: %s', fold, score)

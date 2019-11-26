@@ -5,10 +5,17 @@ import tempfile
 from collections import defaultdict
 from datetime import datetime
 
-import keras.models
 import numpy as np
-from keras.applications import mobilenet
-from keras.utils.generic_utils import CustomObjectScope
+from sklearn.preprocessing import LabelEncoder
+
+
+def encode_score(scorer, expected, observed):
+    if expected.dtype == 'object':
+        le = LabelEncoder()
+        expected = le.fit_transform(expected)
+        observed = le.transform(observed)
+
+    return scorer(expected, observed)
 
 
 def ensure_dir(directory):
@@ -89,6 +96,9 @@ def restore_dots(document):
 
 def make_keras_picklable():
     """Make the keras models picklable."""
+
+    import keras.models   # noqa: lazy import slow dependencies
+
     def __getstate__(self):
         model_str = ""
         with tempfile.NamedTemporaryFile(suffix='.hdf5', delete=True) as fd:
@@ -105,6 +115,8 @@ def make_keras_picklable():
                 model = keras.models.load_model(fd.name)
 
             except ValueError:
+                from keras.applications import mobilenet
+                from keras.utils.generic_utils import CustomObjectScope
                 scope = {
                     'relu6': mobilenet.relu6,
                     'DepthwiseConv2D': mobilenet.DepthwiseConv2D

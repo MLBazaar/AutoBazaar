@@ -5,13 +5,13 @@
         "task_type": "classification"
     },
     "primitives": [
-        "mlprimitives.preprocessing.ClassEncoder",
-        "mlprimitives.feature_extraction.CategoricalEncoder",
-        "mlprimitives.feature_extraction.DatetimeFeaturizer",
+        "mlprimitives.custom.preprocessing.ClassEncoder",
+        "mlprimitives.custom.feature_extraction.CategoricalEncoder",
+        "mlprimitives.custom.feature_extraction.DatetimeFeaturizer",
         "sklearn.preprocessing.Imputer",
         "sklearn.preprocessing.StandardScaler",
         "sklearn.ensemble.RandomForestClassifier",
-        "mlprimitives.preprocessing.ClassDecoder"
+        "mlprimitives.custom.preprocessing.ClassDecoder"
     ],
     "hyperparameters": {
         "xgboost.XGBClassifier#1": {

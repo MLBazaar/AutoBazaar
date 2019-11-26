@@ -5,11 +5,11 @@
         "task_type": "classification"
     },
     "primitives": [
-        "mlprimitives.preprocessing.ClassEncoder",
+        "mlprimitives.custom.preprocessing.ClassEncoder",
         "keras.applications.mobilenet.preprocess_input",
         "keras.applications.mobilenet.MobileNet",
         "xgboost.XGBClassifier",
-        "mlprimitives.preprocessing.ClassDecoder"
+        "mlprimitives.custom.preprocessing.ClassDecoder"
     ],
     "hyperparameters": {
         "xgboost.XGBClassifier#1": {
