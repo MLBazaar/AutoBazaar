@@ -12,11 +12,11 @@ with open('HISTORY.md') as history_file:
 install_requires = [
     'baytune>=0.2.1,<0.3',
     'mlblocks>=0.3.2,<0.4',
-    'mlprimitives>=0.2.2.dev,<0.3',
+    'mlprimitives>=0.2.2,<0.3',
     'scikit-learn>=0.20,<0.21',
     'mit-d3m>=0.2.1,<0.3',
-    'numpy<=1.16.5',
-    'gitpython==3.0.2'
+    'numpy>=1.16.5,<1.17',
+    'gitpython>=3.1.1,<4'
 ]
 
 tests_require = [
@@ -30,31 +30,31 @@ setup_requires = [
 
 development_requires = [
     # general
-    'bumpversion>=0.5.3',
-    'pip>=10.0.0',
-    'watchdog>=0.8.3',
+    'pip>=9.0.1',
+    'bumpversion>=0.5.3,<0.6',
+    'watchdog>=0.8.3,<0.11',
 
     # docs
-    'm2r>=0.2.0',
-    'Sphinx>=1.7.1',
-    'sphinx_rtd_theme>=0.2.4',
-    'autodocsumm>=0.1.10',
+    'm2r>=0.2.0,<0.3',
+    'autodocsumm>=0.1.10,<0.2',
+    'Sphinx>=1.7.1,<3',
+    'sphinx_rtd_theme>=0.2.4,<0.5',
 
     # style check
-    'flake8>=3.5.0',
-    'isort>=4.3.4',
+    'flake8>=3.7.7,<4',
+    'isort>=4.3.4,<5',
 
     # fix style issues
-    'autoflake>=1.1',
-    'autopep8>=1.3.5',
+    'autoflake>=1.1,<2',
+    'autopep8>=1.4.3,<2',
 
     # distribute on PyPI
-    'twine>=1.10.0',
+    'twine>=1.10.0,<4',
     'wheel>=0.30.0',
 
     # Advanced testing
-    'tox>=2.9.1',
-    'coverage>=4.5.1',
+    'coverage>=4.5.1,<6',
+    'tox>=2.9.1,<4',
 ]
 
 setup(
