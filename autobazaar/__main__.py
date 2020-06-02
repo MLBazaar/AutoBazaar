@@ -339,6 +339,8 @@ def _search(args):
     columns = REPORT_COLUMNS[1:]
     print(report.set_index('dataset').to_string(columns=columns))
 
+    return report.error.notnull().all()
+
 
 def _get_datasets(args):
     if args.all:
@@ -528,8 +530,8 @@ def main():
     logging_setup(args.verbose, args.logfile)
     gc.enable()
 
-    args.command(args)
+    return int(bool(args.command(args)))
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())

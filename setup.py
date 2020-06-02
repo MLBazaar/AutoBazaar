@@ -22,6 +22,7 @@ install_requires = [
 tests_require = [
     'pytest>=3.4.2',
     'pytest-cov>=2.6.0',
+    'rundoc>=0.4.3,<0.5',
 ]
 
 setup_requires = [
@@ -55,6 +56,7 @@ development_requires = [
     # Advanced testing
     'coverage>=4.5.1,<6',
     'tox>=2.9.1,<4',
+    'rundoc>=0.4.3,<0.5',
 ]
 
 setup(
@@ -66,7 +68,6 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
@@ -79,7 +80,7 @@ setup(
     },
     extras_require={
         'dev': development_requires + tests_require,
-        'tests': tests_require,
+        'test': tests_require,
     },
     include_package_data=True,
     install_requires=install_requires,
@@ -89,11 +90,11 @@ setup(
     keywords='automl machine learning hyperparameters tuning classification regression autobazaar',
     name='autobazaar',
     packages=find_packages(include=['autobazaar', 'autobazaar.*']),
-    python_requires='>=3.5',
+    python_requires='>=3.5,<3.8',
     setup_requires=setup_requires,
     test_suite='tests',
     tests_require=tests_require,
     url='https://github.com/HDI-project/AutoBazaar',
-    version='0.2.1-dev',
+    version='0.2.1.dev0',
     zip_safe=False,
 )
