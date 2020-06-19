@@ -10,13 +10,12 @@ with open('HISTORY.md') as history_file:
     history = history_file.read()
 
 install_requires = [
-    'baytune>=0.2.1,<0.3',
     'mlblocks>=0.3.2,<0.4',
     'mlprimitives>=0.2.2,<0.3',
-    'scikit-learn>=0.20,<0.21',
+    'baytune>=0.2.1,<0.3',
     'mit-d3m>=0.2.1,<0.3',
-    'numpy>=1.16.5,<1.17',
-    'gitpython>=3.1.1,<4'
+    'gitpython>=3.1.1,<4',
+    'Keras>=2.1.6,<2.4',
 ]
 
 tests_require = [
