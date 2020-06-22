@@ -41,7 +41,7 @@ interfering with other software installed in the system where **AutoBazaar** is 
 The easiest and recommended way to install **AutoBazaar** is using
 [pip](https://pip.pypa.io/en/stable/):
 
-```bash
+```
 pip install autobazaar
 ```
 
@@ -91,7 +91,10 @@ If your dataset is in a different place than inside a folder called `data` withi
 current working directory, do not forget to add the `-i` argument to your command indicating
 the path to the folder that contains your dataset.
 
-```bash
+Assuming that the data is inside a folder called `input` within your current folder,
+you can run:
+
+```
 $ abz list -i /path/to/your/datasets/folder
 ```
 
@@ -112,7 +115,7 @@ dataset
 dataset format and make sure to have indicated the right path.
 
 For the rest of this quickstart, we will be using the `185_baseball` dataset that you can
-find inside the [data folder](https://github.com/HDI-Project/AutoBazaar/tree/master/data)
+find inside the [input folder](https://github.com/HDI-Project/AutoBazaar/tree/master/input)
 contained in this repository.
 
 ## 2. Start the search process
@@ -122,7 +125,9 @@ command.
 To do this, you will need to provide again the path to where your datasets are contained, as
 well as the name of the datasets that you want to process.
 
-```bash
+For example if you want to search for the best
+
+```
 $ abz search -i /path/to/your/datasets/folder name_of_your_dataset
 ```
 
