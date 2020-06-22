@@ -18,7 +18,8 @@ install_requires = [
     'Keras>=2.1.6,<2.4',
     'scikit-learn<0.21,>=0.20.0',
     'pandas<0.25,>=0.23.4',
-    'numpy<1.17,>=1.15.2'
+    'numpy<1.17,>=1.15.2',
+    'python-dateutil<2.8.1,>=2.1',
 ]
 
 tests_require = [
