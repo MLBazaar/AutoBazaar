@@ -1,0 +1,42 @@
+{
+  "about": {
+    "problemID": "196_autoMpg_problem_TRAIN",
+    "problemName": "autoMpg_problem",
+    "problemDescription": "**Author**:   \n**Source**: Unknown -   \n**Please cite**:   \n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n Identifier attribute deleted.\n\n As used by Kilpatrick, D. & Cameron-Jones, M. (1998). Numeric prediction\n using instance-based learning with encoding length selection. In Progress\n in Connectionist-Based Information Systems. Singapore: Springer-Verlag.\n\n !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n\n 1. Title: Auto-Mpg Data\n \n 2. Sources:\n    (a) Origin:  This dataset was taken from the StatLib library which is\n                 maintained at Carnegie Mellon University. The dataset was \n                 used in the 1983 American Statistical Association Exposition.\n    (c) Date: July 7, 1993\n \n 3. Past Usage:\n     -  See 2b (above)\n     -  Quinlan,R. (1993). Combining Instance-Based and Model-Based Learning.\n        In Proceedings on the Tenth International Conference of Machine \n        Learning, 236-243, University of Massachusetts, Amherst. Morgan\n        Kaufmann.\n \n 4. Relevant Information:\n \n    This dataset is a slightly modified version of the dataset provided in\n    the StatLib library.  In line with the use by Ross Quinlan (1993) in\n    predicting the attribute \"mpg\", 8 of the original instances were removed \n    because they had unknown values for the \"mpg\" attribute.  The original \n    dataset is available in the file \"auto-mpg.data-original\".\n \n    \"The data concerns city-cycle fuel consumption in miles per gallon,\n     to be predicted in terms of 3 multivalued discrete and 5 continuous\n     attributes.\" (Quinlan, 1993)\n \n 5. Number of Instances: 398\n \n 6. Number of Attributes: 9 including the class attribute\n \n 7. Attribute Information:\n \n     1. mpg:           continuous\n     2. cylinders:     multi-valued discrete\n     3. displacement:  continuous\n     4. horsepower:    continuous\n     5. weight:        continuous\n     6. acceleration:  continuous\n     7. model year:    multi-valued discrete\n     8. origin:        multi-valued discrete\n     9. car name:      string (unique for each instance)\n \n 8. Missing Attribute Values:  horsepower has 6 missing values",
+    "taskType": "regression",
+    "taskSubType": "univariate",
+    "problemVersion": "1.0",
+    "problemSchemaVersion": "3.0"
+  },
+  "inputs": {
+    "data": [
+      {
+        "datasetID": "196_autoMpg_dataset_TRAIN",
+        "targets": [
+          {
+            "targetIndex": 0,
+            "resID": "0",
+            "colIndex": 8,
+            "colName": "class"
+          }
+        ]
+      }
+    ],
+    "dataSplits": {
+      "method": "holdOut",
+      "testSize": 0.2,
+      "stratified": true,
+      "numRepeats": 0,
+      "randomSeed": 42,
+      "splitsFile": "dataSplits.csv"
+    },
+    "performanceMetrics": [
+      {
+        "metric": "meanSquaredError"
+      }
+    ]
+  },
+  "expectedOutputs": {
+    "predictionsFile": "predictions.csv"
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "about": {
+    "datasetID": "196_autoMpg_dataset_TEST",
+    "datasetName": "autoMpg",
+    "description": "**Author**:   \n**Source**: Unknown -   \n**Please cite**:   \n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n Identifier attribute deleted.\n\n As used by Kilpatrick, D. & Cameron-Jones, M. (1998). Numeric prediction\n using instance-based learning with encoding length selection. In Progress\n in Connectionist-Based Information Systems. Singapore: Springer-Verlag.\n\n !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n\n 1. Title: Auto-Mpg Data\n \n 2. Sources:\n    (a) Origin:  This dataset was taken from the StatLib library which is\n                 maintained at Carnegie Mellon University. The dataset was \n                 used in the 1983 American Statistical Association Exposition.\n    (c) Date: July 7, 1993\n \n 3. Past Usage:\n     -  See 2b (above)\n     -  Quinlan,R. (1993). Combining Instance-Based and Model-Based Learning.\n        In Proceedings on the Tenth International Conference of Machine \n        Learning, 236-243, University of Massachusetts, Amherst. Morgan\n        Kaufmann.\n \n 4. Relevant Information:\n \n    This dataset is a slightly modified version of the dataset provided in\n    the StatLib library.  In line with the use by Ross Quinlan (1993) in\n    predicting the attribute \"mpg\", 8 of the original instances were removed \n    because they had unknown values for the \"mpg\" attribute.  The original \n    dataset is available in the file \"auto-mpg.data-original\".\n \n    \"The data concerns city-cycle fuel consumption in miles per gallon,\n     to be predicted in terms of 3 multivalued discrete and 5 continuous\n     attributes.\" (Quinlan, 1993)\n \n 5. Number of Instances: 398\n \n 6. Number of Attributes: 9 including the class attribute\n \n 7. Attribute Information:\n \n     1. mpg:           continuous\n     2. cylinders:     multi-valued discrete\n     3. displacement:  continuous\n     4. horsepower:    continuous\n     5. weight:        continuous\n     6. acceleration:  continuous\n     7. model year:    multi-valued discrete\n     8. origin:        multi-valued discrete\n     9. car name:      string (unique for each instance)\n \n 8. Missing Attribute Values:  horsepower has 6 missing values",
+    "citation": "\n\t\t\t\t@article{OpenML2013,\n\t\t\t\tauthor = {Vanschoren, Joaquin and van Rijn, Jan N. and Bischl, Bernd and Torgo, Luis},\n\t\t\t\ttitle = {OpenML: Networked Science in Machine Learning},\n\t\t\t\tjournal = {SIGKDD Explorations},\n\t\t\t\tvolume = {15},\n\t\t\t\tnumber = {2},\n\t\t\t\tyear = {2013},\n\t\t\t\tpages = {49--60},\n\t\t\t\turl = {http://doi.acm.org/10.1145/2641190.2641198},\n\t\t\t\tdoi = {10.1145/2641190.2641198},\n\t\t\t\tpublisher = {ACM},\n\t\t\t\taddress = {New York, NY, USA},\n\t\t\t\t}",
+    "license": "CC-BY license",
+    "source": "OpenML",
+    "sourceURI": "http://www.openml.org/d/196",
+    "approximateSize": "",
+    "datasetSchemaVersion": "3.0",
+    "redacted": false,
+    "datasetVersion": "1.0"
+  },
+  "dataResources": [
+    {
+      "resID": "0",
+      "resPath": "tables/learningData.csv",
+      "resType": "table",
+      "resFormat": [
+        "text/csv"
+      ],
+      "isCollection": false,
+      "columns": [
+        {
+          "colIndex": 0,
+          "colName": "d3mIndex",
+          "colType": "integer",
+          "role": [
+            "index"
+          ]
+        },
+        {
+          "colIndex": 1,
+          "colName": "cylinders",
+          "colType": "categorical",
+          "role": [
+            "attribute"
+          ]
+        },
+        {
+          "colIndex": 2,
+          "colName": "displacement",
+          "colType": "real",
+          "role": [
+            "attribute"
+          ]
+        },
+        {
+          "colIndex": 3,
+          "colName": "horsepower",
+          "colType": "real",
+          "role": [
+            "attribute"
+          ]
+        },
+        {
+          "colIndex": 4,
+          "colName": "weight",
+          "colType": "real",
+          "role": [
+            "attribute"
+          ]
+        },
+        {
+          "colIndex": 5,
+          "colName": "acceleration",
+          "colType": "real",
+          "role": [
+            "attribute"
+          ]
+        },
+        {
+          "colIndex": 6,
+          "colName": "model",
+          "colType": "categorical",
+          "role": [
+            "attribute"
+          ]
+        },
+        {
+          "colIndex": 7,
+          "colName": "origin",
+          "colType": "categorical",
+          "role": [
+            "attribute"
+          ]
+        },
+        {
+          "colIndex": 8,
+          "colName": "class",
+          "colType": "real",
+          "role": [
+            "suggestedTarget"
+          ]
+        }
+      ]
+    }
+  ]
+}

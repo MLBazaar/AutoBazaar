@@ -3,6 +3,7 @@
 <i>An open source project from Data to AI Lab at MIT.</i>
 </p>
 
+[![Development Status](https://img.shields.io/badge/Development%20Status-2%20--%20Pre--Alpha-yellow)](https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha)
 [![PyPi](https://img.shields.io/pypi/v/autobazaar.svg)](https://pypi.python.org/pypi/autobazaar)
 [![Travis](https://travis-ci.org/HDI-Project/AutoBazaar.svg?branch=master)](https://travis-ci.org/HDI-Project/AutoBazaar)
 [![Downloads](https://pepy.tech/badge/autobazaar)](https://pepy.tech/project/autobazaar)
@@ -10,6 +11,7 @@
 # AutoBazaar
 
 * License: [MIT](https://github.com/HDI-Project/AutoBazaar/blob/master/LICENSE)
+* Development Status: [Pre-Alpha](https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha)
 * Documentation: https://HDI-Project.github.io/AutoBazaar/
 * Homepage: https://github.com/HDI-Project/AutoBazaar
 * Paper: https://arxiv.org/pdf/1905.08942.pdf
@@ -39,7 +41,7 @@ interfering with other software installed in the system where **AutoBazaar** is 
 The easiest and recommended way to install **AutoBazaar** is using
 [pip](https://pip.pypa.io/en/stable/):
 
-```bash
+```
 pip install autobazaar
 ```
 
@@ -64,8 +66,8 @@ refer to the [Schema Documentation](https://github.com/mitll/d3m-schema/tree/mas
 
 As an example, you can browse some datasets which have been included in this repository for
 demonstration purposes:
-- [185_baseball](https://github.com/HDI-Project/AutoBazaar/tree/master/data/185_baseball): Single Table Regression
-- [196_autoMpg](https://github.com/HDI-Project/AutoBazaar/tree/master/data/196_autoMpg): Single Table Classification
+- [185_baseball](https://github.com/HDI-Project/AutoBazaar/tree/master/input/185_baseball): Single Table Regression
+- [196_autoMpg](https://github.com/HDI-Project/AutoBazaar/tree/master/input/196_autoMpg): Single Table Classification
 
 <!--Additionally, you can find a collection with ~500 datasets already formatted in the
 [d3m-data-dai S3 Bucket](https://d3m-data-dai.s3.amazonaws.com/index.html).-->
@@ -89,7 +91,10 @@ If your dataset is in a different place than inside a folder called `data` withi
 current working directory, do not forget to add the `-i` argument to your command indicating
 the path to the folder that contains your dataset.
 
-```bash
+Assuming that the data is inside a folder called `input` within your current folder,
+you can run:
+
+```
 $ abz list -i /path/to/your/datasets/folder
 ```
 
@@ -110,7 +115,7 @@ dataset
 dataset format and make sure to have indicated the right path.
 
 For the rest of this quickstart, we will be using the `185_baseball` dataset that you can
-find inside the [data folder](https://github.com/HDI-Project/AutoBazaar/tree/master/data)
+find inside the [input folder](https://github.com/HDI-Project/AutoBazaar/tree/master/input)
 contained in this repository.
 
 ## 2. Start the search process
@@ -120,7 +125,9 @@ command.
 To do this, you will need to provide again the path to where your datasets are contained, as
 well as the name of the datasets that you want to process.
 
-```bash
+For example if you want to search for the best
+
+```
 $ abz search -i /path/to/your/datasets/folder name_of_your_dataset
 ```
 

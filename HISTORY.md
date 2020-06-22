@@ -1,5 +1,10 @@
 # History
 
+## 0.2.1 - 2020-06-22
+
+This release curates some of the dependencies and updates the example datasets
+and documentation.
+
 ## 0.2.0 - 2019-11-26
 
 Second Release:
