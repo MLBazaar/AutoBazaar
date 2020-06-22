@@ -16,6 +16,9 @@ install_requires = [
     'mit-d3m>=0.2.1,<0.3',
     'gitpython>=3.1.1,<4',
     'Keras>=2.1.6,<2.4',
+    'scikit-learn<0.21,>=0.20.0',
+    'pandas<0.25,>=0.23.4',
+    'numpy<1.17,>=1.15.2'
 ]
 
 tests_require = [
