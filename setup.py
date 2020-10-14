@@ -10,6 +10,8 @@ with open('HISTORY.md') as history_file:
     history = history_file.read()
 
 install_requires = [
+    'boto3>=1.14,<1.14.45',
+    'botocore<1.17.45,>=1.17.44',
     'mlblocks>=0.3.2,<0.4',
     'mlprimitives>=0.2.2,<0.3',
     'baytune>=0.2.1,<0.3',
