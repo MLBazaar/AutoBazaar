@@ -6,6 +6,7 @@
 import argparse
 import gc
 import json
+import logging
 import os
 import shutil
 import socket
@@ -30,6 +31,7 @@ warnings.filterwarnings(action='ignore')
 
 
 VERSION = autobazaar.get_version()
+LOGGER = logging.getLogger(__name__)
 
 
 def _load_targets(datasets_dir, dataset, problem):
@@ -358,6 +360,7 @@ def _get_datasets(args):
         summary = get_stats(datasets, args.input)
     except KeyError:
         print("No matching datasets found")
+        LOGGER.exception('No matching datasets found')
         sys.exit(1)
 
     summary = summary.set_index('dataset').reindex(datasets)
