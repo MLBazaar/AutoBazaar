@@ -11,7 +11,6 @@ by the [Human-Data Interaction (HDI) Project](https://hdi-dai.lids.mit.edu/) at 
 * Free software: MIT license
 * Documentation: https://HDI-Project.github.io/AutoBazaar
 """
-import os
 import shlex
 import subprocess
 
