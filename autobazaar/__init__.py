@@ -12,8 +12,8 @@ by the [Human-Data Interaction (HDI) Project](https://hdi-dai.lids.mit.edu/) at 
 * Documentation: https://HDI-Project.github.io/AutoBazaar
 """
 import os
-
-import git
+import shlex
+import subprocess
 
 __author__ = 'MIT Data To AI Lab'
 __copyright__ = 'Copyright (c) 2019, MIT Data To AI Lab'
@@ -22,22 +22,22 @@ __license__ = 'MIT'
 __version__ = '0.2.2.dev0'
 
 
+def _run(cmd):
+    return subprocess.check_output(shlex.split(cmd)).decode().strip()
+
+
 def _get_commit():
     try:
-        base_path = os.path.dirname(__file__)
-        repo = git.Repo(base_path, search_parent_directories=True)
-        commit = repo.commit().hexsha[0:7]
-        if repo.is_dirty(untracked_files=False):
-            commit += '*'
-
-        return commit
-    except git.InvalidGitRepositoryError:
+        commit = _run('git rev-parse --short HEAD')
+        dirty = '*' if _run('git diff --shortstat') != '' else ''
+        return commit + dirty
+    except subprocess.CalledProcessError:
         return None
 
 
 def get_version():
     commit = _get_commit()
     if commit:
-        return '{} - {}'.format(__version__, commit)
+        return '{}+{}'.format(__version__, commit)
 
     return __version__
