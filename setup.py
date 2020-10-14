@@ -94,7 +94,7 @@ setup(
     keywords='automl machine learning hyperparameters tuning classification regression autobazaar',
     name='autobazaar',
     packages=find_packages(include=['autobazaar', 'autobazaar.*']),
-    python_requires='>=3.5,<3.8',
+    python_requires='~=3.6,~=3.7',
     setup_requires=setup_requires,
     test_suite='tests',
     tests_require=tests_require,
