@@ -2,10 +2,11 @@
 language: python
 python:
   - 3.6
+  - 3.7
 
 # Command to install dependencies
 install:
-  - pip install -U tox-travis codecov
+  - pip install --upgrade pip && pip install -U tox-travis codecov
 
 # Command to run tests
 script: tox
