@@ -12,6 +12,7 @@ with open('HISTORY.md') as history_file:
 install_requires = [
     'boto3>=1.14,<1.14.45',
     'botocore<1.17.45,>=1.17.44',
+    'd3m-dataset-manager>=0.1.0',
     'mlblocks>=0.3.2,<0.4',
     'mlprimitives>=0.2.2,<0.3',
     'baytune>=0.2.1,<0.3',
