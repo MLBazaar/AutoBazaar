@@ -1,3 +1,10 @@
+"""Easily convert a single-table CSV into D3M format
+
+Authors:
+- Micah Smith <micahjsmith@gmail.com>
+- Plamen Kolev
+"""
+
 import json
 import uuid
 
