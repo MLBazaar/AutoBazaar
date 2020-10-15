@@ -183,15 +183,6 @@ abz search 185_baseball -c10,20,30 -b10 -r results.csv
 For more details about **AutoBazaar** and all its possibilities and features, please check the
 [project documentation site](https://HDI-Project.github.io/AutoBazaar/)!
 
-# Credits
-
-AutoBazaar is an open-source project from the Data to AI Lab at MIT built by the following team:
-
-* Micah Smith <micahs@mit.edu>
-* Carles Sala <csala@mit.edu>
-* Max Kanter <max.kanter@featurelabs.com>
-* Kalyan Veeramachaneni <kalyanv@mit.edu>
-
 ## Citing AutoBazaar
 
 If you use AutoBazaar for your research, please consider citing the following paper (https://arxiv.org/pdf/1905.08942.pdf):
