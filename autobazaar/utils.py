@@ -27,7 +27,7 @@ def ensure_dir(directory):
 def make_dumpable(params, datetimes=False):
     """Get nested dicts of params to allow json dumping.
 
-    Also work around this: https://github.com/HDI-Project/BTB/issues/79
+    Also work around this: https://github.com/MLBazaar/BTB/issues/79
     And convert numpy types to primitive types.
 
     Optionally dump datetimes to ISO format.
