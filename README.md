@@ -5,6 +5,7 @@
 
 [![Development Status](https://img.shields.io/badge/Development%20Status-2%20--%20Pre--Alpha-yellow)](https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha)
 [![PyPi](https://img.shields.io/pypi/v/autobazaar.svg)](https://pypi.python.org/pypi/autobazaar)
+[![Tests](https://github.com/MLBazaar/AutoBazaar/workflows/Run%20Tests/badge.svg)](https://github.com/MLBazaar/AutoBazaar/actions?query=workflow%3A%22Run+Tests%22+branch%3Amaster)
 [![Travis](https://travis-ci.org/HDI-Project/AutoBazaar.svg?branch=master)](https://travis-ci.org/HDI-Project/AutoBazaar)
 [![Downloads](https://pepy.tech/badge/autobazaar)](https://pepy.tech/project/autobazaar)
 
