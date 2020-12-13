@@ -9,7 +9,7 @@ Development](https://arxiv.org/pdf/1905.08942.pdf)
 by the [Human-Data Interaction (HDI) Project](https://hdi-dai.lids.mit.edu/) at LIDS, MIT.
 
 * Free software: MIT license
-* Documentation: https://HDI-Project.github.io/AutoBazaar
+* Documentation: https://MLBazaar.github.io/AutoBazaar
 """
 import shlex
 import subprocess

@@ -10,10 +10,10 @@
 
 # AutoBazaar
 
-* License: [MIT](https://github.com/HDI-Project/AutoBazaar/blob/master/LICENSE)
+* License: [MIT](https://github.com/MLBazaar/AutoBazaar/blob/master/LICENSE)
 * Development Status: [Pre-Alpha](https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha)
-* Documentation: https://HDI-Project.github.io/AutoBazaar/
-* Homepage: https://github.com/HDI-Project/AutoBazaar
+* Documentation: https://MLBazaar.github.io/AutoBazaar/
+* Homepage: https://github.com/MLBazaar/AutoBazaar
 * Paper: https://arxiv.org/pdf/1905.08942.pdf
 
 ## Overview
@@ -48,7 +48,7 @@ pip install autobazaar
 This will pull and install the latest stable release from [PyPI](https://pypi.org/).
 
 If you want to install from source or contribute to the project please read the
-[Contributing Guide](https://HDI-Project.github.io/AutoBazaar/contributing.html#get-started).
+[Contributing Guide](https://MLBazaar.github.io/AutoBazaar/contributing.html#get-started).
 
 # Data Format
 
@@ -66,8 +66,8 @@ refer to the [Schema Documentation](https://github.com/mitll/d3m-schema/tree/mas
 
 As an example, you can browse some datasets which have been included in this repository for
 demonstration purposes:
-- [185_baseball](https://github.com/HDI-Project/AutoBazaar/tree/master/input/185_baseball): Single Table Regression
-- [196_autoMpg](https://github.com/HDI-Project/AutoBazaar/tree/master/input/196_autoMpg): Single Table Classification
+- [185_baseball](https://github.com/MLBazaar/AutoBazaar/tree/master/input/185_baseball): Single Table Regression
+- [196_autoMpg](https://github.com/MLBazaar/AutoBazaar/tree/master/input/196_autoMpg): Single Table Classification
 
 <!--Additionally, you can find a collection with ~500 datasets already formatted in the
 [d3m-data-dai S3 Bucket](https://d3m-data-dai.s3.amazonaws.com/index.html).-->
@@ -115,7 +115,7 @@ dataset
 dataset format and make sure to have indicated the right path.
 
 For the rest of this quickstart, we will be using the `185_baseball` dataset that you can
-find inside the [input folder](https://github.com/HDI-Project/AutoBazaar/tree/master/input)
+find inside the [input folder](https://github.com/MLBazaar/AutoBazaar/tree/master/input)
 contained in this repository.
 
 ## 2. Start the search process
@@ -181,7 +181,7 @@ abz search 185_baseball -c10,20,30 -b10 -r results.csv
 ## What's next?
 
 For more details about **AutoBazaar** and all its possibilities and features, please check the
-[project documentation site](https://HDI-Project.github.io/AutoBazaar/)!
+[project documentation site](https://MLBazaar.github.io/AutoBazaar/)!
 
 ## Citing AutoBazaar
 
