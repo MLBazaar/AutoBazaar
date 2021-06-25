@@ -453,7 +453,7 @@ def _get_parser():
 
     # Search Configuration
     search_args = ArgumentParser(add_help=False)
-    search_args.add_argument('-b', '--budget', type=int,
+    search_args.add_argument('-b', '--budget', type=int, default=0,
                              help='If given, maximum number tuning iterations to perform.')
     search_args.add_argument('-s', '--splits', type=int, default=5,
                              help='Number of Cross Validation Folds. Defaults to 5')
