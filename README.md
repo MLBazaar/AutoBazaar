@@ -4,7 +4,7 @@
 </p>
 
 [![Development Status](https://img.shields.io/badge/Development%20Status-2%20--%20Pre--Alpha-yellow)](https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha)
-[![PyPi](https://img.shields.io/pypi/v/autobazaar.svg)](https://pypi.Python.org/pypi/autobazaar)
+[![PyPi](https://img.shields.io/pypi/v/autobazaar.svg)](https://pypi.python.org/pypi/autobazaar)
 [![Tests](https://github.com/MLBazaar/AutoBazaar/workflows/Run%20Tests/badge.svg)](https://github.com/MLBazaar/AutoBazaar/actions?query=workflow%3A%22Run+Tests%22+branch%3Amaster)
 [![Downloads](https://pepy.tech/badge/autobazaar)](https://pepy.tech/project/autobazaar)
 
@@ -14,7 +14,7 @@
 * Development Status: [Pre-Alpha](https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha)
 * Documentation: https://MLBazaar.github.io/AutoBazaar/
 * Homepage: https://github.com/MLBazaar/AutoBazaar
-* Paper: [ml-bazaar-paper]
+* Paper: [here][ml-bazaar-paper]
 
 ## Overview
 
@@ -30,7 +30,7 @@ from the command line.
 
 ## Requirements
 
-AutoBazaar has been developed and tested on [Python 3.6 and 3.7](https://www.Python.org/downloads/)
+AutoBazaar has been developed and tested on [Python 3.6 and 3.7](https://www.python.org/downloads/)
 
 Also, although it is not strictly required, the usage of a
 [virtualenv](https://virtualenv.pypa.io/en/latest/) is highly recommended in order to avoid
@@ -85,9 +85,9 @@ Make sure to have your data prepared in the [Data Format](#data-format) explaine
 and uncompressed folder in a filesystem directly accessible by AutoBazaar.
 
 In order to check, whether your dataset is available and ready to use, you can execute
-the `abz` command in your command line with its `list` subcommand.
+the `abz list` subcommand.
 If your dataset is in a different place than inside a folder called `data` within your
-current working directory, do not forget to add the `-i` argument to your command indicating
+current working directory, add the `-i` argument to your command indicating
 the path to the folder that contains your dataset.
 
 Assuming that the data is inside a folder called `input` within your current folder,
@@ -123,7 +123,7 @@ Once your data is ready, you can start the AutoBazaar search process using the `
 command. To do this, you will need to provide again the path to where your datasets are contained, as
 well as the name of the datasets that you want to process.
 
-Without further configuration, the search process will evaluate only the default pipeline without performing additional tuning iteration on it.
+Without further configuration, the search process will evaluate only the default pipeline without performing additional tuning iterations on it.
 
 ```bash
 abz search -i path/to/your/datasets/folder name_of_your_dataset
@@ -187,7 +187,7 @@ For more details about AutoBazaar and all its possibilities and features, please
 ## Citing AutoBazaar
 
 If you use AutoBazaar for your research, please consider citing
-[our paper about ML Bazaar][ml-bazaar-paper]
+[our paper about ML Bazaar][ml-bazaar-paper]:
 
 ```bibtex
 @inproceedings{smith2020machine,
