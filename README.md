@@ -14,15 +14,15 @@
 * Development Status: [Pre-Alpha](https://pypi.org/search/?c=Development+Status+%3A%3A+2+-+Pre-Alpha)
 * Documentation: https://MLBazaar.github.io/AutoBazaar/
 * Homepage: https://github.com/MLBazaar/AutoBazaar
-* Paper: https://arxiv.org/pdf/1905.08942.pdf
+* Paper: [here][ml-bazaar-paper]
 
 ## Overview
 
-AutoBazaar is an AutoML system created using [The Machine Learning Bazaar](https://arxiv.org/abs/1905.08942),
-a research project and framework for building ML and AutoML systems by the Data To AI Lab at MIT.
+*AutoBazaar* is an AutoML system created using [The Machine Learning Bazaar](https://mlbazaar.github.io),
+a research project and framework for building ML and AutoML systems by the [Data To AI Lab](https://dai.lids.mit.edu) at MIT.
 See [below](#citing-autobazaar) for more references.
 
-It comes in the form of a python library which can be used directly inside any other python
+It comes in the form of a Python library which can be used directly inside any other Python
 project, as well as a CLI which allows searching for pipelines to solve a problem directly
 from the command line.
 
@@ -30,18 +30,18 @@ from the command line.
 
 ## Requirements
 
-**AutoBazaar** has been developed and tested on [Python 3.6 and 3.7](https://www.python.org/downloads/)
+AutoBazaar has been developed and tested on [Python 3.6 and 3.7](https://www.python.org/downloads/)
 
 Also, although it is not strictly required, the usage of a
 [virtualenv](https://virtualenv.pypa.io/en/latest/) is highly recommended in order to avoid
-interfering with other software installed in the system where **AutoBazaar** is run.
+interfering with other software installed in the system where AutoBazaar is run.
 
 ## Install with pip
 
-The easiest and recommended way to install **AutoBazaar** is using
+The easiest and recommended way to install AutoBazaar is using
 [pip](https://pip.pypa.io/en/stable/):
 
-```
+```bash
 pip install autobazaar
 ```
 
@@ -69,13 +69,12 @@ demonstration purposes:
 - [185_baseball](https://github.com/MLBazaar/AutoBazaar/tree/master/input/185_baseball): Single Table Regression
 - [196_autoMpg](https://github.com/MLBazaar/AutoBazaar/tree/master/input/196_autoMpg): Single Table Classification
 
-<!--Additionally, you can find a collection with ~500 datasets already formatted in the
-[d3m-data-dai S3 Bucket](https://d3m-data-dai.s3.amazonaws.com/index.html).-->
+Additionally, you can find a collection with ~450 datasets already in the D3M Schema in the [ML Bazaar Task Suite](https://mlbazaar.github.io/#datasets-and-tasks) (please request access [here](https://mlbazaar.github.io/#how-can-i-request-access-to-the-datasets)).
 
 # Quickstart
 
 In this short tutorial we will guide you through a series of steps that will help you getting
-started with **AutoBazaar** using its CLI command `abz`.
+started with AutoBazaar using its CLI command `abz`.
 
 For more details about its usage and the available options, please execute `abz --help`
 on your command line.
@@ -83,19 +82,19 @@ on your command line.
 ## 1. Prepare your Data
 
 Make sure to have your data prepared in the [Data Format](#data-format) explained above inside
-and uncompressed folder in a filesystem directly accessible by **AutoBazaar**.
+and uncompressed folder in a filesystem directly accessible by AutoBazaar.
 
 In order to check, whether your dataset is available and ready to use, you can execute
-the `abz` command in your command line with its `list` subcommand.
+the `abz list` subcommand.
 If your dataset is in a different place than inside a folder called `data` within your
-current working directory, do not forget to add the `-i` argument to your command indicating
+current working directory, add the `-i` argument to your command indicating
 the path to the folder that contains your dataset.
 
 Assuming that the data is inside a folder called `input` within your current folder,
 you can run:
 
-```
-$ abz list -i /path/to/your/datasets/folder
+```bash
+$ abz list -i path/to/your/datasets/folder
 ```
 
 The output should be a table which includes the details of all the datasets found inside
@@ -111,8 +110,8 @@ dataset
 60_jester     single_table  collaborative_filtering               meanAbsoluteError        44M         880719
 ```
 
-**Note:** If you see an error saying that `No matching datasets found`, please review your
-dataset format and make sure to have indicated the right path.
+> :bulb: If you see an error saying that `No matching datasets found`, please review your
+> dataset format and make sure you have indicated the right path.
 
 For the rest of this quickstart, we will be using the `185_baseball` dataset that you can
 find inside the [input folder](https://github.com/MLBazaar/AutoBazaar/tree/master/input)
@@ -121,43 +120,45 @@ contained in this repository.
 ## 2. Start the search process
 
 Once your data is ready, you can start the AutoBazaar search process using the `abz search`
-command.
-To do this, you will need to provide again the path to where your datasets are contained, as
+command. To do this, you will need to provide again the path to where your datasets are contained, as
 well as the name of the datasets that you want to process.
 
-For example if you want to search for the best
+Without further configuration, the search process will evaluate only the default pipeline without performing additional tuning iterations on it.
 
+```bash
+abz search -i path/to/your/datasets/folder name_of_your_dataset
 ```
-$ abz search -i /path/to/your/datasets/folder name_of_your_dataset
-```
 
-This will evaluate the default pipeline without performing additional tuning iteration on it.
-
-In order to start an actual tuning process, you will need to provide at least one of the
+In order to start a real search process, you will need to provide at least one of the
 following additional options:
 
-* `-b, --budget`: Maximum number of tuning iterations to perform.
-* `-t, --timeout`: Maximum time that the system needs to run, in seconds.
-* `-c, --checkpoints`: Comma separated string containing the different checkpoints where
-  the best pipeline so far must be stored and evaluated against the test dataset. There must be
-  no spaces between the checkpoint times. For example, to store the best pipeline every 10 minutes
-  until 30 minutes have passed, you would use the option `-c 600,1200,1800`.
+* `-b, --budget`:
+    Maximum number of tuning iterations to perform.
+* `-c, --checkpoints`:
+    Comma separated string containing the different checkpoints, in seconds,
+    where the best pipeline so far must be stored and evaluated against the
+    test dataset. There must be no spaces between the checkpoint times. For
+    example, to store the best pipeline every 10 minutes until 30 minutes have
+    elapsed, you would use the option `-c 600,1200,1800`. If checkpoints are
+    provided, the system will terminate at the time of the final checkpoint.
+* `-t, --timeout`:
+    Maximum time for the system to run, in seconds. Ignored if checkpoints are
+    given.
 
-For example, to search process the `185_baseball` dataset during 30 seconds evaluating the
-best pipeline so far every 10 seconds but with a maximum of 10 tuning iterations, we would
+For example, to search over the `185_baseball` dataset for a 30 second period, evaluating the
+best pipeline so far every 10 seconds, but with a maximum of 10 tuning iterations, we would
 use the following command:
 
 ```bash
 abz search 185_baseball -c10,20,30 -b10
 ```
 
-For further details about the available options, please execute `abz search --help` in your
-terminal.
+For further details about the available options, run `abz search --help`.
 
 ## 3. Explore the results
 
-Once the **AutoBazaar** has finished searching for the best pipeline, a table will be printed
-in stdout with a summary of the best pipeline found for each dataset.
+Once AutoBazaar has finished searching for the best pipeline, a table will be printed
+to stdout with a summary of the best pipeline found for each dataset.
 If multiple checkpoints were provided, details about the best pipeline in each checkpoint
 will also be included.
 
@@ -180,22 +181,28 @@ abz search 185_baseball -c10,20,30 -b10 -r results.csv
 
 ## What's next?
 
-For more details about **AutoBazaar** and all its possibilities and features, please check the
+For more details about AutoBazaar and all its possibilities and features, please check the
 [project documentation site](https://MLBazaar.github.io/AutoBazaar/)!
 
 ## Citing AutoBazaar
 
-If you use AutoBazaar for your research, please consider citing the following paper (https://arxiv.org/pdf/1905.08942.pdf):
+If you use AutoBazaar for your research, please consider citing
+[our paper about ML Bazaar][ml-bazaar-paper]:
 
-```
-@article{smith2019mlbazaar,
-  author = {Smith, Micah J. and Sala, Carles and Kanter, James Max and Veeramachaneni, Kalyan},
-  title = {The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development},
-  journal = {arXiv e-prints},
-  year = {2019},
-  eid = {arXiv:1905.08942},
-  pages = {arxiv:1904.09535},
-  archivePrefix = {arXiv},
-  eprint = {1905.08942},
+```bibtex
+@inproceedings{smith2020machine,
+    author = "Smith, Micah J. and Sala, Carles and Kanter, James Max and Veeramachaneni, Kalyan",
+    title = "The {{Machine Learning Bazaar}}: {{Harnessing}} the {{ML Ecosystem}} for {{Effective System Development}}",
+    booktitle = "Proceedings of the 2020 {{ACM SIGMOD International Conference}} on {{Management}} of {{Data}}",
+    year = "2020",
+    pages = "785--800",
+    publisher = "{Association for Computing Machinery}",
+    address = "{Portland, OR, USA}",
+    doi = "10.1145/3318464.3386146",
+    isbn = "978-1-4503-6735-6",
+    language = "en",
+    series = "{{SIGMOD}} '20"
 }
 ```
+
+[ml-bazaar-paper]: https://doi.org/10.1145/3318464.3386146
